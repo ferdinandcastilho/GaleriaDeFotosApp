@@ -10,6 +10,7 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
+        <PackageReference Include="SQLite" Version="3.13.0" />
         <PackageReference Include="WinUIEx" Version="1.8.0" />
     </ItemGroup>
 
@@ -33,7 +34,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <OutputType>WinExe</OutputType>
-        <Platforms>x86;x64;arm64</Platforms>
+        <Platforms>x64</Platforms>
         <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
         <RootNamespace>GaleriaDeFotos</RootNamespace>
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
