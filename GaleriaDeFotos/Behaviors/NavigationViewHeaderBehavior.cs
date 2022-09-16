@@ -13,25 +13,26 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     public static readonly DependencyProperty DefaultHeaderProperty =
         DependencyProperty.Register("DefaultHeader", typeof(object),
             typeof(NavigationViewHeaderBehavior),
-            new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
+            new PropertyMetadata(null, (_, _) => _current!.UpdateHeader()));
 
     public static readonly DependencyProperty HeaderModeProperty =
         DependencyProperty.RegisterAttached("HeaderMode", typeof(bool),
             typeof(NavigationViewHeaderBehavior),
             new PropertyMetadata(NavigationViewHeaderMode.Always,
-                (d, e) => _current!.UpdateHeader()));
+                (_, _) => _current!.UpdateHeader()));
 
     public static readonly DependencyProperty HeaderContextProperty =
         DependencyProperty.RegisterAttached("HeaderContext", typeof(object),
             typeof(NavigationViewHeaderBehavior),
-            new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
+            new PropertyMetadata(null, (_, _) => _current!.UpdateHeader()));
 
     public static readonly DependencyProperty HeaderTemplateProperty =
         DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate),
             typeof(NavigationViewHeaderBehavior),
-            new PropertyMetadata(null, (d, e) => _current!.UpdateHeaderTemplate()));
+            new PropertyMetadata(null, (_, _) => _current!.UpdateHeaderTemplate()));
 
     private Page? _currentPage;
+    public NavigationViewHeaderBehavior() { DefaultHeaderTemplate = DefaultHeaderTemplate; }
 
     public DataTemplate? DefaultHeaderTemplate { get; set; }
 
@@ -112,10 +113,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
             } else
             {
                 var headerFromPage = GetHeaderContext(_currentPage);
-                if (headerFromPage != null)
-                    AssociatedObject.Header = headerFromPage;
-                else
-                    AssociatedObject.Header = DefaultHeader;
+                AssociatedObject.Header = headerFromPage;
 
                 if (headerMode == NavigationViewHeaderMode.Always)
                     AssociatedObject.AlwaysShowHeader = true;
@@ -130,7 +128,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
         if (_currentPage != null)
         {
             var headerTemplate = GetHeaderTemplate(_currentPage);
-            AssociatedObject.HeaderTemplate = headerTemplate ?? DefaultHeaderTemplate;
+            AssociatedObject.HeaderTemplate = headerTemplate;
         }
     }
 }

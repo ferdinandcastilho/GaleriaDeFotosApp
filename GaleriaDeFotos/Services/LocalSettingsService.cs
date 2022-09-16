@@ -20,6 +20,8 @@ public class LocalSettingsService : ILocalSettingsService
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
     private readonly string _localSettingsFile;
+
+    // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly LocalSettingsOptions _options;
 
     private bool _isInitialized;
@@ -42,7 +44,7 @@ public class LocalSettingsService : ILocalSettingsService
 
     public async Task<T?> ReadSettingAsync<T>(string key)
     {
-        if (RuntimeHelper.IsMSIX)
+        if (RuntimeHelper.IsMsix)
         {
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
                 return await Json.ToObjectAsync<T>((string)obj);
@@ -59,7 +61,7 @@ public class LocalSettingsService : ILocalSettingsService
 
     public async Task SaveSettingAsync<T>(string key, T value)
     {
-        if (RuntimeHelper.IsMSIX)
+        if (RuntimeHelper.IsMsix)
         {
             ApplicationData.Current.LocalSettings.Values[key] = await Json.StringifyAsync(value);
         } else

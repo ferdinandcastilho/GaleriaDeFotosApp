@@ -1,9 +1,8 @@
 ﻿using GaleriaDeFotos.ViewModels;
-using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.Views;
 
-public sealed partial class FavoritasPage : Page
+public sealed partial class FavoritasPage
 {
     public FavoritasPage()
     {

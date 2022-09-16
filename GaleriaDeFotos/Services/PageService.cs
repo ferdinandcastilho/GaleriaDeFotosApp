@@ -15,6 +15,7 @@ public class PageService : IPageService
         Configure<MainViewModel, MainPage>();
         Configure<FotosViewModel, FotosPage>();
         Configure<FotosDetailViewModel, FotosDetailPage>();
+        Configure<FotosFullViewModel, FotosFullPage>();
         Configure<FavoritasViewModel, FavoritasPage>();
         Configure<BlankViewModel, BlankPage>();
         Configure<SettingsViewModel, SettingsPage>();

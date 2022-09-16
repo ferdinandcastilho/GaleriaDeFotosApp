@@ -52,6 +52,8 @@ public partial class App
                 services.AddTransient<FavoritasPage>();
                 services.AddTransient<FotosDetailViewModel>();
                 services.AddTransient<FotosDetailPage>();
+                services.AddTransient<FotosFullPage>();
+                services.AddTransient<FotosFullViewModel>();
                 services.AddTransient<FotosViewModel>();
                 services.AddTransient<FotosPage>();
                 services.AddTransient<MainViewModel>();

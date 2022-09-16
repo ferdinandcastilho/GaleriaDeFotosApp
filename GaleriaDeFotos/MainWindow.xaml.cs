@@ -1,6 +1,4 @@
-﻿using GaleriaDeFotos.Helpers;
-
-namespace GaleriaDeFotos;
+﻿namespace GaleriaDeFotos;
 
 public sealed partial class MainWindow
 {

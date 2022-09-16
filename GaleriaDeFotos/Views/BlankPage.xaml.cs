@@ -1,9 +1,8 @@
 ﻿using GaleriaDeFotos.ViewModels;
-using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.Views;
 
-public sealed partial class BlankPage : Page
+public sealed partial class BlankPage
 {
     public BlankPage()
     {
@@ -11,5 +10,6 @@ public sealed partial class BlankPage : Page
         InitializeComponent();
     }
 
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public BlankViewModel ViewModel { get; }
 }

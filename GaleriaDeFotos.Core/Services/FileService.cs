@@ -22,6 +22,7 @@ public class FileService : IFileService
 
     public void Save<T>(string folderPath, string fileName, T content)
     {
+        if (string.IsNullOrWhiteSpace(folderPath)) return;
         if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
         var fileContent = JsonConvert.SerializeObject(content);

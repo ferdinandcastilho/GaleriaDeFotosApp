@@ -12,19 +12,20 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
     private readonly INavigationService _navigationService;
     private readonly IFotosDataService _fotosDataService;
+    [ObservableProperty] private Foto? _selectedFoto;
 
-    public FotosViewModel(INavigationService navigationService,
-        IFotosDataService fotosDataService)
+    public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService)
     {
         _navigationService = navigationService;
         _fotosDataService = fotosDataService;
     }
 
     [RelayCommand]
-    void ItemClick(Foto clickedItem)
+    private void ItemClick(Foto? clickedItem)
     {
+        if (clickedItem == null) return;
         _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-        _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, clickedItem.ImageId);
+        _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
     }
 
     public ObservableCollection<Foto> Source { get; } = new();
@@ -34,7 +35,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     public async void OnNavigatedTo(object parameter)
     {
         Source.Clear();
-        
+
         var data = await _fotosDataService.GetPhotos();
         foreach (var item in data) Source.Add(item);
     }
