@@ -14,7 +14,7 @@
             animations:Connected.ListItemElementName="itemThumbnail"
             animations:Connected.ListItemKey="animationKeyContentGrid"
             DesiredWidth="330"
-            ItemHeight="220"
+            ItemHeight="210"
             IsItemClickEnabled="True"
             ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
             ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
@@ -26,7 +26,7 @@
                           x:Name="itemThumbnail"
                           Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image Height="180" Width="320">
+                            <Image Height="200" Width="320">
                                 <Image.Source>
                                     <BitmapImage UriSource="{x:Bind ImageUri}" />
                                 </Image.Source>

@@ -17,7 +17,7 @@ public class FotosDataService : IFotosDataService
             if (extension is ".png" or ".jpg")
             {
                 var uri = new Uri(file);
-                var photo = new Foto { ImageId = 0, ImageUri = uri };
+                var photo = new Foto { ImageId = list.Count, ImageUri = uri };
                 list.Add(photo);
             }
         }
