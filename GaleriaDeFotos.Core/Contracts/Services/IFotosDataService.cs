@@ -3,7 +3,7 @@
 namespace GaleriaDeFotos.Core.Contracts.Services;
 
 // Remove this class once your pages/features are using your data.
-public interface ISampleDataService
+public interface IFotosDataService
 {
-    Task<IEnumerable<SampleOrder>> GetContentGridDataAsync();
+    Task<IEnumerable<Foto>> GetPhotos();
 }

@@ -2,8 +2,6 @@
     x:Class="GaleriaDeFotos.Views.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:GaleriaDeFotos.Helpers"
     xmlns:behaviors="using:GaleriaDeFotos.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -23,7 +21,7 @@
                        VerticalAlignment="Center"
                        TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}"
-                       Margin="28,0,0,0"/>
+                       Margin="28,0,0,0" />
         </Grid>
         <NavigationView
             x:Name="NavigationViewControl"
@@ -43,24 +41,28 @@
                 TODO: Update item icons by updating FontIcon.Glyph properties.
                 https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
                 -->
-                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.MainViewModel">
+                <NavigationViewItem x:Uid="Shell_Main"
+                                    helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Fotos" helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.FotosViewModel">
+                <NavigationViewItem x:Uid="Shell_Fotos"
+                                    helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.FotosViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Favoritas" helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.FavoritasViewModel">
+                <NavigationViewItem x:Uid="Shell_Favoritas"
+                                    helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.FavoritasViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Blank" helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.BlankViewModel">
+                <NavigationViewItem x:Uid="Shell_Blank"
+                                    helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.BlankViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

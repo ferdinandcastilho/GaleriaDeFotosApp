@@ -4,8 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:models="using:GaleriaDeFotos.Core.Models"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
@@ -43,43 +41,25 @@
                         VerticalAlignment="Top"
                         RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.AlignLeftWithPanel="True">
-                        <FontIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="70"
-                            Glyph="{x:Bind ViewModel.Item.Symbol}"
-                            AutomationProperties.Name="{x:Bind ViewModel.Item.SymbolName}" />
                     </Grid>
-
-                    <TextBlock
-                        x:Name="title"
-                        Margin="{StaticResource XXSmallTopMargin}"
-                        RelativePanel.AlignTopWithPanel="True"
-                        RelativePanel.RightOf="itemHero"
-                        Style="{ThemeResource TitleTextBlockStyle}"
-                        Text="{x:Bind ViewModel.Item.Company, Mode=OneWay}" />
-
+                    
                     <StackPanel x:Name="propertiesGroup1" RelativePanel.Below="itemHero">
                         <StackPanel x:Name="statusGroup" Margin="{StaticResource SmallTopMargin}">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Status" />
-                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.Status}" />
-                        </StackPanel>
+                       </StackPanel>
 
                         <StackPanel x:Name="orderDateGroup" Margin="{StaticResource SmallTopMargin}">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Order date" />
-                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.OrderDate}" />
-                        </StackPanel>
+                      </StackPanel>
                     </StackPanel>
 
                     <StackPanel x:Name="propertiesGroup2" RelativePanel.Below="propertiesGroup1">
                         <StackPanel x:Name="shipToGroup" Margin="{StaticResource SmallTopMargin}">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Ship to" />
-                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.ShipTo}" />
                         </StackPanel>
 
                         <StackPanel x:Name="orderTotalGroup" Margin="{StaticResource SmallTopMargin}">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Order total" />
-                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.OrderTotal}" />
                         </StackPanel>
                     </StackPanel>
 

@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.ViewModels;
-
 using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.Services;
@@ -16,15 +14,17 @@ public class NavigationViewService : INavigationViewService
 
     private NavigationView? _navigationView;
 
-    public IList<object>? MenuItems => _navigationView?.MenuItems;
-
-    public object? SettingsItem => _navigationView?.SettingsItem;
-
     public NavigationViewService(INavigationService navigationService, IPageService pageService)
     {
         _navigationService = navigationService;
         _pageService = pageService;
     }
+
+    #region INavigationViewService Members
+
+    public IList<object>? MenuItems => _navigationView?.MenuItems;
+
+    public object? SettingsItem => _navigationView?.SettingsItem;
 
     [MemberNotNull(nameof(_navigationView))]
     public void Initialize(NavigationView navigationView)
@@ -46,29 +46,30 @@ public class NavigationViewService : INavigationViewService
     public NavigationViewItem? GetSelectedItem(Type pageType)
     {
         if (_navigationView != null)
-        {
-            return GetSelectedItem(_navigationView.MenuItems, pageType) ?? GetSelectedItem(_navigationView.FooterMenuItems, pageType);
-        }
+            return GetSelectedItem(_navigationView.MenuItems, pageType) ??
+                   GetSelectedItem(_navigationView.FooterMenuItems, pageType);
 
         return null;
     }
 
-    private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) => _navigationService.GoBack();
+    #endregion
+
+    private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+    {
+        _navigationService.GoBack();
+    }
 
     private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
         if (args.IsSettingsInvoked)
         {
             _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
-        }
-        else
+        } else
         {
             var selectedItem = args.InvokedItemContainer as NavigationViewItem;
 
             if (selectedItem?.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
-            {
                 _navigationService.NavigateTo(pageKey);
-            }
         }
     }
 
@@ -76,16 +77,10 @@ public class NavigationViewService : INavigationViewService
     {
         foreach (var item in menuItems.OfType<NavigationViewItem>())
         {
-            if (IsMenuItemForPageType(item, pageType))
-            {
-                return item;
-            }
+            if (IsMenuItemForPageType(item, pageType)) return item;
 
             var selectedChild = GetSelectedItem(item.MenuItems, pageType);
-            if (selectedChild != null)
-            {
-                return selectedChild;
-            }
+            if (selectedChild != null) return selectedChild;
         }
 
         return null;
@@ -94,9 +89,7 @@ public class NavigationViewService : INavigationViewService
     private bool IsMenuItemForPageType(NavigationViewItem menuItem, Type sourcePageType)
     {
         if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
-        {
             return _pageService.GetPageType(pageKey) == sourcePageType;
-        }
 
         return false;
     }

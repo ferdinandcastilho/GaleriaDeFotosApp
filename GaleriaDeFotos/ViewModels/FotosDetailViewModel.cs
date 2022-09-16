@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
 using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
@@ -8,30 +7,28 @@ namespace GaleriaDeFotos.ViewModels;
 
 public class FotosDetailViewModel : ObservableRecipient, INavigationAware
 {
-    private readonly ISampleDataService _sampleDataService;
-    private SampleOrder? _item;
+    private readonly IFotosDataService _fotosDataService;
+    private Foto? _item;
 
-    public SampleOrder? Item
+    public FotosDetailViewModel(IFotosDataService fotosDataService)
     {
-        get => _item;
-        set => SetProperty(ref _item, value);
+        _fotosDataService = fotosDataService;
     }
 
-    public FotosDetailViewModel(ISampleDataService sampleDataService)
-    {
-        _sampleDataService = sampleDataService;
-    }
+    public Foto? Item { get => _item; set => SetProperty(ref _item, value); }
+
+    #region INavigationAware Members
 
     public async void OnNavigatedTo(object parameter)
     {
-        if (parameter is long orderID)
+        if (parameter is long imageId)
         {
-            var data = await _sampleDataService.GetContentGridDataAsync();
-            Item = data.First(i => i.OrderID == orderID);
+            var data = await _fotosDataService.GetPhotos();
+            Item = data.First(i => i.ImageId == imageId);
         }
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
+
+    #endregion
 }

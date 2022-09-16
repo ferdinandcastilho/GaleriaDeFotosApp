@@ -1,25 +1,19 @@
 ﻿using CommunityToolkit.WinUI.UI.Animations;
-
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.ViewModels;
-
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
 namespace GaleriaDeFotos.Views;
 
-public sealed partial class FotosDetailPage : Page
+public sealed partial class FotosDetailPage
 {
-    public FotosDetailViewModel ViewModel
-    {
-        get;
-    }
-
     public FotosDetailPage()
     {
         ViewModel = App.GetService<FotosDetailViewModel>();
         InitializeComponent();
     }
+
+    public FotosDetailViewModel ViewModel { get; }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
@@ -35,9 +29,7 @@ public sealed partial class FotosDetailPage : Page
             var navigationService = App.GetService<INavigationService>();
 
             if (ViewModel.Item != null)
-            {
                 navigationService.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
-            }
         }
     }
 }

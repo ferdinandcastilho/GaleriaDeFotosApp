@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Views;
-
 using Microsoft.UI.Xaml.Navigation;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -12,15 +10,17 @@ public class ShellViewModel : ObservableRecipient
     private bool _isBackEnabled;
     private object? _selected;
 
-    public INavigationService NavigationService
+    public ShellViewModel(INavigationService navigationService,
+        INavigationViewService navigationViewService)
     {
-        get;
+        NavigationService = navigationService;
+        NavigationService.Navigated += OnNavigated;
+        NavigationViewService = navigationViewService;
     }
 
-    public INavigationViewService NavigationViewService
-    {
-        get;
-    }
+    public INavigationService NavigationService { get; }
+
+    public INavigationViewService NavigationViewService { get; }
 
     public bool IsBackEnabled
     {
@@ -28,18 +28,7 @@ public class ShellViewModel : ObservableRecipient
         set => SetProperty(ref _isBackEnabled, value);
     }
 
-    public object? Selected
-    {
-        get => _selected;
-        set => SetProperty(ref _selected, value);
-    }
-
-    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
-    {
-        NavigationService = navigationService;
-        NavigationService.Navigated += OnNavigated;
-        NavigationViewService = navigationViewService;
-    }
+    public object? Selected { get => _selected; set => SetProperty(ref _selected, value); }
 
     private void OnNavigated(object sender, NavigationEventArgs e)
     {
@@ -52,9 +41,6 @@ public class ShellViewModel : ObservableRecipient
         }
 
         var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
-        if (selectedItem != null)
-        {
-            Selected = selectedItem;
-        }
+        if (selectedItem != null) Selected = selectedItem;
     }
 }

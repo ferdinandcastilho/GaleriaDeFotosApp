@@ -1,7 +1,6 @@
 ﻿using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Views;
-
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -9,17 +8,21 @@ namespace GaleriaDeFotos.Services;
 
 public class ActivationService : IActivationService
 {
-    private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
+    private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IThemeSelectorService _themeSelectorService;
-    private UIElement? _shell = null;
+    private UIElement? _shell;
 
-    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
+    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
+        IEnumerable<IActivationHandler> activationHandlers,
+        IThemeSelectorService themeSelectorService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
     }
+
+    #region IActivationService Members
 
     public async Task ActivateAsync(object activationArgs)
     {
@@ -43,19 +46,17 @@ public class ActivationService : IActivationService
         await StartupAsync();
     }
 
+    #endregion
+
     private async Task HandleActivationAsync(object activationArgs)
     {
-        var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
+        var activationHandler =
+            _activationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
 
-        if (activationHandler != null)
-        {
-            await activationHandler.HandleAsync(activationArgs);
-        }
+        if (activationHandler != null) await activationHandler.HandleAsync(activationArgs);
 
         if (_defaultHandler.CanHandle(activationArgs))
-        {
             await _defaultHandler.HandleAsync(activationArgs);
-        }
     }
 
     private async Task InitializeAsync()

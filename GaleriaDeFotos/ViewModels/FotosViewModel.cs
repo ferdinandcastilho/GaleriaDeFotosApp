@@ -1,9 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
@@ -11,48 +8,38 @@ using GaleriaDeFotos.Core.Models;
 
 namespace GaleriaDeFotos.ViewModels;
 
-public class FotosViewModel : ObservableRecipient, INavigationAware
+public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
     private readonly INavigationService _navigationService;
-    private readonly ISampleDataService _sampleDataService;
+    private readonly IFotosDataService _fotosDataService;
 
-    public ICommand ItemClickCommand
-    {
-        get;
-    }
-
-    public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
-
-    public FotosViewModel(INavigationService navigationService, ISampleDataService sampleDataService)
+    public FotosViewModel(INavigationService navigationService,
+        IFotosDataService fotosDataService)
     {
         _navigationService = navigationService;
-        _sampleDataService = sampleDataService;
-
-        ItemClickCommand = new RelayCommand<SampleOrder>(OnItemClick);
+        _fotosDataService = fotosDataService;
     }
+
+    [RelayCommand]
+    void ItemClick(Foto clickedItem)
+    {
+        _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
+        _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, clickedItem.ImageId);
+    }
+
+    public ObservableCollection<Foto> Source { get; } = new();
+
+    #region INavigationAware Members
 
     public async void OnNavigatedTo(object parameter)
     {
         Source.Clear();
-
-        // TODO: Replace with real data.
-        var data = await _sampleDataService.GetContentGridDataAsync();
-        foreach (var item in data)
-        {
-            Source.Add(item);
-        }
+        
+        var data = await _fotosDataService.GetPhotos();
+        foreach (var item in data) Source.Add(item);
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
 
-    private void OnItemClick(SampleOrder? clickedItem)
-    {
-        if (clickedItem != null)
-        {
-            _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-            _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, clickedItem.OrderID);
-        }
-    }
+    #endregion
 }

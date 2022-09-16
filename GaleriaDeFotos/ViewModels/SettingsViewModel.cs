@@ -1,23 +1,35 @@
 ﻿using System.Reflection;
-using System.Windows.Input;
-
+using Windows.ApplicationModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Helpers;
-
 using Microsoft.UI.Xaml;
-
-using Windows.ApplicationModel;
 
 namespace GaleriaDeFotos.ViewModels;
 
-public class SettingsViewModel : ObservableRecipient
+public partial class SettingsViewModel : ObservableRecipient
 {
     private readonly IThemeSelectorService _themeSelectorService;
     private ElementTheme _elementTheme;
     private string _versionDescription;
+
+    public SettingsViewModel(IThemeSelectorService themeSelectorService)
+    {
+        _themeSelectorService = themeSelectorService;
+        _elementTheme = _themeSelectorService.Theme;
+        _versionDescription = GetVersionDescription();
+    }
+
+    [RelayCommand]
+    async void SwitchTheme(ElementTheme param)
+    {
+        if (ElementTheme != param)
+        {
+            ElementTheme = param;
+            await _themeSelectorService.SetThemeAsync(param);
+        }
+    }
 
     public ElementTheme ElementTheme
     {
@@ -31,28 +43,6 @@ public class SettingsViewModel : ObservableRecipient
         set => SetProperty(ref _versionDescription, value);
     }
 
-    public ICommand SwitchThemeCommand
-    {
-        get;
-    }
-
-    public SettingsViewModel(IThemeSelectorService themeSelectorService)
-    {
-        _themeSelectorService = themeSelectorService;
-        _elementTheme = _themeSelectorService.Theme;
-        _versionDescription = GetVersionDescription();
-
-        SwitchThemeCommand = new RelayCommand<ElementTheme>(
-            async (param) =>
-            {
-                if (ElementTheme != param)
-                {
-                    ElementTheme = param;
-                    await _themeSelectorService.SetThemeAsync(param);
-                }
-            });
-    }
-
     private static string GetVersionDescription()
     {
         Version version;
@@ -61,13 +51,14 @@ public class SettingsViewModel : ObservableRecipient
         {
             var packageVersion = Package.Current.Id.Version;
 
-            version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
-        }
-        else
+            version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build,
+                packageVersion.Revision);
+        } else
         {
             version = Assembly.GetExecutingAssembly().GetName().Version!;
         }
 
-        return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+        return
+            $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
     }
 }

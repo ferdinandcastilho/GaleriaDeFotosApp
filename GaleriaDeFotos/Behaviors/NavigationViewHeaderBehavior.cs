@@ -1,5 +1,4 @@
 ﻿using GaleriaDeFotos.Contracts.Services;
-
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -11,12 +10,30 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 {
     private static NavigationViewHeaderBehavior? _current;
 
+    public static readonly DependencyProperty DefaultHeaderProperty =
+        DependencyProperty.Register("DefaultHeader", typeof(object),
+            typeof(NavigationViewHeaderBehavior),
+            new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
+
+    public static readonly DependencyProperty HeaderModeProperty =
+        DependencyProperty.RegisterAttached("HeaderMode", typeof(bool),
+            typeof(NavigationViewHeaderBehavior),
+            new PropertyMetadata(NavigationViewHeaderMode.Always,
+                (d, e) => _current!.UpdateHeader()));
+
+    public static readonly DependencyProperty HeaderContextProperty =
+        DependencyProperty.RegisterAttached("HeaderContext", typeof(object),
+            typeof(NavigationViewHeaderBehavior),
+            new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
+
+    public static readonly DependencyProperty HeaderTemplateProperty =
+        DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate),
+            typeof(NavigationViewHeaderBehavior),
+            new PropertyMetadata(null, (d, e) => _current!.UpdateHeaderTemplate()));
+
     private Page? _currentPage;
 
-    public DataTemplate? DefaultHeaderTemplate
-    {
-        get; set;
-    }
+    public DataTemplate? DefaultHeaderTemplate { get; set; }
 
     public object DefaultHeader
     {
@@ -24,29 +41,35 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
         set => SetValue(DefaultHeaderProperty, value);
     }
 
-    public static readonly DependencyProperty DefaultHeaderProperty =
-        DependencyProperty.Register("DefaultHeader", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
+    public static NavigationViewHeaderMode GetHeaderMode(Page item)
+    {
+        return (NavigationViewHeaderMode)item.GetValue(HeaderModeProperty);
+    }
 
-    public static NavigationViewHeaderMode GetHeaderMode(Page item) => (NavigationViewHeaderMode)item.GetValue(HeaderModeProperty);
+    public static void SetHeaderMode(Page item, NavigationViewHeaderMode value)
+    {
+        item.SetValue(HeaderModeProperty, value);
+    }
 
-    public static void SetHeaderMode(Page item, NavigationViewHeaderMode value) => item.SetValue(HeaderModeProperty, value);
+    public static object GetHeaderContext(Page item)
+    {
+        return item.GetValue(HeaderContextProperty);
+    }
 
-    public static readonly DependencyProperty HeaderModeProperty =
-        DependencyProperty.RegisterAttached("HeaderMode", typeof(bool), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(NavigationViewHeaderMode.Always, (d, e) => _current!.UpdateHeader()));
+    public static void SetHeaderContext(Page item, object value)
+    {
+        item.SetValue(HeaderContextProperty, value);
+    }
 
-    public static object GetHeaderContext(Page item) => item.GetValue(HeaderContextProperty);
+    public static DataTemplate GetHeaderTemplate(Page item)
+    {
+        return (DataTemplate)item.GetValue(HeaderTemplateProperty);
+    }
 
-    public static void SetHeaderContext(Page item, object value) => item.SetValue(HeaderContextProperty, value);
-
-    public static readonly DependencyProperty HeaderContextProperty =
-        DependencyProperty.RegisterAttached("HeaderContext", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
-
-    public static DataTemplate GetHeaderTemplate(Page item) => (DataTemplate)item.GetValue(HeaderTemplateProperty);
-
-    public static void SetHeaderTemplate(Page item, DataTemplate value) => item.SetValue(HeaderTemplateProperty, value);
-
-    public static readonly DependencyProperty HeaderTemplateProperty =
-        DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current!.UpdateHeaderTemplate()));
+    public static void SetHeaderTemplate(Page item, DataTemplate value)
+    {
+        item.SetValue(HeaderTemplateProperty, value);
+    }
 
     protected override void OnAttached()
     {
@@ -86,27 +109,18 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
             {
                 AssociatedObject.Header = null;
                 AssociatedObject.AlwaysShowHeader = false;
-            }
-            else
+            } else
             {
                 var headerFromPage = GetHeaderContext(_currentPage);
                 if (headerFromPage != null)
-                {
                     AssociatedObject.Header = headerFromPage;
-                }
                 else
-                {
                     AssociatedObject.Header = DefaultHeader;
-                }
 
                 if (headerMode == NavigationViewHeaderMode.Always)
-                {
                     AssociatedObject.AlwaysShowHeader = true;
-                }
                 else
-                {
                     AssociatedObject.AlwaysShowHeader = false;
-                }
             }
         }
     }

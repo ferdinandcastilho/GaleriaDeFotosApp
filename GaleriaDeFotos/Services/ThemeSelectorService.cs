@@ -1,6 +1,5 @@
 ﻿using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Helpers;
-
 using Microsoft.UI.Xaml;
 
 namespace GaleriaDeFotos.Services;
@@ -9,14 +8,16 @@ public class ThemeSelectorService : IThemeSelectorService
 {
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 
-    public ElementTheme Theme { get; set; } = ElementTheme.Default;
-
     private readonly ILocalSettingsService _localSettingsService;
 
     public ThemeSelectorService(ILocalSettingsService localSettingsService)
     {
         _localSettingsService = localSettingsService;
     }
+
+    #region IThemeSelectorService Members
+
+    public ElementTheme Theme { get; set; } = ElementTheme.Default;
 
     public async Task InitializeAsync()
     {
@@ -44,14 +45,13 @@ public class ThemeSelectorService : IThemeSelectorService
         await Task.CompletedTask;
     }
 
+    #endregion
+
     private async Task<ElementTheme> LoadThemeFromSettingsAsync()
     {
         var themeName = await _localSettingsService.ReadSettingAsync<string>(SettingsKey);
 
-        if (Enum.TryParse(themeName, out ElementTheme cacheTheme))
-        {
-            return cacheTheme;
-        }
+        if (Enum.TryParse(themeName, out ElementTheme cacheTheme)) return cacheTheme;
 
         return ElementTheme.Default;
     }

@@ -12,10 +12,17 @@ namespace GaleriaDeFotos.Helpers;
 // NavigationHelper.SetNavigateTo(navigationViewItem, typeof(MainViewModel).FullName);
 public class NavigationHelper
 {
-    public static string GetNavigateTo(NavigationViewItem item) => (string)item.GetValue(NavigateToProperty);
-
-    public static void SetNavigateTo(NavigationViewItem item, string value) => item.SetValue(NavigateToProperty, value);
-
     public static readonly DependencyProperty NavigateToProperty =
-        DependencyProperty.RegisterAttached("NavigateTo", typeof(string), typeof(NavigationHelper), new PropertyMetadata(null));
+        DependencyProperty.RegisterAttached("NavigateTo", typeof(string), typeof(NavigationHelper),
+            new PropertyMetadata(null));
+
+    public static string GetNavigateTo(NavigationViewItem item)
+    {
+        return (string)item.GetValue(NavigateToProperty);
+    }
+
+    public static void SetNavigateTo(NavigationViewItem item, string value)
+    {
+        item.SetValue(NavigateToProperty, value);
+    }
 }
