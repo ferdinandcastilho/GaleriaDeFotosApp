@@ -1,7 +1,4 @@
-﻿using GaleriaDeFotos.Core.Models;
-using GaleriaDeFotos.ViewModels;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+﻿using GaleriaDeFotos.ViewModels;
 
 namespace GaleriaDeFotos.Views;
 

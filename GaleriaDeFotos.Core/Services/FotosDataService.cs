@@ -8,8 +8,7 @@ public class FotosDataService : IFotosDataService
     public async Task<IEnumerable<Foto>> GetPhotos()
     {
         var list = new List<Foto>();
-        var userPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var imagePath = Path.Join(userPath, "OneDrive", "Imagens");
+        var imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         var files = Directory.GetFiles(imagePath);
         foreach (var file in files)
         {
