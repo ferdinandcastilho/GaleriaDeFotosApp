@@ -9,20 +9,12 @@ public class FotosDataService : IFotosDataService
     {
         var list = new List<Foto>();
         var imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-        var files = Directory.GetFiles(imagePath);
-        foreach (var file in files)
-        {
-            var extension = Path.GetExtension(file);
-            if (extension is ".png" or ".jpg")
-            {
-                var uri = new Uri(file);
-                var photo = new Foto { ImageId = list.Count, ImageUri = uri };
-                list.Add(photo);
-            }
-        }
-
 
         await Task.CompletedTask;
-        return list;
+
+        return Directory.GetFiles(imagePath)
+            .Where(file => Path.GetExtension(file) is ".png" or ".jpg")
+            .Select(file => new Foto { ImageId = list.Count, ImageUri = new Uri(file) })
+            .ToList();
     }
 }
