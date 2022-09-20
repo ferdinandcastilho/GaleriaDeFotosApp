@@ -1,11 +1,14 @@
-﻿using GaleriaDeFotos.Activation;
+﻿using System.Data.SQLite;
+using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Core.Contracts.Services;
+using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.Core.Services;
 using GaleriaDeFotos.Models;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.ViewModels;
 using GaleriaDeFotos.Views;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -16,10 +19,15 @@ namespace GaleriaDeFotos;
 // To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App
 {
+    private const string FotosDb = "Fotos.db";
+    public IConfigurationRoot Configuration { get; set; }
+
     public App()
     {
         InitializeComponent();
-
+        //Set AppSettings.json
+        var builder = GetAppSettingsBuilder();
+        Configuration = builder.Build();
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
             .UseContentRoot(AppContext.BaseDirectory).ConfigureServices((context, services) =>
             {
@@ -61,6 +69,19 @@ public partial class App
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
 
+                if (Configuration != null)
+                {
+                    var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
+
+                    if (!File.Exists(FotosDb))
+                    {
+                        SQLiteConnection.CreateFile(FotosDb);
+                    }
+
+                    FotoContext.SetConnectionString(connection);
+                    services.AddSqlite<FotoContext>(connection);
+                }
+
                 // Configuration
                 services.Configure<LocalSettingsOptions>(
                     context.Configuration.GetSection(nameof(LocalSettingsOptions)));
@@ -98,5 +119,11 @@ public partial class App
         base.OnLaunched(args);
 
         await GetService<IActivationService>().ActivateAsync(args);
+    }
+
+    private static IConfigurationBuilder GetAppSettingsBuilder()
+    {
+        return new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
     }
 }

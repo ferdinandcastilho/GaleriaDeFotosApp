@@ -1,20 +1,48 @@
-﻿using System.Security.Cryptography;
+﻿using System.Diagnostics;
+using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
+using HashidsNet;
 
 namespace GaleriaDeFotos.Core.Services;
 
 public class FotosDataService : IFotosDataService
 {
-    public async Task<IEnumerable<Foto>> GetPhotos()
+    private const string Salt = "MaikeuFernando";
+    public async Task<IEnumerable<Foto>> GetPhotosAsync()
     {
         var imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
         await Task.CompletedTask;
+        var files = Directory.GetFiles(imagePath)
+            .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
+        var photos = new List<Foto>();
+        foreach (var file in files)
+        {
+            var photo = await AddPhoto(file);
+            photos.Add(photo);
+        }
+#if DEBUG
+        await using var dataContext = new FotoContext();
 
-        return Directory.GetFiles(imagePath)
-            .Where(file => Path.GetExtension(file) is ".png" or ".jpg").Select(file =>
-                new Foto { ImageId = CreateHash(file), ImageUri = new Uri(file) }).ToList();
+        foreach (var cat in dataContext.Fotos.ToList())
+        {
+            Debug.WriteLine($"Id= {cat.ImageId}, Uri = {cat.ImageUri}");
+        }
+#endif
+
+        return photos;
+    }
+
+    private async Task<Foto> AddPhoto(string file)
+    {
+        var hash = CreateHash(file);
+        var photo = new Foto { ImageId = hash, ImageUri = new Uri(file) };
+        await using var dataContext = new FotoContext();
+        dataContext.Fotos.Add(photo.ToData());
+        await dataContext.SaveChangesAsync();
+
+        return photo;
     }
 
     private static string CreateHash(string file)
@@ -22,6 +50,8 @@ public class FotosDataService : IFotosDataService
         using var md5 = MD5.Create();
         using var stream = File.OpenRead(file);
         var byteArrayHash = md5.ComputeHash(stream);
-        return System.Text.Encoding.UTF8.GetString(byteArrayHash);
+        var hashids = new Hashids(Salt);
+        var bytesAsInts = byteArrayHash.Select(x => (int)x).ToArray();
+        return hashids.Encode(bytesAsInts);
     }
 }

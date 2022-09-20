@@ -7,10 +7,12 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
         <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
         <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+        <PackageReference Include="Hashids.net" Version="1.6.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
         <PackageReference Include="SQLite" Version="3.13.0" />
+        <PackageReference Include="System.Data.SQLite.Core" Version="1.0.116" />
         <PackageReference Include="WinUIEx" Version="1.8.0" />
     </ItemGroup>
 

@@ -36,7 +36,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     {
         Source.Clear();
 
-        var data = await _fotosDataService.GetPhotos();
+        var data = await _fotosDataService.GetPhotosAsync();
         foreach (var item in data) Source.Add(item);
     }
 
