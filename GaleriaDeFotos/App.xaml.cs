@@ -1,4 +1,6 @@
 ﻿using System.Data.SQLite;
+using System.Diagnostics;
+using Windows.Storage;
 using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Core.Contracts.Services;
@@ -68,19 +70,7 @@ public partial class App
                 services.AddTransient<MainPage>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
-
-                if (Configuration != null)
-                {
-                    var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
-
-                    if (!File.Exists(FotosDb))
-                    {
-                        SQLiteConnection.CreateFile(FotosDb);
-                    }
-
-                    FotoContext.SetConnectionString(connection);
-                    services.AddSqlite<FotoContext>(connection);
-                }
+                ConfigureDB(services);
 
                 // Configuration
                 services.Configure<LocalSettingsOptions>(
@@ -88,6 +78,41 @@ public partial class App
             }).Build();
 
         UnhandledException += App_UnhandledException;
+    }
+
+    private void ConfigureDB(IServiceCollection services)
+    {
+        if (Configuration != null)
+        {
+            var dbPath = GetConnectionString(out var connectionString);
+            if (!File.Exists(dbPath))
+            {
+                SQLiteConnection.CreateFile(dbPath);
+            }
+
+
+            FotoContext.SetConnectionString(connectionString);
+            services.AddSqlite<FotoContext>(connectionString);
+        }
+    }
+
+    private string GetConnectionString(out string connectionString)
+    {
+        var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
+        var connectionStringBuilder = new SQLiteConnectionStringBuilder(connection);
+        var baseFolder = string.Empty;
+        try
+        {
+            baseFolder = ApplicationData.Current.LocalFolder.Path;
+        } catch (InvalidOperationException)
+        {
+            Debug.WriteLine("UnPackaged Application");
+        }
+
+        var dbPath = Path.Combine(baseFolder, connectionStringBuilder.DataSource);
+        connectionStringBuilder.DataSource = dbPath;
+        connectionString = connectionStringBuilder.ConnectionString;
+        return dbPath;
     }
 
     // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
