@@ -9,6 +9,7 @@ public partial class FotosDetailViewModel : ObservableRecipient, INavigationAwar
 {
     private readonly IFotosDataService _fotosDataService;
     [ObservableProperty] private Foto? _item;
+
     public FotosDetailViewModel(IFotosDataService fotosDataService)
     {
         _fotosDataService = fotosDataService;

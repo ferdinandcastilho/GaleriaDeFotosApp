@@ -4,8 +4,7 @@
     xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
     xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
     xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-    IgnorableNamespaces="uap rescap genTemplate"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap rescap genTemplate"
     xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10">
 
     <Applications>

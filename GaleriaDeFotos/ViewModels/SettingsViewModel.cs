@@ -21,16 +21,6 @@ public partial class SettingsViewModel : ObservableRecipient
         _versionDescription = GetVersionDescription();
     }
 
-    [RelayCommand]
-    async void SwitchTheme(ElementTheme param)
-    {
-        if (ElementTheme != param)
-        {
-            ElementTheme = param;
-            await _themeSelectorService.SetThemeAsync(param);
-        }
-    }
-
     public ElementTheme ElementTheme
     {
         get => _elementTheme;
@@ -41,6 +31,16 @@ public partial class SettingsViewModel : ObservableRecipient
     {
         get => _versionDescription;
         set => SetProperty(ref _versionDescription, value);
+    }
+
+    [RelayCommand]
+    private async void SwitchTheme(ElementTheme param)
+    {
+        if (ElementTheme != param)
+        {
+            ElementTheme = param;
+            await _themeSelectorService.SetThemeAsync(param);
+        }
     }
 
     private static string GetVersionDescription()

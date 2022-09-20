@@ -10,21 +10,14 @@ namespace GaleriaDeFotos.ViewModels;
 
 public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
 {
-    private readonly INavigationService _navigationService;
     private readonly IFotosDataService _fotosDataService;
+    private readonly INavigationService _navigationService;
 
     public FavoritasViewModel(INavigationService navigationService,
         IFotosDataService fotosDataService)
     {
         _navigationService = navigationService;
         _fotosDataService = fotosDataService;
-    }
-
-    [RelayCommand]
-    void ItemClick(Foto clickedItem)
-    {
-        _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-        _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, clickedItem.ImageId);
     }
 
     public ObservableCollection<Foto> Source { get; } = new();
@@ -43,4 +36,11 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
     public void OnNavigatedFrom() { }
 
     #endregion
+
+    [RelayCommand]
+    private void ItemClick(Foto clickedItem)
+    {
+        _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
+        _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, clickedItem.ImageId);
+    }
 }

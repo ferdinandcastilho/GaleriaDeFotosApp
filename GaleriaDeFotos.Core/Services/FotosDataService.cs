@@ -9,6 +9,9 @@ namespace GaleriaDeFotos.Core.Services;
 public class FotosDataService : IFotosDataService
 {
     private const string Salt = "MaikeuFernando";
+
+    #region IFotosDataService Members
+
     public async Task<IEnumerable<Foto>> GetPhotosAsync()
     {
         var imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
@@ -26,13 +29,13 @@ public class FotosDataService : IFotosDataService
         await using var dataContext = new FotoContext();
 
         foreach (var cat in dataContext.Fotos.ToList())
-        {
             Debug.WriteLine($"Id= {cat.ImageId}, Uri = {cat.ImageUri}");
-        }
 #endif
 
         return photos;
     }
+
+    #endregion
 
     private async Task<Foto> AddPhoto(string file)
     {

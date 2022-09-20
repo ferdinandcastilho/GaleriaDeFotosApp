@@ -21,9 +21,6 @@ namespace GaleriaDeFotos;
 // To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App
 {
-    private const string FotosDb = "Fotos.db";
-    public IConfigurationRoot Configuration { get; set; }
-
     public App()
     {
         InitializeComponent();
@@ -70,7 +67,7 @@ public partial class App
                 services.AddTransient<MainPage>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
-                ConfigureDB(services);
+                ConfigureDb(services);
 
                 // Configuration
                 services.Configure<LocalSettingsOptions>(
@@ -80,20 +77,25 @@ public partial class App
         UnhandledException += App_UnhandledException;
     }
 
-    private void ConfigureDB(IServiceCollection services)
+    public IConfigurationRoot Configuration { get; }
+
+    // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
+    // https://docs.microsoft.com/dotnet/core/extensions/generic-host
+    // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
+    // https://docs.microsoft.com/dotnet/core/extensions/configuration
+    // https://docs.microsoft.com/dotnet/core/extensions/logging
+    public IHost Host { get; }
+
+    public static WindowEx MainWindow { get; } = new MainWindow();
+
+    private void ConfigureDb(IServiceCollection services)
     {
-        if (Configuration != null)
-        {
-            var dbPath = GetConnectionString(out var connectionString);
-            if (!File.Exists(dbPath))
-            {
-                SQLiteConnection.CreateFile(dbPath);
-            }
+        var dbPath = GetConnectionString(out var connectionString);
+        if (!File.Exists(dbPath)) SQLiteConnection.CreateFile(dbPath);
 
 
-            FotoContext.SetConnectionString(connectionString);
-            services.AddSqlite<FotoContext>(connectionString);
-        }
+        FotoContext.SetConnectionString(connectionString);
+        services.AddSqlite<FotoContext>(connectionString);
     }
 
     private string GetConnectionString(out string connectionString)
@@ -114,15 +116,6 @@ public partial class App
         connectionString = connectionStringBuilder.ConnectionString;
         return dbPath;
     }
-
-    // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-    // https://docs.microsoft.com/dotnet/core/extensions/generic-host
-    // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-    // https://docs.microsoft.com/dotnet/core/extensions/configuration
-    // https://docs.microsoft.com/dotnet/core/extensions/logging
-    public IHost Host { get; }
-
-    public static WindowEx MainWindow { get; } = new MainWindow();
 
     public static T GetService<T>() where T : class
     {
@@ -149,6 +142,6 @@ public partial class App
     private static IConfigurationBuilder GetAppSettingsBuilder()
     {
         return new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            .AddJsonFile("appsettings.json", true, true);
     }
 }

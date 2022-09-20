@@ -48,15 +48,17 @@ public class FotoContext : DbContext
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options) { }
 
+    public DbSet<FotoData> Fotos { get; set; }
+
     public static void SetConnectionString(string connectionString)
     {
         _connectionString = connectionString;
     }
 
-    public DbSet<FotoData> Fotos { get; set; }
-    
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite(_connectionString);
+    {
+        options.UseSqlite(_connectionString);
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

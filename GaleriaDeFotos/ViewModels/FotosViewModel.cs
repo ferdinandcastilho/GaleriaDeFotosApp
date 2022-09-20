@@ -10,22 +10,14 @@ namespace GaleriaDeFotos.ViewModels;
 
 public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
-    private readonly INavigationService _navigationService;
     private readonly IFotosDataService _fotosDataService;
+    private readonly INavigationService _navigationService;
     [ObservableProperty] private Foto? _selectedFoto;
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService)
     {
         _navigationService = navigationService;
         _fotosDataService = fotosDataService;
-    }
-
-    [RelayCommand]
-    private void ItemClick(Foto? clickedItem)
-    {
-        if (clickedItem == null) return;
-        _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-        _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
     }
 
     public ObservableCollection<Foto> Source { get; } = new();
@@ -43,4 +35,12 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     public void OnNavigatedFrom() { }
 
     #endregion
+
+    [RelayCommand]
+    private void ItemClick(Foto? clickedItem)
+    {
+        if (clickedItem == null) return;
+        _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
+        _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
+    }
 }
