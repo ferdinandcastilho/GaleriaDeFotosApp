@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaleriaDeFotos.Core.Models;
@@ -9,10 +10,13 @@ public partial class Foto : ObservableObject
     [ObservableProperty] private string _imageId;
 
     [ObservableProperty] private Uri _imageUri;
+    public Foto() { }
+
+    public Foto(FotoData data) { FromData(data); }
 
     public FotoData ToData()
     {
-        var data = new FotoData { ImageId = ImageId, ImageUri = ImageUri.AbsolutePath };
+        var data = new FotoData(ImageId, ImageUri.AbsolutePath, false);
         return data;
     }
 
@@ -25,8 +29,18 @@ public partial class Foto : ObservableObject
 
 public class FotoData
 {
-    public string ImageId { get; set; }
-    public string ImageUri { get; set; }
+    public FotoData() { }
+
+    public FotoData(string imageId, string imageUri, bool isFavorite)
+    {
+        ImageId = imageId;
+        ImageUri = imageUri;
+        IsFavorite = isFavorite;
+    }
+
+    public string ImageId { get; }
+    public string ImageUri { get; }
+    public bool IsFavorite { get; }
 }
 
 public class FotoContext : DbContext
@@ -36,19 +50,18 @@ public class FotoContext : DbContext
 
     public FotoContext()
     {
-        if (!_created)
-        {
-            _created = true;
-            // ReSharper disable VirtualMemberCallInConstructor
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
-            // ReSharper restore VirtualMemberCallInConstructor
-        }
+        if (_created) return;
+        _created = true;
+        // ReSharper disable VirtualMemberCallInConstructor
+        Database.EnsureDeleted();
+        Database.EnsureCreated();
+        // ReSharper restore VirtualMemberCallInConstructor
+        
     }
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options) { }
 
-    public DbSet<FotoData> Fotos { get; set; }
+    [UsedImplicitly] public DbSet<FotoData> Fotos { get; set; }
 
     public static void SetConnectionString(string connectionString)
     {

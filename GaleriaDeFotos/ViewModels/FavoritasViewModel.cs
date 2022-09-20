@@ -27,8 +27,6 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
     public async void OnNavigatedTo(object parameter)
     {
         Source.Clear();
-
-        // TODO: Replace with real data.
         var data = await _fotosDataService.GetPhotosAsync();
         foreach (var item in data) Source.Add(item);
     }

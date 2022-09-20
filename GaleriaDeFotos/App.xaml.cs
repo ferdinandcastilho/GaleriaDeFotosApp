@@ -73,7 +73,6 @@ public partial class App
                 services.Configure<LocalSettingsOptions>(
                     context.Configuration.GetSection(nameof(LocalSettingsOptions)));
             }).Build();
-
         UnhandledException += App_UnhandledException;
     }
 
@@ -91,10 +90,15 @@ public partial class App
     private void ConfigureDb(IServiceCollection services)
     {
         var dbPath = GetConnectionString(out var connectionString);
-        if (!File.Exists(dbPath)) SQLiteConnection.CreateFile(dbPath);
-
-
         FotoContext.SetConnectionString(connectionString);
+        if (!File.Exists(dbPath))
+        {
+            SQLiteConnection.CreateFile(dbPath);
+        }
+        //todo: O banco é limpo a cada abertura do programa, devido à um problema em que as URI não persistem.
+        var _ = new FotoContext();
+
+
         services.AddSqlite<FotoContext>(connectionString);
     }
 
@@ -138,7 +142,7 @@ public partial class App
 
         await GetService<IActivationService>().ActivateAsync(args);
     }
-
+    
     private static IConfigurationBuilder GetAppSettingsBuilder()
     {
         return new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory)

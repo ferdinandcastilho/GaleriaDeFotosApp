@@ -3,8 +3,9 @@ using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using HashidsNet;
+using Microsoft.UI.Xaml;
 
-namespace GaleriaDeFotos.Core.Services;
+namespace GaleriaDeFotos.Services;
 
 public class FotosDataService : IFotosDataService
 {
@@ -14,36 +15,43 @@ public class FotosDataService : IFotosDataService
 
     public async Task<IEnumerable<Foto>> GetPhotosAsync()
     {
-        var imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-
-        await Task.CompletedTask;
-        var files = Directory.GetFiles(imagePath)
-            .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
         var photos = new List<Foto>();
-        foreach (var file in files)
+        var fotoContext = App.GetService<FotoContext>();
+        if (fotoContext.Fotos == null) return photos;
+        if (!fotoContext.Fotos.Any())
         {
-            var photo = await AddPhoto(file);
-            photos.Add(photo);
-        }
-#if DEBUG
-        await using var dataContext = new FotoContext();
+            var imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-        foreach (var cat in dataContext.Fotos.ToList())
+            await Task.CompletedTask;
+            var files = Directory.GetFiles(imagePath)
+                .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
+
+            foreach (var file in files)
+            {
+                var photo = await AddPhoto(file, fotoContext);
+                photos.Add(photo);
+            }
+        } else
+        {
+            photos.AddRange(fotoContext.Fotos.Select(foto => new Foto(foto)));
+        }
+
+#if DEBUG
+
+        foreach (var cat in fotoContext.Fotos.ToList())
             Debug.WriteLine($"Id= {cat.ImageId}, Uri = {cat.ImageUri}");
 #endif
-
         return photos;
     }
 
     #endregion
 
-    private async Task<Foto> AddPhoto(string file)
+    private async Task<Foto> AddPhoto(string file, FotoContext context)
     {
         var hash = CreateHash(file);
         var photo = new Foto { ImageId = hash, ImageUri = new Uri(file) };
-        await using var dataContext = new FotoContext();
-        dataContext.Fotos.Add(photo.ToData());
-        await dataContext.SaveChangesAsync();
+        context.Fotos.Add(photo.ToData());
+        await context.SaveChangesAsync();
 
         return photo;
     }
