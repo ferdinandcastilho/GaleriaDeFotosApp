@@ -13,13 +13,15 @@ public class FotosDataService : IFotosDataService
         await Task.CompletedTask;
 
         return Directory.GetFiles(imagePath)
-            .Where(file => Path.GetExtension(file) is ".png" or ".jpg")
-            .Select(file => new Foto { ImageId = CreateHash(file) , ImageUri = new Uri(file) })
-            .ToList();
+            .Where(file => Path.GetExtension(file) is ".png" or ".jpg").Select(file =>
+                new Foto { ImageId = CreateHash(file), ImageUri = new Uri(file) }).ToList();
     }
 
     private static string CreateHash(string file)
     {
-        return null;
+        using var md5 = MD5.Create();
+        using var stream = File.OpenRead(file);
+        var byteArrayHash = md5.ComputeHash(stream);
+        return System.Text.Encoding.UTF8.GetString(byteArrayHash);
     }
 }

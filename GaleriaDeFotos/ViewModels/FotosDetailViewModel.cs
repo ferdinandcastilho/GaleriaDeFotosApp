@@ -18,7 +18,7 @@ public partial class FotosDetailViewModel : ObservableRecipient, INavigationAwar
 
     public async void OnNavigatedTo(object parameter)
     {
-        if (parameter is long imageId)
+        if (parameter is string imageId)
         {
             var data = await _fotosDataService.GetPhotos();
             Item = data.First(i => i.ImageId == imageId);
