@@ -16,7 +16,10 @@ public partial class Foto : ObservableObject
 
     public FotoData ToData()
     {
-        var data = new FotoData(ImageId, ImageUri.AbsolutePath, false);
+        var data = new FotoData
+        {
+            ImageId = ImageId, ImageUri = ImageUri.AbsolutePath, IsFavorite = false
+        };
         return data;
     }
 
@@ -30,17 +33,9 @@ public partial class Foto : ObservableObject
 public class FotoData
 {
     public FotoData() { }
-
-    public FotoData(string imageId, string imageUri, bool isFavorite)
-    {
-        ImageId = imageId;
-        ImageUri = imageUri;
-        IsFavorite = isFavorite;
-    }
-
-    public string ImageId { get; }
-    public string ImageUri { get; }
-    public bool IsFavorite { get; }
+    public string ImageId { get; set; }
+    public string ImageUri { get; set; }
+    public bool IsFavorite { get; set; }
 }
 
 public class FotoContext : DbContext
@@ -56,7 +51,6 @@ public class FotoContext : DbContext
         Database.EnsureDeleted();
         Database.EnsureCreated();
         // ReSharper restore VirtualMemberCallInConstructor
-        
     }
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options) { }

@@ -94,10 +94,8 @@ public partial class App
         if (!File.Exists(dbPath))
         {
             SQLiteConnection.CreateFile(dbPath);
+            var _ = new FotoContext();
         }
-        //todo: O banco é limpo a cada abertura do programa, devido à um problema em que as URI não persistem.
-        var _ = new FotoContext();
-
 
         services.AddSqlite<FotoContext>(connectionString);
     }
