@@ -10,6 +10,7 @@ public partial class Foto : ObservableObject
     [ObservableProperty] private string _imageId;
 
     [ObservableProperty] private Uri _imageUri;
+    [ObservableProperty] private bool _isFavorite;
     public Foto() { }
 
     public Foto(FotoData data) { FromData(data); }
@@ -18,7 +19,7 @@ public partial class Foto : ObservableObject
     {
         var data = new FotoData
         {
-            ImageId = ImageId, ImageUri = ImageUri.AbsolutePath, IsFavorite = false
+            ImageId = ImageId, ImageUri = ImageUri.AbsolutePath, IsFavorite = IsFavorite
         };
         return data;
     }
@@ -27,12 +28,12 @@ public partial class Foto : ObservableObject
     {
         ImageId = data.ImageId;
         ImageUri = new Uri(data.ImageUri);
+        IsFavorite = data.IsFavorite;
     }
 }
 
 public class FotoData
 {
-    public FotoData() { }
     public string ImageId { get; set; }
     public string ImageUri { get; set; }
     public bool IsFavorite { get; set; }

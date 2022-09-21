@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using HashidsNet;
-using Microsoft.UI.Xaml;
 
 namespace GaleriaDeFotos.Services;
 
@@ -42,6 +41,14 @@ public class FotosDataService : IFotosDataService
             Debug.WriteLine($"Id= {cat.ImageId}, Uri = {cat.ImageUri}");
 #endif
         return photos;
+    }
+
+    public async void SetFavorite(Foto foto, bool isFavorite)
+    {
+        var fotoContext = App.GetService<FotoContext>();
+        var fotoData = fotoContext.Fotos.First(data => data.ImageId == foto.ImageId);
+        fotoData.IsFavorite = isFavorite;
+        await fotoContext.SaveChangesAsync();
     }
 
     #endregion

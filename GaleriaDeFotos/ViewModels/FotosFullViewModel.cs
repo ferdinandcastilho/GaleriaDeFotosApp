@@ -37,10 +37,17 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
     #endregion
 
     [RelayCommand]
-    private void DetailClick()
+    private void GetDetails()
     {
         if (Item == null) return;
         _navigationService.SetListDataItemForNextConnectedAnimation(Item);
         _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, Item.ImageId);
     }
+
+    [RelayCommand]
+    private void SetFavorite() { _fotosDataService.SetFavorite(Item, true); }
+
+
+    [RelayCommand]
+    private void UnSetFavorite() { _fotosDataService.SetFavorite(Item, false); }
 }
