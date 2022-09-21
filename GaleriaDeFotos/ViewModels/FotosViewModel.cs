@@ -41,7 +41,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
-        Source.Clear();
+        
     }
 
     #endregion
@@ -69,13 +69,17 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         StorageFolder folder = await folderPicker.PickSingleFolderAsync();
 
         var fotos = await _fotosDataService.GetPhotosAsync(folder?.Path);
-        if (fotos?.Count() > 0)
+        var enumerable = fotos.ToList();
+        if (enumerable.Any())
         {
-            IsLoading = true; 
-            ShowFolderPicker = false; 
-            ShowPhotos = true; 
+            IsLoading = true;
+            ShowFolderPicker = false;
+            ShowPhotos = true;
 
-            foreach (var foto in fotos) { Source.Add(foto); }
+            foreach (var foto in enumerable)
+            {
+                Source.Add(foto);
+            }
 
             await Task.Delay(3000);
             IsLoading = false;

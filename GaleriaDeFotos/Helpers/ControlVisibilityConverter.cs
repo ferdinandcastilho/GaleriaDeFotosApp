@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
-using System;
 
 namespace GaleriaDeFotos.Helpers;
 public class ControlVisibilityConverter : IValueConverter
@@ -14,13 +13,13 @@ public class ControlVisibilityConverter : IValueConverter
         {
             bool b => b ? inverter ? Visibility.Collapsed : Visibility.Visible : Visibility.Collapsed,
             int i => i > 0 ? inverter ? Visibility.Collapsed : Visibility.Visible : Visibility.Collapsed,
-            string s => s is not null && s.Length > 0 ? inverter ? Visibility.Collapsed : Visibility.Visible : Visibility.Collapsed,
+            string s => s.Length > 0 ? inverter ? Visibility.Collapsed : Visibility.Visible : Visibility.Collapsed,
             null => inverter ? Visibility.Visible : Visibility.Collapsed,
             _ => Visibility.Collapsed,
         };
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    public object? ConvertBack(object value, Type targetType, object parameter, string language)
     {
         return null;
     }

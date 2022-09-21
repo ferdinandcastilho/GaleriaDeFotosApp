@@ -74,6 +74,8 @@ public partial class App
                     context.Configuration.GetSection(nameof(LocalSettingsOptions)));
             }).Build();
         UnhandledException += App_UnhandledException;
+        var db = GetService<FotoContext>();
+        db.Clear();
     }
 
     public IConfigurationRoot Configuration { get; }

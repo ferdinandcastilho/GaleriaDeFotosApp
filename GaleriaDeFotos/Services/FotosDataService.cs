@@ -18,12 +18,12 @@ public class FotosDataService : IFotosDataService
         _fotoContext = fotoContext;
     }
 
-    public async Task<IEnumerable<Foto>> GetPhotosAsync(string imagePath = null)
+    public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
     {
         var photos = new List<Foto>();
         if (!_fotoContext.Fotos.Any())
         {
-            if (imagePath is null) imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures); // Substituir SpecialFolder por última pasta declarada pelo usuário
+            imagePath ??= Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
             await Task.CompletedTask;
 

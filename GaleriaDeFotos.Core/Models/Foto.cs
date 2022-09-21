@@ -48,10 +48,7 @@ public class FotoContext : DbContext
     {
         if (_created) return;
         _created = true;
-        // ReSharper disable VirtualMemberCallInConstructor
-        Database.EnsureDeleted();
-        Database.EnsureCreated();
-        // ReSharper restore VirtualMemberCallInConstructor
+        Clear();
     }
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options) { }
@@ -72,5 +69,11 @@ public class FotoContext : DbContext
     {
         builder.Entity<FotoData>().HasKey(m => m.ImageId);
         base.OnModelCreating(builder);
+    }
+
+    public void Clear()
+    {
+        Database.EnsureDeleted();
+        Database.EnsureCreated();
     }
 }
