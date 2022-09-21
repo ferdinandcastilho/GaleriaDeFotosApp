@@ -20,6 +20,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     [ObservableProperty] private Foto? _selectedFoto;
     [ObservableProperty] private bool _showFolderPicker = true;
     [ObservableProperty] private bool _showPhotos;
+    [ObservableProperty] private bool _isLoading;
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService)
     {
@@ -68,6 +69,16 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         StorageFolder folder = await folderPicker.PickSingleFolderAsync();
 
         var fotos = await _fotosDataService.GetPhotosAsync(folder?.Path);
-        if (fotos is not null) { ShowFolderPicker = false; ShowPhotos = true; foreach (var foto in fotos) { Source.Add(foto); } } // Substituir variáveis por Converter
+        if (fotos is not null)
+        {
+            IsLoading = true; 
+            ShowFolderPicker = false; 
+            ShowPhotos = true; 
+
+            foreach (var foto in fotos) { Source.Add(foto); }
+
+            await Task.Delay(3000);
+            IsLoading = false;
+        } // Substituir ObservableProperties por Converter
     }
 }
