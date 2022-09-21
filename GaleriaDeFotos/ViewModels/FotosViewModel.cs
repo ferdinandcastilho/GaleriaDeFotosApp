@@ -40,6 +40,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
+        Source.Clear();
     }
 
     #endregion

@@ -9,36 +9,41 @@ namespace GaleriaDeFotos.Services;
 public class FotosDataService : IFotosDataService
 {
     private const string Salt = "MaikeuFernando";
+    private readonly FotoContext _fotoContext;
 
     #region IFotosDataService Members
+
+    public FotosDataService(FotoContext fotoContext)
+    {
+        _fotoContext = fotoContext;
+    }
 
     public async Task<IEnumerable<Foto>> GetPhotosAsync(string imagePath = null)
     {
         var photos = new List<Foto>();
-        var fotoContext = App.GetService<FotoContext>(); // O projeto GaleriaFotos está referenciando o Core. Por isso é possível injetar via construtor que a DI do GaleriaFotos conseguirá resolver // Service passível de moção para o projeto Core
-        if (fotoContext.Fotos == null) return photos;
-        if (!fotoContext.Fotos.Any())
+        if (!_fotoContext.Fotos.Any())
         {
-            if (imagePath is null) imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (imagePath is null) imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures); // Substituir SpecialFolder por última pasta declarada pelo usuário
 
             await Task.CompletedTask;
+
             var files = Directory.GetFiles(imagePath)
                 .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
 
             foreach (var file in files)
             {
-                var photo = await AddPhoto(file, fotoContext);
+                var photo = await AddPhoto(file);
                 photos.Add(photo);
             }
         }
         else
         {
-            photos.AddRange(fotoContext.Fotos.Select(foto => new Foto(foto)));
+            photos.AddRange(_fotoContext.Fotos.Select(foto => new Foto(foto)));
         }
 
 #if DEBUG
 
-        foreach (var cat in fotoContext.Fotos.ToList())
+        foreach (var cat in _fotoContext.Fotos.ToList())
             Debug.WriteLine($"Id= {cat.ImageId}, Uri = {cat.ImageUri}");
 #endif
         return photos;
@@ -46,20 +51,19 @@ public class FotosDataService : IFotosDataService
 
     public async void SetFavorite(Foto foto, bool isFavorite)
     {
-        var fotoContext = App.GetService<FotoContext>();
-        var fotoData = fotoContext.Fotos.First(data => data.ImageId == foto.ImageId);
+        var fotoData = _fotoContext.Fotos.First(data => data.ImageId == foto.ImageId);
         fotoData.IsFavorite = isFavorite;
-        await fotoContext.SaveChangesAsync();
+        await _fotoContext.SaveChangesAsync();
     }
 
     #endregion
 
-    private async Task<Foto> AddPhoto(string file, FotoContext context)
+    private async Task<Foto> AddPhoto(string file)
     {
         var hash = CreateHash(file);
         var photo = new Foto { ImageId = hash, ImageUri = new Uri(file) };
-        context.Fotos.Add(photo.ToData());
-        await context.SaveChangesAsync();
+        _fotoContext.Fotos.Add(photo.ToData());
+        await _fotoContext.SaveChangesAsync();
 
         return photo;
     }
