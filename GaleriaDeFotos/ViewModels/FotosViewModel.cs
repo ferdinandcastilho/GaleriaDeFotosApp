@@ -69,7 +69,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         StorageFolder folder = await folderPicker.PickSingleFolderAsync();
 
         var fotos = await _fotosDataService.GetPhotosAsync(folder?.Path);
-        if (fotos is not null)
+        if (fotos?.Count() > 0)
         {
             IsLoading = true; 
             ShowFolderPicker = false; 
