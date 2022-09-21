@@ -12,14 +12,14 @@ public class FotosDataService : IFotosDataService
 
     #region IFotosDataService Members
 
-    public async Task<IEnumerable<Foto>> GetPhotosAsync()
+    public async Task<IEnumerable<Foto>> GetPhotosAsync(string imagePath = null)
     {
         var photos = new List<Foto>();
-        var fotoContext = App.GetService<FotoContext>();
+        var fotoContext = App.GetService<FotoContext>(); // O projeto GaleriaFotos está referenciando o Core. Por isso é possível injetar via construtor que a DI do GaleriaFotos conseguirá resolver // Service passível de moção para o projeto Core
         if (fotoContext.Fotos == null) return photos;
         if (!fotoContext.Fotos.Any())
         {
-            var imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (imagePath is null) imagePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
             await Task.CompletedTask;
             var files = Directory.GetFiles(imagePath)
@@ -30,7 +30,8 @@ public class FotosDataService : IFotosDataService
                 var photo = await AddPhoto(file, fotoContext);
                 photos.Add(photo);
             }
-        } else
+        }
+        else
         {
             photos.AddRange(fotoContext.Fotos.Select(foto => new Foto(foto)));
         }

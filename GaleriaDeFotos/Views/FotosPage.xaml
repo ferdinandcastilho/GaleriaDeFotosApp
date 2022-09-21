@@ -1,32 +1,50 @@
-﻿<Page
-    x:Class="GaleriaDeFotos.Views.FotosPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:models="using:GaleriaDeFotos.Core.Models"
-    mc:Ignorable="d">
+﻿<Page x:Class="GaleriaDeFotos.Views.FotosPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
+      xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+      xmlns:models="using:GaleriaDeFotos.Core.Models"
+      xmlns:helpers="using:GaleriaDeFotos.Helpers"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <helpers:ControlVisibilityConverter x:Key="ControlVisibilityConverter" />
+    </Page.Resources>
 
     <Grid>
-        <controls:AdaptiveGridView
-            animations:Connected.ListItemElementName="itemThumbnail"
-            animations:Connected.ListItemKey="animationKeyContentGrid"
-            DesiredWidth="330"
-            ItemHeight="210"
-            IsItemClickEnabled="True"
-            ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
-            ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
-            SelectionMode="None"
-            StretchContentForSingleRow="False">
+        <Viewbox Visibility="{x:Bind ViewModel.ShowFolderPicker, Mode=OneWay}">
+            <Button Background="Transparent"
+                    BorderBrush="Transparent"
+                    Foreground="DimGray"
+                    FontSize="100"
+                    FontWeight="Thin"
+                    Content="Clique aqui para selecionar uma pasta"
+                    Command="{x:Bind ViewModel.PickDirectoryCommand}">
+            </Button>
+        </Viewbox>
+
+        <controls:AdaptiveGridView  Visibility="{x:Bind ViewModel.ShowPhotos, Mode=OneWay}"
+                                    animations:Connected.ListItemElementName="itemThumbnail"
+                                    animations:Connected.ListItemKey="animationKeyContentGrid"
+                                    DesiredWidth="330"
+                                    ItemHeight="210"
+                                    IsItemClickEnabled="True"
+                                    ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
+                                    ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
+                                    SelectionMode="None"
+                                    StretchContentForSingleRow="False">
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Foto">
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center"
+                    <Grid VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
                           x:Name="itemThumbnail"
                           Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image Height="200" Width="320">
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <Image Height="200"
+                                   Width="320">
                                 <Image.Source>
                                     <BitmapImage UriSource="{x:Bind ImageUri}" />
                                 </Image.Source>

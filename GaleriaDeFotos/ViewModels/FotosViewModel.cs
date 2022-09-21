@@ -5,6 +5,9 @@ using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
 
@@ -12,7 +15,11 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
+    public ObservableCollection<Foto> Source { get; } = new();
+
     [ObservableProperty] private Foto? _selectedFoto;
+    [ObservableProperty] private bool _showFolderPicker = true;
+    [ObservableProperty] private bool _showPhotos;
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService)
     {
@@ -20,7 +27,6 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         _fotosDataService = fotosDataService;
     }
 
-    public ObservableCollection<Foto> Source { get; } = new();
 
     #region INavigationAware Members
 
@@ -32,7 +38,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         foreach (var item in data) Source.Add(item);
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 
@@ -42,5 +50,23 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         if (clickedItem == null) return;
         _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
         _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
+    }
+
+    [RelayCommand]
+    private async Task PickDirectory()
+    {
+        FolderPicker folderPicker = new()
+        {
+            SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+            ViewMode = PickerViewMode.Thumbnail
+        };
+
+        var hwnd = App.MainWindow.GetWindowHandle();
+        InitializeWithWindow.Initialize(folderPicker, hwnd);
+
+        StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+
+        var fotos = await _fotosDataService.GetPhotosAsync(folder?.Path);
+        if (fotos is not null) { ShowFolderPicker = false; ShowPhotos = true; foreach (var foto in fotos) { Source.Add(foto); } } // Substituir variáveis por Converter
     }
 }
