@@ -8,9 +8,6 @@ using GaleriaDeFotos.Core.Models;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using WinRT.Interop;
-using Microsoft.UI.Xaml.Controls;
-using Windows.Security.Cryptography.Core;
-using GaleriaDeFotos.Services;
 
 namespace GaleriaDeFotos.ViewModels;
 
@@ -34,7 +31,8 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     public async void OnNavigatedTo(object parameter)
     {
         var photos = await OpenLastOpenedFolder();
-        Source = photos is not null ? new(photos) : Source;
+
+        if (photos != null) Source = new(photos);
     }
 
     public void OnNavigatedFrom()
@@ -62,12 +60,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
             IsLoading = true;
 
             var fotos = await _fotosDataService.GetPhotosAsync(folderPath);
-            if (fotos.Any())
-            {
-                Source = new(fotos);
+            if (fotos.Any()) Source = new(fotos);
 
-                IsLoading = false;
-            }
+            IsLoading = false;
         }
     }
 
