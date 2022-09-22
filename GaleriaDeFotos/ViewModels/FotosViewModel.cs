@@ -65,6 +65,13 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
             IsLoading = false;
         }
     }
+    private async Task<IEnumerable<Foto>?> OpenLastOpenedFolder()
+    {
+        var settings = App.GetService<ILocalSettingsService>();
+        var folderToReadPhotos = await settings.ReadSettingAsync<string?>("LastFolder");
+
+        return folderToReadPhotos is not null ? await _fotosDataService.GetPhotosAsync(folderToReadPhotos) : null;
+    }
 
     private static async Task<string?> FolderPicker()
     {
@@ -82,11 +89,4 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         return folder?.Path;
     }
 
-    private async Task<IEnumerable<Foto>?> OpenLastOpenedFolder()
-    {
-        var settings = App.GetService<ILocalSettingsService>();
-        var folderToReadPhotos = await settings.ReadSettingAsync<string?>("LastFolder");
-
-        return folderToReadPhotos is not null ? await _fotosDataService.GetPhotosAsync(folderToReadPhotos) : null;
-    }
 }
