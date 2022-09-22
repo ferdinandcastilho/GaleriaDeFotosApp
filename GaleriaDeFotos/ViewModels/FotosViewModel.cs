@@ -32,7 +32,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     {
         var photos = await OpenLastOpenedFolder();
 
-        if (photos != null) Source = new(photos);
+        if (photos is not null) Source = new(photos);
     }
 
     public void OnNavigatedFrom()
@@ -82,12 +82,11 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         return folder?.Path;
     }
 
-    private async Task<IEnumerable<Foto>> OpenLastOpenedFolder()
+    private async Task<IEnumerable<Foto>?> OpenLastOpenedFolder()
     {
         var settings = App.GetService<ILocalSettingsService>();
-        string folderToReadPhotos = await settings.ReadSettingAsync<string?>("LastFolder");
+        var folderToReadPhotos = await settings.ReadSettingAsync<string?>("LastFolder");
 
-        if (folderToReadPhotos is not null) return await _fotosDataService.GetPhotosAsync(folderToReadPhotos);
-        else return null;
+        return folderToReadPhotos is not null ? await _fotosDataService.GetPhotosAsync(folderToReadPhotos) : null;
     }
 }

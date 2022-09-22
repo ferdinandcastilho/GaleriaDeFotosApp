@@ -11,13 +11,13 @@ public class ControlVisibilityConverter : IValueConverter
 
         bool result;
 
-        if (value is int @i && @i == 0) result = true;
+        if (value is 0) result = true;
         else result = false;
 
         if (inverter) result = !result;
 
-        if (result == true) return Visibility.Visible;
-        else return Visibility.Collapsed;
+        if (result) return Visibility.Visible;
+        return Visibility.Collapsed;
 
     }
 
