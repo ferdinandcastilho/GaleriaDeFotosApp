@@ -8,6 +8,9 @@ using GaleriaDeFotos.Core.Models;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using WinRT.Interop;
+using Microsoft.UI.Xaml.Controls;
+using Windows.Security.Cryptography.Core;
+using GaleriaDeFotos.Services;
 
 namespace GaleriaDeFotos.ViewModels;
 
@@ -15,11 +18,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
-    public ObservableCollection<Foto> Source { get; } = new();
 
+    [ObservableProperty] private ObservableCollection<Foto> _source = new();
     [ObservableProperty] private Foto? _selectedFoto;
-    [ObservableProperty] private bool _showFolderPicker = true;
-    [ObservableProperty] private bool _showPhotos;
     [ObservableProperty] private bool _isLoading;
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService)
@@ -28,20 +29,17 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         _fotosDataService = fotosDataService;
     }
 
-
     #region INavigationAware Members
 
     public async void OnNavigatedTo(object parameter)
     {
-        Source.Clear();
-
-        var data = await _fotosDataService.GetPhotosAsync();
-        foreach (var item in data) Source.Add(item);
+        var photos = await OpenLastOpenedFolder();
+        Source = photos is not null ? new(photos) : Source;
     }
 
     public void OnNavigatedFrom()
     {
-        
+
     }
 
     #endregion
@@ -55,7 +53,25 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     }
 
     [RelayCommand]
-    private async Task PickDirectory()
+    private async Task SelectDirectory()
+    {
+        var folderPath = await FolderPicker();
+
+        if (folderPath is not null)
+        {
+            IsLoading = true;
+
+            var fotos = await _fotosDataService.GetPhotosAsync(folderPath);
+            if (fotos.Any())
+            {
+                Source = new(fotos);
+
+                IsLoading = false;
+            }
+        }
+    }
+
+    private static async Task<string?> FolderPicker()
     {
         FolderPicker folderPicker = new()
         {
@@ -68,21 +84,15 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 
         StorageFolder folder = await folderPicker.PickSingleFolderAsync();
 
-        var fotos = await _fotosDataService.GetPhotosAsync(folder?.Path);
-        var enumerable = fotos.ToList();
-        if (enumerable.Any())
-        {
-            IsLoading = true;
-            ShowFolderPicker = false;
-            ShowPhotos = true;
+        return folder?.Path;
+    }
 
-            foreach (var foto in enumerable)
-            {
-                Source.Add(foto);
-            }
+    private async Task<IEnumerable<Foto>> OpenLastOpenedFolder()
+    {
+        var settings = App.GetService<ILocalSettingsService>();
+        string folderToReadPhotos = await settings.ReadSettingAsync<string?>("LastFolder");
 
-            await Task.Delay(3000);
-            IsLoading = false;
-        } // Substituir ObservableProperties por Converter
+        if (folderToReadPhotos is not null) return await _fotosDataService.GetPhotosAsync(folderToReadPhotos);
+        else return null;
     }
 }

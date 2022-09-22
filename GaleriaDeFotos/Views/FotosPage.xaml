@@ -7,27 +7,34 @@
       xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
       xmlns:models="using:GaleriaDeFotos.Core.Models"
       xmlns:brushes='using:CommunityToolkit.WinUI.UI.Media'
+      xmlns:helpers='using:GaleriaDeFotos.Helpers'
       mc:Ignorable="d">
+
+    <Page.Resources>
+        <helpers:ControlVisibilityConverter x:Key="ControlVisibilityConverter" />
+    </Page.Resources>
+
     <Grid>
-        <Viewbox Visibility="{x:Bind ViewModel.ShowFolderPicker, Mode=OneWay}">
+        <TextBlock Text='{x:Bind ViewModel.Source.Count, Mode=OneWay}' />
+        <Viewbox Visibility="{x:Bind ViewModel.Source.Count, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}}">
             <Button Background="Transparent"
                     BorderBrush="Transparent"
                     Foreground="DimGray"
                     FontSize="100"
                     FontWeight="Thin"
                     Content="Clique aqui para selecionar uma pasta"
-                    Command="{x:Bind ViewModel.PickDirectoryCommand}">
+                    Command='{x:Bind ViewModel.SelectDirectoryCommand, Mode=OneWay}'>
             </Button>
         </Viewbox>
 
-        <controls:AdaptiveGridView  Visibility="{x:Bind ViewModel.ShowPhotos, Mode=OneWay}"
+        <controls:AdaptiveGridView  Visibility="{x:Bind ViewModel.Source.Count, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}, ConverterParameter=True}"
                                     animations:Connected.ListItemElementName="itemThumbnail"
                                     animations:Connected.ListItemKey="animationKeyContentGrid"
                                     DesiredWidth="330"
                                     ItemHeight="210"
                                     IsItemClickEnabled="True"
                                     ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
-                                    ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
+                                    ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
                                     SelectionMode="None"
                                     StretchContentForSingleRow="False">
             <controls:AdaptiveGridView.ItemTemplate>
