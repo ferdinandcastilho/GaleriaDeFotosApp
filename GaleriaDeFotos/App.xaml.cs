@@ -1,11 +1,11 @@
 ﻿using System.Data.SQLite;
-using System.Diagnostics;
 using Windows.Storage;
 using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.Core.Services;
+using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Models;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.ViewModels;
@@ -107,12 +107,9 @@ public partial class App
         var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
         var connectionStringBuilder = new SQLiteConnectionStringBuilder(connection);
         var baseFolder = string.Empty;
-        try
+        if (RuntimeHelper.IsMsix)
         {
             baseFolder = ApplicationData.Current.LocalFolder.Path;
-        } catch (InvalidOperationException)
-        {
-            Debug.WriteLine("UnPackaged Application");
         }
 
         var dbPath = Path.Combine(baseFolder, connectionStringBuilder.DataSource);
@@ -142,7 +139,7 @@ public partial class App
 
         await GetService<IActivationService>().ActivateAsync(args);
     }
-    
+
     private static IConfigurationBuilder GetAppSettingsBuilder()
     {
         return new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory)

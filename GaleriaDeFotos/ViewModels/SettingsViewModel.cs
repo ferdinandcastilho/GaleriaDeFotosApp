@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Helpers;
+using GaleriaDeFotos.Models;
 using Microsoft.UI.Xaml;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -11,7 +12,8 @@ namespace GaleriaDeFotos.ViewModels;
 public partial class SettingsViewModel : ObservableRecipient
 {
     private readonly IThemeSelectorService _themeSelectorService;
-    private ElementTheme _elementTheme;
+    [ObservableProperty] private ElementTheme _elementTheme;
+    [ObservableProperty] private LastFolderBehavior _folderBehavior;
     private string _versionDescription;
 
     public SettingsViewModel(IThemeSelectorService themeSelectorService)
@@ -21,16 +23,17 @@ public partial class SettingsViewModel : ObservableRecipient
         _versionDescription = GetVersionDescription();
     }
 
-    public ElementTheme ElementTheme
-    {
-        get => _elementTheme;
-        set => SetProperty(ref _elementTheme, value);
-    }
-
     public string VersionDescription
     {
         get => _versionDescription;
         set => SetProperty(ref _versionDescription, value);
+    }
+
+    [RelayCommand]
+    private async void SwitchLastFolderBehavior(LastFolderBehavior behavior)
+    {
+        Console.WriteLine($"Behavior: {behavior}");
+        await Task.CompletedTask;
     }
 
     [RelayCommand]

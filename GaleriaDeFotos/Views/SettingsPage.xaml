@@ -6,13 +6,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:GaleriaDeFotos.Helpers"
     xmlns:xaml="using:Microsoft.UI.Xaml"
+    xmlns:models="using:GaleriaDeFotos.Models"
     mc:Ignorable="d">
     <Page.Resources>
-        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <helpers:EnumToBoolConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
     <Grid>
         <StackPanel>
             <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <!-- Opções do Programa -->
+            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+                <TextBlock Text="Comportamento de Pasta" />
+                <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                    <RadioButton
+                        Content="Abrir Última Pasta"
+                        FontSize="15"
+                        GroupName="LastFolderBehaviorGroup"
+                        IsChecked="{x:Bind ViewModel.FolderBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=UseLastFolder, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.SwitchLastFolderBehaviorCommand}"
+                        CommandParameter="{x:Bind models:LastFolderBehavior.UseLastFolder}">
+                    </RadioButton>
+                    <RadioButton
+                        Content="Sempre Selecionar Pasta"
+                        FontSize="15"
+                        GroupName="LastFolderBehaviorGroup"
+                        IsChecked="{x:Bind ViewModel.FolderBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=AlwaysPick, Mode=OneWay}"
+                        CommandParameter="{x:Bind models:LastFolderBehavior.AlwaysPick}">
+
+                    </RadioButton>
+                </StackPanel>
+            </StackPanel>
+            <!-- Seleção do Tema -->
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
                 <TextBlock x:Uid="Settings_Theme" />
 
