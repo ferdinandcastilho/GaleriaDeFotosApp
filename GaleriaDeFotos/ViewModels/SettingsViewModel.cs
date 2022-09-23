@@ -2,9 +2,10 @@
 using Windows.ApplicationModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GaleriaDeFotos.Contracts.Services;
+using GaleriaDeFotos.Contracts.Settings;
+using GaleriaDeFotos.EnumTypes;
 using GaleriaDeFotos.Helpers;
-using GaleriaDeFotos.Models;
+using GaleriaDeFotos.Services.Settings;
 using Microsoft.UI.Xaml;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -12,14 +13,18 @@ namespace GaleriaDeFotos.ViewModels;
 public partial class SettingsViewModel : ObservableRecipient
 {
     private readonly IThemeSelectorService _themeSelectorService;
+    private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
     [ObservableProperty] private ElementTheme _elementTheme;
-    [ObservableProperty] private LastFolderBehavior _folderBehavior;
+    [ObservableProperty] private LastFolderOption _lastFolderOption;
     private string _versionDescription;
 
-    public SettingsViewModel(IThemeSelectorService themeSelectorService)
+    public SettingsViewModel(IThemeSelectorService themeSelectorService,
+        LastFolderOptionSelectorService lastFolderOptionSelectorService)
     {
+        _lastFolderOptionSelectorService = lastFolderOptionSelectorService;
         _themeSelectorService = themeSelectorService;
-        _elementTheme = _themeSelectorService.Theme;
+        _elementTheme = _themeSelectorService.Setting;
+        _lastFolderOption = _lastFolderOptionSelectorService.Setting;
         _versionDescription = GetVersionDescription();
     }
 
@@ -30,9 +35,14 @@ public partial class SettingsViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    private async void SwitchLastFolderBehavior(LastFolderBehavior behavior)
+    private async void SwitchLastFolderOption(LastFolderOption option)
     {
-        Console.WriteLine($"Behavior: {behavior}");
+        if (LastFolderOption != option)
+        {
+            LastFolderOption = option;
+            await _lastFolderOptionSelectorService.SetSetting(option);
+        }
+
         await Task.CompletedTask;
     }
 

@@ -1,8 +1,10 @@
-﻿using GaleriaDeFotos.Contracts.Services;
+﻿using GaleriaDeFotos.Contracts.Abstractions;
+using GaleriaDeFotos.Contracts.Services;
+using GaleriaDeFotos.Contracts.Settings;
 using GaleriaDeFotos.Helpers;
 using Microsoft.UI.Xaml;
 
-namespace GaleriaDeFotos.Services;
+namespace GaleriaDeFotos.Services.Settings;
 
 public class ThemeSelectorService : SettingSelectorService<ElementTheme>, IThemeSelectorService
 {
@@ -13,35 +15,25 @@ public class ThemeSelectorService : SettingSelectorService<ElementTheme>, ITheme
 
     #region IThemeSelectorService Members
 
-    public ElementTheme Theme { get; set; } = ElementTheme.Default;
-
-    protected override string SettingsKey { get; } = "AppBackgroundRequestedTheme";
+    protected override string SettingKey => nameof(ElementTheme);
 
     public async Task SetThemeAsync(ElementTheme theme)
     {
-        Theme = theme;
-
+        await SetSetting(theme);
         await SetRequestedThemeAsync();
-        await SaveThemeInSettingsAsync(Theme);
     }
 
     public async Task SetRequestedThemeAsync()
     {
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
-            rootElement.RequestedTheme = Theme;
+            rootElement.RequestedTheme = Setting;
 
-            TitleBarHelper.UpdateTitleBar(Theme);
+            TitleBarHelper.UpdateTitleBar(Setting);
         }
 
         await Task.CompletedTask;
     }
 
     #endregion
-
-
-    private async Task SaveThemeInSettingsAsync(ElementTheme theme)
-    {
-        await LocalSettingsService.SaveSettingAsync(SettingsKey, theme.ToString());
-    }
 }

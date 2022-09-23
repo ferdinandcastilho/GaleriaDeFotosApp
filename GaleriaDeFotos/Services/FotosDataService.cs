@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using HashidsNet;
-using Windows.Storage;
 
 namespace GaleriaDeFotos.Services;
 
@@ -14,10 +13,7 @@ public class FotosDataService : IFotosDataService
 
     #region IFotosDataService Members
 
-    public FotosDataService(FotoContext fotoContext)
-    {
-        _fotoContext = fotoContext;
-    }
+    public FotosDataService(FotoContext fotoContext) { _fotoContext = fotoContext; }
 
     public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
     {
@@ -31,13 +27,8 @@ public class FotosDataService : IFotosDataService
             var files = Directory.GetFiles(imagePath)
                 .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
 
-            foreach (var file in files)
-            {
-                var photo = await AddPhoto(file);
-                photos.Add(photo);
-            }
-        }
-        else
+            photos = await SetupPhotosAsync(files);
+        } else
         {
             photos.AddRange(_fotoContext.Fotos.Select(foto => new Foto(foto)));
         }
@@ -59,14 +50,20 @@ public class FotosDataService : IFotosDataService
 
     #endregion
 
-    private async Task<Foto> AddPhoto(string file)
+    private async Task<List<Foto>> SetupPhotosAsync(IEnumerable<string> files)
     {
-        var hash = CreateHash(file);
-        var photo = new Foto { ImageId = hash, ImageUri = new Uri(file) };
-        _fotoContext.Fotos.Add(photo.ToData());
+        var list = new List<Foto>();
+        foreach (var file in files)
+        {
+            var hash = CreateHash(file);
+            if (list.Find(foto => foto.ImageId == hash) != null) continue;
+            list.Add(new Foto { ImageId = hash, ImageUri = new Uri(file) });
+        }
+
+        await _fotoContext.Fotos.AddRangeAsync(list.Select(foto => foto.ToData()).ToList());
         await _fotoContext.SaveChangesAsync();
 
-        return photo;
+        return list;
     }
 
     private static string CreateHash(string file)

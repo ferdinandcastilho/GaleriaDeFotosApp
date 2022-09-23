@@ -12,6 +12,7 @@ public class LocalSettingsService : ILocalSettingsService
 {
     private const string DefaultApplicationDataFolder = "GaleriaDeFotos/ApplicationData";
     private const string DefaultLocalSettingsFile = "LocalSettings.json";
+    public const string LastFolderKey = nameof(LastFolderKey);
     private readonly string _applicationDataFolder;
 
     private readonly IFileService _fileService;

@@ -2,12 +2,14 @@
 using Windows.Storage;
 using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
+using GaleriaDeFotos.Contracts.Settings;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.Core.Services;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Models;
 using GaleriaDeFotos.Services;
+using GaleriaDeFotos.Services.Settings;
 using GaleriaDeFotos.ViewModels;
 using GaleriaDeFotos.Views;
 using Microsoft.Extensions.Configuration;
@@ -37,9 +39,12 @@ public partial class App
 
                 // Other Activation Handlers
 
-                // Services
+                // Settings
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
                 services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+                services.AddSingleton<LastFolderOptionSelectorService>();
+                // Services
+
                 services.AddTransient<INavigationViewService, NavigationViewService>();
 
                 services.AddSingleton<IActivationService, ActivationService>();

@@ -6,7 +6,9 @@ using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using Windows.Storage.Pickers;
-using Windows.Storage;
+using GaleriaDeFotos.EnumTypes;
+using GaleriaDeFotos.Services;
+using GaleriaDeFotos.Services.Settings;
 using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -15,30 +17,37 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
+    private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
 
     [ObservableProperty] private ObservableCollection<Foto> _source = new();
     [ObservableProperty] private Foto? _selectedFoto;
     [ObservableProperty] private bool _isLoading;
+    [ObservableProperty] private bool _needToPickFolder;
 
-    public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService)
+    public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService,
+        LastFolderOptionSelectorService lastFolderOptionSelectorService)
     {
+        _lastFolderOptionSelectorService = lastFolderOptionSelectorService;
         _navigationService = navigationService;
         _fotosDataService = fotosDataService;
+        Source.CollectionChanged += (_, _) => OnPropertyChanged(nameof(BottomBar));
     }
+
+    public string BottomBar => $"{Source.Count} items";
 
     #region INavigationAware Members
 
     public async void OnNavigatedTo(object parameter)
     {
-        var photos = await OpenLastOpenedFolder();
-
-        if (photos is not null) Source = new(photos);
+        var option = _lastFolderOptionSelectorService.Setting;
+        NeedToPickFolder = option == LastFolderOption.AlwaysPick;
+        if (!NeedToPickFolder)
+        {
+            await OpenLastOpenedFolder();
+        }
     }
 
-    public void OnNavigatedFrom()
-    {
-
-    }
+    public void OnNavigatedFrom() { }
 
     #endregion
 
@@ -53,40 +62,35 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     [RelayCommand]
     private async Task SelectDirectory()
     {
-        var folderPath = await FolderPicker();
-
-        if (folderPath is not null)
-        {
-            IsLoading = true;
-
-            var fotos = await _fotosDataService.GetPhotosAsync(folderPath);
-            if (fotos.Any()) Source = new(fotos);
-
-            IsLoading = false;
-        }
-    }
-    private async Task<IEnumerable<Foto>?> OpenLastOpenedFolder()
-    {
-        var settings = App.GetService<ILocalSettingsService>();
-        var folderToReadPhotos = await settings.ReadSettingAsync<string?>("LastFolder");
-
-        return folderToReadPhotos is not null ? await _fotosDataService.GetPhotosAsync(folderToReadPhotos) : null;
-    }
-
-    private static async Task<string?> FolderPicker()
-    {
         FolderPicker folderPicker = new()
         {
             SuggestedStartLocation = PickerLocationId.PicturesLibrary,
             ViewMode = PickerViewMode.Thumbnail
         };
 
-        var hwnd = App.MainWindow.GetWindowHandle();
-        InitializeWithWindow.Initialize(folderPicker, hwnd);
+        var windowHandle = App.MainWindow.GetWindowHandle();
+        InitializeWithWindow.Initialize(folderPicker, windowHandle);
 
-        StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+        var folder = await folderPicker.PickSingleFolderAsync();
 
-        return folder?.Path;
+        Source = new ObservableCollection<Foto>(
+            await _fotosDataService.GetPhotosAsync(folder.Path));
     }
 
+    private async Task OpenLastOpenedFolder()
+    {
+        var settings = App.GetService<ILocalSettingsService>();
+        var folderToReadPhotos =
+            await settings.ReadSettingAsync<string?>(LocalSettingsService.LastFolderKey);
+
+        await ReadPhotosFromFolder(folderToReadPhotos);
+    }
+
+    private async Task ReadPhotosFromFolder(string? path)
+    {
+        IsLoading = true;
+        Source = new ObservableCollection<Foto>(await _fotosDataService.GetPhotosAsync(path));
+        await Task.Delay(1000);
+        IsLoading = false;
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
+using GaleriaDeFotos.Contracts.Settings;
+using GaleriaDeFotos.Services.Settings;
 using GaleriaDeFotos.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -11,15 +13,17 @@ public class ActivationService : IActivationService
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IThemeSelectorService _themeSelectorService;
+    private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
     private UIElement? _shell;
 
     public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
         IEnumerable<IActivationHandler> activationHandlers,
-        IThemeSelectorService themeSelectorService)
+        IThemeSelectorService themeSelectorService, LastFolderOptionSelectorService lastFolderOptionSelectorService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
+        _lastFolderOptionSelectorService = lastFolderOptionSelectorService;
     }
 
     #region IActivationService Members
@@ -62,6 +66,7 @@ public class ActivationService : IActivationService
     private async Task InitializeAsync()
     {
         await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
+        await _lastFolderOptionSelectorService.InitializeAsync().ConfigureAwait(false);
         await Task.CompletedTask;
     }
 

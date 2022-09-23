@@ -1,10 +1,10 @@
 ﻿using Microsoft.UI.Xaml;
 
-namespace GaleriaDeFotos.Contracts.Services;
+namespace GaleriaDeFotos.Contracts.Settings;
 
 public interface IThemeSelectorService
 {
-    ElementTheme Theme { get; }
+    ElementTheme Setting { get; }
 
     Task InitializeAsync();
 
