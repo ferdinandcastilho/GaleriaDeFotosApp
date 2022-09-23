@@ -73,8 +73,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 
         var folder = await folderPicker.PickSingleFolderAsync();
 
-        Source = new ObservableCollection<Foto>(
-            await _fotosDataService.GetPhotosAsync(folder.Path));
+        await ReadPhotosFromFolder(folder.Path);
     }
 
     private async Task OpenLastOpenedFolder()
@@ -89,7 +88,13 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     private async Task ReadPhotosFromFolder(string? path)
     {
         IsLoading = true;
-        Source = new ObservableCollection<Foto>(await _fotosDataService.GetPhotosAsync(path));
+        var dbPhotos = (await _fotosDataService.GetPhotosAsync(path)).ToList();
+        Source.Clear();
+        foreach (var photo in dbPhotos)
+        {
+            Source.Add(photo);
+        }
+
         await Task.Delay(1000);
         IsLoading = false;
     }

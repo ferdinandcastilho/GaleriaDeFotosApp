@@ -17,21 +17,16 @@ public class FotosDataService : IFotosDataService
 
     public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
     {
-        var photos = new List<Foto>();
-        if (!_fotoContext.Fotos.Any())
-        {
-            imagePath ??= Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+        imagePath ??= Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-            await Task.CompletedTask;
+        await Task.CompletedTask;
 
-            var files = Directory.GetFiles(imagePath)
-                .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
+        var files = Directory.GetFiles(imagePath)
+            .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
+        _fotoContext.Clear();
+        await _fotoContext.SaveChangesAsync();
+        var photos = await SetupPhotosAsync(files);
 
-            photos = await SetupPhotosAsync(files);
-        } else
-        {
-            photos.AddRange(_fotoContext.Fotos.Select(foto => new Foto(foto)));
-        }
 
 #if DEBUG
 

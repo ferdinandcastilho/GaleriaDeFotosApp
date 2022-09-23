@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GaleriaDeFotos.Core.Models;
 
-// Model for the SampleDataService. Replace with your own model.
 public partial class Foto : ObservableObject
 {
     [ObservableProperty] private string _imageId;
@@ -39,7 +38,7 @@ public class FotoData
     public bool IsFavorite { get; set; }
 }
 
-public class FotoContext : DbContext
+public sealed class FotoContext : DbContext
 {
     private static bool _created;
     private static string _connectionString;
@@ -48,7 +47,6 @@ public class FotoContext : DbContext
     {
         if (_created) return;
         _created = true;
-        Clear();
     }
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options) { }
@@ -71,7 +69,19 @@ public class FotoContext : DbContext
         base.OnModelCreating(builder);
     }
 
+    public void EnsureCreated()
+    {
+        Database.EnsureCreated();
+    }
+
     public void Clear()
+    {
+        var list = Fotos.ToList();
+        Fotos.RemoveRange(list);
+        SaveChangesAsync();
+    }
+
+    public void Recreate()
     {
         Database.EnsureDeleted();
         Database.EnsureCreated();
