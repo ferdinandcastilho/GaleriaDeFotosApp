@@ -80,8 +80,8 @@ public partial class App
             }).Build();
         UnhandledException += App_UnhandledException;
         var db = GetService<FotoContext>();
-        // db.EnsureCreated();
-        db.Recreate();
+        db.EnsureCreated();
+        //db.Recreate();
     }
 
     public IConfigurationRoot Configuration { get; }
