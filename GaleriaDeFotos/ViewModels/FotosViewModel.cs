@@ -15,11 +15,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
-    public ObservableCollection<Foto> Source { get; } = new();
 
+    [ObservableProperty] private ObservableCollection<Foto> _source = new();
     [ObservableProperty] private Foto? _selectedFoto;
-    [ObservableProperty] private bool _showFolderPicker = true;
-    [ObservableProperty] private bool _showPhotos;
     [ObservableProperty] private bool _isLoading;
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService)
@@ -28,20 +26,18 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         _fotosDataService = fotosDataService;
     }
 
-
     #region INavigationAware Members
 
     public async void OnNavigatedTo(object parameter)
     {
-        Source.Clear();
+        var photos = await OpenLastOpenedFolder();
 
-        var data = await _fotosDataService.GetPhotosAsync();
-        foreach (var item in data) Source.Add(item);
+        if (photos is not null) Source = new(photos);
     }
 
     public void OnNavigatedFrom()
     {
-        
+
     }
 
     #endregion
@@ -55,7 +51,29 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     }
 
     [RelayCommand]
-    private async Task PickDirectory()
+    private async Task SelectDirectory()
+    {
+        var folderPath = await FolderPicker();
+
+        if (folderPath is not null)
+        {
+            IsLoading = true;
+
+            var fotos = await _fotosDataService.GetPhotosAsync(folderPath);
+            if (fotos.Any()) Source = new(fotos);
+
+            IsLoading = false;
+        }
+    }
+    private async Task<IEnumerable<Foto>?> OpenLastOpenedFolder()
+    {
+        var settings = App.GetService<ILocalSettingsService>();
+        var folderToReadPhotos = await settings.ReadSettingAsync<string?>("LastFolder");
+
+        return folderToReadPhotos is not null ? await _fotosDataService.GetPhotosAsync(folderToReadPhotos) : null;
+    }
+
+    private static async Task<string?> FolderPicker()
     {
         FolderPicker folderPicker = new()
         {
@@ -68,21 +86,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 
         StorageFolder folder = await folderPicker.PickSingleFolderAsync();
 
-        var fotos = await _fotosDataService.GetPhotosAsync(folder?.Path);
-        var enumerable = fotos.ToList();
-        if (enumerable.Any())
-        {
-            IsLoading = true;
-            ShowFolderPicker = false;
-            ShowPhotos = true;
-
-            foreach (var foto in enumerable)
-            {
-                Source.Add(foto);
-            }
-
-            await Task.Delay(3000);
-            IsLoading = false;
-        } // Substituir ObservableProperties por Converter
+        return folder?.Path;
     }
+
 }

@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using HashidsNet;
+using Windows.Storage;
 
 namespace GaleriaDeFotos.Services;
 
