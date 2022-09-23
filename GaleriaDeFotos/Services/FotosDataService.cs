@@ -10,6 +10,7 @@ public class FotosDataService : IFotosDataService
 {
     private const string Salt = "MaikeuFernando";
     private readonly FotoContext _fotoContext;
+    private string _lastPath = string.Empty;
 
     #region IFotosDataService Members
 
@@ -17,7 +18,14 @@ public class FotosDataService : IFotosDataService
 
     public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
     {
-        imagePath ??= Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+        if (string.IsNullOrWhiteSpace(imagePath))
+        {
+            imagePath = string.IsNullOrWhiteSpace(_lastPath)
+                ? Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+                : _lastPath;
+        }
+
+        _lastPath = imagePath;
 
         await Task.CompletedTask;
 
