@@ -7,6 +7,7 @@ using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using Windows.Storage.Pickers;
 using GaleriaDeFotos.EnumTypes;
+using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.Services.Settings;
 using WinRT.Interop;
@@ -33,7 +34,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         Source.CollectionChanged += (_, _) => OnPropertyChanged(nameof(BottomBar));
     }
 
-    public string BottomBar => $"{Source.Count} items";
+    public string BottomBar => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
 
     #region INavigationAware Members
 
@@ -47,7 +48,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         }
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 
