@@ -26,14 +26,14 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
 
     public async void OnNavigatedTo(object parameter)
     {
-        var data = await _fotosDataService.GetPhotosAsync();
-        foreach (var item in data)
+        var favorites = _fotosDataService.Select(data => data.IsFavorite);
+        Source.Clear();
+        foreach (var favorite in favorites)
         {
-            if (item.IsFavorite)
-            {
-                Source.Add(item);
-            }
+            Source.Add(favorite);
         }
+
+        await Task.CompletedTask;
     }
 
     public void OnNavigatedFrom() { }
@@ -41,9 +41,10 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
     #endregion
 
     [RelayCommand]
-    private void ItemClick(Foto clickedItem)
+    private void ItemClick(Foto? clickedItem)
     {
+        if (clickedItem == null) return;
         _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-        _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, clickedItem.ImageId);
+        _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
     }
 }

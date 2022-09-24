@@ -18,7 +18,7 @@ public partial class Foto : ObservableObject
     {
         var data = new FotoData
         {
-            ImageId = ImageId, ImageUri = ImageUri.AbsolutePath, IsFavorite = IsFavorite
+            ImageId = ImageId, ImageUri = ImageUri.LocalPath, IsFavorite = IsFavorite
         };
         return data;
     }
