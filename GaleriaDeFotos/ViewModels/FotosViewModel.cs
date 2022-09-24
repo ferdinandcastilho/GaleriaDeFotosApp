@@ -76,7 +76,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 
         var folder = await folderPicker.PickSingleFolderAsync();
 
-        await ReadPhotosFromFolder(folder != null ? folder.Path : null);
+        if (!string.IsNullOrEmpty(folder?.Path)) await ReadPhotosFromFolder(folder.Path);
     }
 
     private async Task OpenLastOpenedFolder()
