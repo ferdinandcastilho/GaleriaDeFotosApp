@@ -1,4 +1,5 @@
-﻿using GaleriaDeFotos.Core.Models;
+﻿using System.Linq.Expressions;
+using GaleriaDeFotos.Core.Models;
 
 namespace GaleriaDeFotos.Core.Contracts.Services;
 
@@ -6,5 +7,6 @@ namespace GaleriaDeFotos.Core.Contracts.Services;
 public interface IFotosDataService
 {
     Task<IEnumerable<Foto>> GetPhotosAsync(string imagePath = null);
+    IEnumerable<Foto> Select(Expression<Func<FotoData, bool>> predicate);
     void SetFavorite(Foto foto, bool isFavorite);
 }

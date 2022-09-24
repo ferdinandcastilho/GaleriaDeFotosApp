@@ -27,9 +27,10 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
     {
         if (parameter is string imageId)
         {
-            var data = await _fotosDataService.GetPhotosAsync();
-            Item = data.First(i => i.ImageId == imageId);
+            Item = _fotosDataService.Select(fotoData => fotoData.ImageId == imageId).First();
         }
+
+        await Task.CompletedTask;
     }
 
     public void OnNavigatedFrom() { }

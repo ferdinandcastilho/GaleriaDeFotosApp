@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
@@ -31,8 +32,6 @@ public class FotosDataService : IFotosDataService
 
         var files = Directory.GetFiles(imagePath)
             .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
-        _fotoContext.Clear();
-        await _fotoContext.SaveChangesAsync();
         var photos = await SetupPhotosAsync(files);
 
 
@@ -55,18 +54,27 @@ public class FotosDataService : IFotosDataService
 
     private async Task<List<Foto>> SetupPhotosAsync(IEnumerable<string> files)
     {
-        var list = new List<Foto>();
+        var listToAdd = new List<FotoData>();
+        var retList = new List<Foto>();
         foreach (var file in files)
         {
             var hash = CreateHash(file);
-            if (list.Find(foto => foto.ImageId == hash) != null) continue;
-            list.Add(new Foto { ImageId = hash, ImageUri = new Uri(file) });
+            var item = new Foto { ImageId = hash, ImageUri = new Uri(file) };
+            if (retList.Find(foto => foto.ImageId == item.ImageId) != null) continue;
+            retList.Add(item);
+            if (await _fotoContext.Fotos.FindAsync(hash) != null) continue;
+            listToAdd.Add(item.ToData());
         }
 
-        await _fotoContext.Fotos.AddRangeAsync(list.Select(foto => foto.ToData()).ToList());
+        await _fotoContext.Fotos.AddRangeAsync(listToAdd);
         await _fotoContext.SaveChangesAsync();
+        return retList;
+    }
 
-        return list;
+    public IEnumerable<Foto> Select(Expression<Func<FotoData, bool>> predicate)
+    {
+        var fotoDatas = _fotoContext.Fotos.Where(predicate);
+        return fotoDatas.Select(foto => new Foto(foto));
     }
 
     private static string CreateHash(string file)
