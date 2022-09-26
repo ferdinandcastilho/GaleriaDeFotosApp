@@ -162,8 +162,8 @@
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
     <value>https://YourPrivacyUrlGoesHere/</value>
   </data>
-  <data name="FotosPage_ClickToSelectFolder.Content" xml:space="preserve">
-    <value>Clique aqui para selecionar uma pasta</value>
+  <data name="FotosPage_ClickToSelectFolder.Text" xml:space="preserve">
+    <value>Abrir Pasta</value>
   </data>
   <data name="FotosPage_Items" xml:space="preserve">
     <value>itens</value>
