@@ -1,22 +1,37 @@
-﻿<Page
-    x:Class="GaleriaDeFotos.Views.FotosFullPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+﻿<Page x:Class="GaleriaDeFotos.Views.FotosFullPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
 
-    <Grid RowDefinitions="*,40">
-        <Image Height="450" Width="720" Stretch="UniformToFill">
-            <Image.Source>
-                <BitmapImage UriSource="{x:Bind ViewModel.Item.ImageUri}" />
-            </Image.Source>
-        </Image>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Detalhes" Command="{x:Bind ViewModel.GetDetailsCommand}" Height="30" />
-            <Button Content="Adicionar Favorito" Command="{x:Bind ViewModel.SetFavoriteCommand}" Height="30" />
-            <Button Content="Remover Favorito" Command="{x:Bind ViewModel.UnSetFavoriteCommand}" />
-        </StackPanel>
+    <Grid RowDefinitions="*,auto">
+        <Viewbox>
+            <Image Height="450"
+                   Width="720"
+                   Stretch="UniformToFill">
+                <Image.Source>
+                    <BitmapImage UriSource="{x:Bind ViewModel.Item.ImageUri}" />
+                </Image.Source>
+            </Image>
+
+        </Viewbox>
+
+        <CommandBar Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Uid="FotosFullPage_CommandBar_Details"
+                              Icon="Zoom"
+                              Command="{x:Bind ViewModel.GetDetailsCommand}" />
+                <AppBarButton x:Uid="FotosFullPage_CommandBar_Favorite"
+                              Icon="SolidStar"
+                              Command="{x:Bind ViewModel.SetFavoriteCommand}" />
+                <AppBarButton x:Uid="FotosFullPage_CommandBar_Unfavorite"
+                              Icon="OutlineStar"
+                              Command="{x:Bind ViewModel.UnSetFavoriteCommand}" />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
 
     </Grid>
 </Page>

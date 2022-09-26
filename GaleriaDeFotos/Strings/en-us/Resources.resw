@@ -183,4 +183,13 @@
   <data name="SettingsPage_FolderBehavior_SelectFolder.Content" xml:space="preserve">
     <value>Sempre Selecionar Pasta</value>
   </data>
+  <data name="FotosFullPage_CommandBar_Details.Label" xml:space="preserve">
+    <value>Detalhes</value>
+  </data>
+  <data name="FotosFullPage_CommandBar_Favorite.Label" xml:space="preserve">
+    <value>Favoritar</value>
+  </data>
+  <data name="FotosFullPage_CommandBar_Unfavorite.Label" xml:space="preserve">
+    <value>Desfavoritar</value>
+  </data>
 </root>
