@@ -58,8 +58,8 @@ public partial class App
                 // Views and ViewModels
                 services.AddTransient<SettingsViewModel>();
                 services.AddTransient<SettingsPage>();
-                services.AddTransient<BlankViewModel>();
-                services.AddTransient<BlankPage>();
+                services.AddTransient<AboutViewModel>();
+                services.AddTransient<AboutPage>();
                 services.AddTransient<FavoritasViewModel>();
                 services.AddTransient<FavoritasPage>();
                 services.AddTransient<FotosDetailViewModel>();

@@ -42,29 +42,25 @@
                 <NavigationViewItem x:Uid="Shell_Main"
                                     helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                  Glyph="&#xe80f;" />
+                        <SymbolIcon Symbol="Home" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_Fotos"
                                     helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.FotosViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                  Glyph="&#xe8b9;" />
+                        <SymbolIcon Symbol="Pictures" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_Favoritas"
                                     helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.FavoritasViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                  Glyph="&#xE734;" />
+                        <SymbolIcon Symbol="SolidStar" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Blank"
-                                    helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.BlankViewModel">
+                <NavigationViewItem x:Uid="Shell_About"
+                                    helpers:NavigationHelper.NavigateTo="GaleriaDeFotos.ViewModels.AboutViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                  Glyph="&#xe7c3;" />
+                        <SymbolIcon Symbol="Contact" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

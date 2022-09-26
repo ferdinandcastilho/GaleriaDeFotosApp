@@ -2,14 +2,14 @@
 
 namespace GaleriaDeFotos.Views;
 
-public sealed partial class BlankPage
+public sealed partial class AboutPage
 {
-    public BlankPage()
+    public AboutPage()
     {
-        ViewModel = App.GetService<BlankViewModel>();
+        ViewModel = App.GetService<AboutViewModel>();
         InitializeComponent();
     }
 
     // ReSharper disable once UnusedAutoPropertyAccessor.Global
-    public BlankViewModel ViewModel { get; }
+    public AboutViewModel ViewModel { get; }
 }

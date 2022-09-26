@@ -2,6 +2,6 @@
 
 namespace GaleriaDeFotos.ViewModels;
 
-public class BlankViewModel : ObservableRecipient
+public class AboutViewModel : ObservableRecipient
 {
 }
