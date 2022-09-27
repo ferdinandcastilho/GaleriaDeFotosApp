@@ -3,7 +3,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:helpers="using:GaleriaDeFotos.Helpers"
       mc:Ignorable="d">
+
+    <Page.Resources>
+        <helpers:ControlVisibilityConverter x:Key="ControlVisibilityConverter" />
+    </Page.Resources>
 
     <Grid RowDefinitions="*,auto">
         <Viewbox>
@@ -20,18 +25,41 @@
         <CommandBar Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
+            <CommandBar.Content>
+                <Viewbox>
+                    <TextBlock x:Uid="FotosFullPage_CommandBar_AddToFavorites"
+                               Style='{ThemeResource FlyoutPickerTitleTextBlockStyle}'
+                               Foreground="DimGray"
+                               Margin='10,13,5,5'
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}}" />
+                </Viewbox>
+            </CommandBar.Content>
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Details"
                               Icon="Zoom"
                               Command="{x:Bind ViewModel.GetDetailsCommand}" />
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Favorite"
                               Icon="SolidStar"
-                              Command="{x:Bind ViewModel.SetFavoriteCommand}" />
+                              ToolTipService.ToolTip='Favoritar Imagem'
+                              Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}, ConverterParameter=True}"
+                              Command="{x:Bind ViewModel.SetFavoriteCommand}"
+                              Click="ShowHideTeachingTip" />
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Unfavorite"
                               Icon="OutlineStar"
-                              Command="{x:Bind ViewModel.UnSetFavoriteCommand}" />
+                              ToolTipService.ToolTip='Desfavoritar Imagem'
+                              Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}}"
+                              Command="{x:Bind ViewModel.UnSetFavoriteCommand}"
+                              Click="ShowHideTeachingTip" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
+
+        <!--Teaching Tip-->
+        <TeachingTip x:Name="FavoriteTeachingTip"
+                     IsLightDismissEnabled="True"
+                     PreferredPlacement="Top">
+        </TeachingTip>
 
     </Grid>
 </Page>

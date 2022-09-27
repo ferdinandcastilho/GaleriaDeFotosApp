@@ -13,6 +13,7 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     [ObservableProperty] private Foto? _item;
     [ObservableProperty] private Foto? _selectedFoto;
+    [ObservableProperty] private bool _isFavorite;
 
     public FotosFullViewModel(INavigationService navigationService,
         IFotosDataService fotosDataService)
@@ -28,12 +29,15 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         if (parameter is string imageId)
         {
             Item = _fotosDataService.Select(fotoData => fotoData.ImageId == imageId).First();
+            IsFavorite = Item.IsFavorite;
         }
 
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 
@@ -46,9 +50,17 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
     }
 
     [RelayCommand]
-    private void SetFavorite() { _fotosDataService.SetFavorite(Item, true); }
+    private void SetFavorite()
+    {
+        _fotosDataService.SetFavorite(Item, true);
+        IsFavorite = true;
+    }
 
 
     [RelayCommand]
-    private void UnSetFavorite() { _fotosDataService.SetFavorite(Item, false); }
+    private void UnSetFavorite()
+    {
+        _fotosDataService.SetFavorite(Item, false);
+        IsFavorite = false;
+    }
 }
