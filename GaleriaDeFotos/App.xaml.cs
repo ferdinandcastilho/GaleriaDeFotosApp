@@ -4,7 +4,6 @@ using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.Settings;
 using GaleriaDeFotos.Core.Contracts.Services;
-using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.Core.Services;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Models;
@@ -17,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArgs;
+using GaleriaDeFotos.Core.DataContext;
 
 namespace GaleriaDeFotos;
 

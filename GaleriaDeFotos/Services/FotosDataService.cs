@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
+using GaleriaDeFotos.Core.DataContext;
 using GaleriaDeFotos.Core.Models;
 using HashidsNet;
 

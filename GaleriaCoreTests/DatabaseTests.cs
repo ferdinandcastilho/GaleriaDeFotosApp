@@ -1,4 +1,5 @@
 using GaleriaDeFotos;
+using GaleriaDeFotos.Core.DataContext;
 using GaleriaDeFotos.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
