@@ -27,28 +27,30 @@
                     Foreground="DimGray"
                     FontSize="100"
                     FontWeight="Thin"
-                    Command='{x:Bind ViewModel.SelectDirectoryCommand, Mode=OneWay}'>
+                    Command='{x:Bind ViewModel.SelectDirectoryCommand, Mode=OneWay}' CornerRadius="20">
                 <Button.Content>
-                    <StackPanel>
-                        <TextBlock  FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                    Text="&#xe838;">
-                            <Run x:Uid="FotosPage_ClickToSelectFolder"/>
-                        </TextBlock>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Viewbox MaxHeight="80" MaxWidth="80" VerticalAlignment="Center">
+                            <SymbolIcon Symbol="Folder" />
+                        </Viewbox>
+                        <TextBlock x:Uid="FotosPage_ClickToSelectFolder" FontSize="50" FontWeight="200"
+                                   VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>
         </Grid>
 
-        <controls:AdaptiveGridView Visibility="{x:Bind ViewModel.Source.Count, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}, ConverterParameter=True}"
-                                   animations:Connected.ListItemElementName="itemThumbnail"
-                                   animations:Connected.ListItemKey="animationKeyContentGrid"
-                                   DesiredWidth="330"
-                                   ItemHeight="210"
-                                   IsItemClickEnabled="True"
-                                   ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
-                                   ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
-                                   SelectionMode="None"
-                                   StretchContentForSingleRow="False">
+        <controls:AdaptiveGridView
+            Visibility="{x:Bind ViewModel.Source.Count, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}, ConverterParameter=True}"
+            animations:Connected.ListItemElementName="itemThumbnail"
+            animations:Connected.ListItemKey="animationKeyContentGrid"
+            DesiredWidth="330"
+            ItemHeight="210"
+            IsItemClickEnabled="True"
+            ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
+            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
+            SelectionMode="None"
+            StretchContentForSingleRow="False">
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Foto">
                     <Grid VerticalAlignment="Center"
@@ -90,10 +92,10 @@
                                       BlurAmount="8" />
             </controls:Loading.Background>
         </controls:Loading>
-        <Frame  Grid.Row="1"
-                HorizontalAlignment="Stretch"
-                BorderThickness="0,1,0,0"
-                BorderBrush="Black">
+        <Frame Grid.Row="1"
+               HorizontalAlignment="Stretch"
+               BorderThickness="0,1,0,0"
+               BorderBrush="Black">
             <TextBlock Text='{x:Bind ViewModel.BottomBar, Mode=OneWay}' />
         </Frame>
     </Grid>
