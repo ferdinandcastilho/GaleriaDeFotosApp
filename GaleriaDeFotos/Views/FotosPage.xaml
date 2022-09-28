@@ -8,7 +8,7 @@
       xmlns:models="using:GaleriaDeFotos.Core.Models"
       xmlns:brushes='using:CommunityToolkit.WinUI.UI.Media'
       xmlns:helpers='using:GaleriaDeFotos.Helpers'
-      NavigationCacheMode="Disabled"
+      NavigationCacheMode="Enabled"
       mc:Ignorable="d">
 
     <Page.Resources>
