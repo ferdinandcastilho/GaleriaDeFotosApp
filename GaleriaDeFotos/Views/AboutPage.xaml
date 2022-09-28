@@ -1,37 +1,63 @@
-﻿<Page
-    x:Class="GaleriaDeFotos.Views.AboutPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+﻿<Page x:Class="GaleriaDeFotos.Views.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Orientation="Vertical" Spacing="30">
-            <TextBlock Text="Integrantes" HorizontalAlignment="Center" FontSize="50" FontWeight="300" />
+        <StackPanel Orientation="Vertical"
+                    Spacing="30">
+            <TextBlock Text="Integrantes"
+                       HorizontalAlignment="Center"
+                       FontSize="50"
+                       FontWeight="300" />
             <!-- Maikeu -->
-            <StackPanel Orientation="Horizontal" Spacing="20">
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" Margin="0"
-                        VerticalAlignment="center" Height="100" Width="100" CornerRadius="75">
+            <StackPanel Orientation="Horizontal"
+                        Spacing="20">
+                <Border BorderBrush="Black"
+                        BorderThickness="1"
+                        HorizontalAlignment="Center"
+                        Margin="0"
+                        VerticalAlignment="center"
+                        Height="100"
+                        Width="100"
+                        CornerRadius="75">
                     <Image Source="/Assets/Images/maikeu.jpg" />
                 </Border>
 
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Maikeu Locatelli" FontSize="36" FontWeight="200" />
-                    <TextBlock Text="Engenheiro Eletrônico" FontSize="24" />
-                    <TextBlock Text="Apaixonado por Programação" FontSize="24" />
+                    <TextBlock x:Uid="AboutPage_MemberNameMaikeu"
+                               FontSize="36"
+                               FontWeight="200" />
+                    <TextBlock x:Uid="AboutPage_MemberOccupationMaikeu"
+                               FontSize="24" />
+                    <TextBlock x:Uid="AboutPage_MemberDescriptionMaikeu"
+                               FontSize="24" />
+
                 </StackPanel>
             </StackPanel>
             <!-- Fernando -->
-            <StackPanel Orientation="Horizontal" Spacing="20">
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" Margin="0"
-                        VerticalAlignment="center" Height="100" Width="100" CornerRadius="75">
+            <StackPanel Orientation="Horizontal"
+                        Spacing="20">
+                <Border BorderBrush="Black"
+                        BorderThickness="1"
+                        HorizontalAlignment="Center"
+                        Margin="0"
+                        VerticalAlignment="center"
+                        Height="100"
+                        Width="100"
+                        CornerRadius="75">
                     <Image Source="/Assets/Images/fernando.jpg" />
                 </Border>
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Fernando Castilho" FontSize="36" FontWeight="200" />
-                    <TextBlock Text="Full Stack Developer" FontSize="24" />
-                    <TextBlock Text="Apaixonado por Programação" FontSize="24" />
+                    <TextBlock x:Uid="AboutPage_MemberNameFernando"
+                               FontSize="36"
+                               FontWeight="200" />
+                    <TextBlock x:Uid="AboutPage_MemberOccupationFernando"
+                               FontSize="24" />
+                    <TextBlock x:Uid="AboutPage_MemberDescriptionFernando"
+                             FontSize="24" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

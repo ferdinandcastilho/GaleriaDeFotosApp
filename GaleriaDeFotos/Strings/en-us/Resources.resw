@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>GaleriaDeFotos</value>
+    <value>Galeria De Fotos</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>GaleriaDeFotos</value>
+    <value>Galeria De Fotos</value>
   </data>
   <data name="Shell_Main.Content" xml:space="preserve">
     <value>Tela Inicial</value>
@@ -151,16 +151,16 @@
     <value>Padrão</value>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
-    <value>About this application</value>
+    <value>Sobre esse Software</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>TODO: Replace with your app description.</value>
+    <value>O app Galeria de Fotos é um projeto de conclusão de curso da CTEDS - 2022</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
+    <value>Informações</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
+    <value>https://www.poli.usp.br/noticias/destaque-home/68581-poli-usp-oferece-curso-de-capacitacao-tecnologica-em-engenharia-e-desenvolvimento-de-software.html</value>
   </data>
   <data name="FotosPage_ClickToSelectFolder.Text" xml:space="preserve">
     <value>Abrir Pasta</value>
@@ -209,5 +209,23 @@
   </data>
   <data name="FotosFullPage_TeachingTip_UnfavoritedTitle" xml:space="preserve">
     <value>Desfavoritada 🧹</value>
+  </data>
+  <data name="AboutPage_MemberDescriptionFernando.Text" xml:space="preserve">
+    <value>dotNET com foco em aplições desktop</value>
+  </data>
+  <data name="AboutPage_MemberDescriptionMaikeu.Text" xml:space="preserve">
+    <value>Apaixonado por Programação</value>
+  </data>
+  <data name="AboutPage_MemberNameFernando.Text" xml:space="preserve">
+    <value>Fernando Castilho</value>
+  </data>
+  <data name="AboutPage_MemberNameMaikeu.Text" xml:space="preserve">
+    <value>Maikeu Locatelli</value>
+  </data>
+  <data name="AboutPage_MemberOccupationFernando.Text" xml:space="preserve">
+    <value>FullStack Developer</value>
+  </data>
+  <data name="AboutPage_MemberOccupationMaikeu.Text" xml:space="preserve">
+    <value>Engenheiro Eletrônico</value>
   </data>
 </root>
