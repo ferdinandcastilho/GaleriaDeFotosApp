@@ -39,19 +39,19 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Details"
                               Icon="Zoom"
-                              Command="{x:Bind ViewModel.GetDetailsCommand}" />
+                              Command="{x:Bind ViewModel.GetDetailsCommand}" CornerRadius="20"/>
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Favorite"
                               Icon="SolidStar"
                               ToolTipService.ToolTip='Favoritar Imagem'
                               Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}, ConverterParameter=True}"
                               Command="{x:Bind ViewModel.SetFavoriteCommand}"
-                              Click="ShowHideTeachingTip" />
+                              Click="ShowHideTeachingTip" CornerRadius="20"/>
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Unfavorite"
                               Icon="OutlineStar"
                               ToolTipService.ToolTip='Desfavoritar Imagem'
                               Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}}"
                               Command="{x:Bind ViewModel.UnSetFavoriteCommand}"
-                              Click="ShowHideTeachingTip" />
+                              Click="ShowHideTeachingTip" CornerRadius="20"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
 

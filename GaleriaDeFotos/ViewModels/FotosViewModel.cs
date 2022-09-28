@@ -19,6 +19,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
     private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
+    private bool _folderAlreadyPicked;
 
     [ObservableProperty] private ObservableCollection<Foto> _source = new();
     [ObservableProperty] private Foto? _selectedFoto;
@@ -42,15 +43,13 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     {
         var option = _lastFolderOptionSelectorService.Setting;
         NeedToPickFolder = option == LastFolderOption.AlwaysPick;
-        if (!NeedToPickFolder)
+        if (!NeedToPickFolder || _folderAlreadyPicked)
         {
             await OpenLastOpenedFolder();
         }
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
 
     #endregion
 
@@ -76,7 +75,11 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
 
         var folder = await folderPicker.PickSingleFolderAsync();
 
-        if (!string.IsNullOrEmpty(folder?.Path)) await ReadPhotosFromFolder(folder.Path);
+        if (!string.IsNullOrEmpty(folder?.Path))
+        {
+            _folderAlreadyPicked = true;
+            await ReadPhotosFromFolder(folder.Path);
+        }
     }
 
     private async Task OpenLastOpenedFolder()
