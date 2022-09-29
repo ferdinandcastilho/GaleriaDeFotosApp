@@ -4,7 +4,6 @@ using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.Settings;
 using GaleriaDeFotos.Core.Contracts.Services;
-using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.Core.Services;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Models;
@@ -17,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArgs;
+using GaleriaDeFotos.Core.DataContext;
 
 namespace GaleriaDeFotos;
 
@@ -86,11 +86,6 @@ public partial class App
 
     public IConfigurationRoot Configuration { get; }
 
-    // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-    // https://docs.microsoft.com/dotnet/core/extensions/generic-host
-    // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-    // https://docs.microsoft.com/dotnet/core/extensions/configuration
-    // https://docs.microsoft.com/dotnet/core/extensions/logging
     public IHost Host { get; }
 
     public static WindowEx MainWindow { get; } = new MainWindow();

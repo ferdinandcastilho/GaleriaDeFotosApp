@@ -8,15 +8,22 @@ public partial class Foto : ObservableObject
 
     [ObservableProperty] private Uri _imageUri;
     [ObservableProperty] private bool _isFavorite;
-    public Foto() { }
+    public Foto()
+    {
+    }
 
-    public Foto(FotoData data) { FromData(data); }
+    public Foto(FotoData data)
+    {
+        FromData(data);
+    }
 
     public FotoData ToData()
     {
         var data = new FotoData
         {
-            ImageId = ImageId, ImageUri = ImageUri.LocalPath, IsFavorite = IsFavorite
+            ImageId = ImageId,
+            ImageUri = ImageUri.LocalPath,
+            IsFavorite = IsFavorite
         };
         return data;
     }

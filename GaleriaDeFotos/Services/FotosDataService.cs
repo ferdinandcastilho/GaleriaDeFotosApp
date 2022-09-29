@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Security.Cryptography;
 using GaleriaDeFotos.Core.Contracts.Services;
+using GaleriaDeFotos.Core.DataContext;
 using GaleriaDeFotos.Core.Models;
 using HashidsNet;
 
@@ -15,9 +16,12 @@ public class FotosDataService : IFotosDataService
 
     #region IFotosDataService Members
 
-    public FotosDataService(FotoContext fotoContext) { _fotoContext = fotoContext; }
+    public FotosDataService(FotoContext fotoContext)
+    {
+        _fotoContext = fotoContext;
+    }
 
-    public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
+    public async Task<IEnumerable<string>> GetImagesFromFolderAsync(string? imagePath = null)
     {
         if (string.IsNullOrWhiteSpace(imagePath))
         {
@@ -32,8 +36,15 @@ public class FotosDataService : IFotosDataService
 
         var files = Directory.GetFiles(imagePath)
             .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
-        var photos = await SetupPhotosAsync(files);
 
+        return files;
+
+    }
+
+    public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
+    {
+        var files = await GetImagesFromFolderAsync(imagePath);
+        var photos = await SetupPhotosAsync(files);
 
 #if DEBUG
 
