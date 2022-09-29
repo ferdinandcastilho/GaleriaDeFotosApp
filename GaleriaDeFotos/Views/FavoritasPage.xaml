@@ -38,7 +38,7 @@
         </controls:AdaptiveGridView>
         <Frame Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Black">
             <TextBlock Text='{x:Bind ViewModel.BottomBar, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}'
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center" FontSize="16"/>
         </Frame>
     </Grid>
 </Page>

@@ -33,18 +33,21 @@
                                       BlurAmount="8" />
             </controls:Loading.Background>
         </controls:Loading>
-        <Frame Grid.Row="0" Height="50"
+        <Frame Grid.Row="0" Height="45"
                Visibility="{x:Bind ViewModel.NotPickFolderVisibility, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
                HorizontalAlignment="Stretch"
                BorderThickness="0,0,0,1"
                BorderBrush="Black">
-            <Button Command="{x:Bind ViewModel.SelectDirectoryCommand}" CornerRadius="20" VerticalAlignment="Center">
+            <Button Background="Transparent"
+                    BorderBrush="Transparent"
+                    Command="{x:Bind ViewModel.SelectDirectoryCommand}" CornerRadius="20"
+                    VerticalAlignment="Center">
                 <Button.Content>
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <Viewbox MaxHeight="30" MaxWidth="30" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Viewbox MaxHeight="25" MaxWidth="30" VerticalAlignment="Center">
                             <SymbolIcon Symbol="Folder" />
                         </Viewbox>
-                        <TextBlock x:Uid="FotosPage_ClickToSelectFolder" FontSize="20" FontWeight="200"
+                        <TextBlock x:Uid="FotosPage_ClickToSelectFolder" FontSize="16" FontWeight="200"
                                    VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
@@ -56,7 +59,6 @@
               VerticalAlignment="Center">
             <Button Background="Transparent"
                     BorderBrush="Transparent"
-                    Foreground="DimGray"
                     FontSize="100"
                     FontWeight="Thin"
                     Command='{x:Bind ViewModel.SelectDirectoryCommand}' CornerRadius="20">
@@ -102,13 +104,13 @@
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>
-        <Frame Grid.Row="2" Height="40"
+        <Frame Grid.Row="2" Height="50"
                Visibility="{x:Bind ViewModel.NotPickFolderVisibility, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
                HorizontalAlignment="Stretch"
                BorderThickness="0,1,0,0"
                BorderBrush="Black">
             <TextBlock Text='{x:Bind ViewModel.BottomBar, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}'
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center" FontSize="16" />
         </Frame>
     </Grid>
 </Page>
