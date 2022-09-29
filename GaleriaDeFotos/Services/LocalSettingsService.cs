@@ -1,10 +1,10 @@
-﻿using Windows.Storage;
-using GaleriaDeFotos.Contracts.Services;
+﻿using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Helpers;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Models;
 using Microsoft.Extensions.Options;
+using Windows.Storage;
 
 namespace GaleriaDeFotos.Services;
 
@@ -49,7 +49,8 @@ public class LocalSettingsService : ILocalSettingsService
         {
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
                 return await Json.ToObjectAsync<T>((string)obj);
-        } else
+        }
+        else
         {
             await InitializeAsync();
 
@@ -65,7 +66,8 @@ public class LocalSettingsService : ILocalSettingsService
         if (RuntimeHelper.IsMsix)
         {
             ApplicationData.Current.LocalSettings.Values[key] = await Json.StringifyAsync(value);
-        } else
+        }
+        else
         {
             await InitializeAsync();
 

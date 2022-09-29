@@ -64,7 +64,8 @@ public class NavigationViewService : INavigationViewService
         if (args.IsSettingsInvoked)
         {
             _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
-        } else
+        }
+        else
         {
             var selectedItem = args.InvokedItemContainer as NavigationViewItem;
 

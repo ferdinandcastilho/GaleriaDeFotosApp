@@ -25,7 +25,9 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
     {
         get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
     public ObservableCollection<Foto> Source { get; } = new();
@@ -41,7 +43,9 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 

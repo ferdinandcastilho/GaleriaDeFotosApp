@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Windows.Storage.Pickers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Services;
@@ -11,6 +10,7 @@ using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.Services.Settings;
 using Microsoft.UI.Xaml;
+using Windows.Storage.Pickers;
 using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -45,7 +45,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     {
         get => Source.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
 
@@ -54,14 +56,18 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         get =>
             PickFolderVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
     public string BottomBar
     {
         get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
     #region INavigationAware Members
@@ -73,7 +79,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         if (!NeedToPickFolder || _folderAlreadyPicked) await OpenLastOpenedFolder();
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 
