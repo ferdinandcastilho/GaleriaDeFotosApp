@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using GaleriaDeFotos.Helpers;
+﻿using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
