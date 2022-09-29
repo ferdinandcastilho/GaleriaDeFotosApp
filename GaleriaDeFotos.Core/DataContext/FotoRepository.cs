@@ -2,14 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace GaleriaDeFotos.Core.DataContext;
+
 public class FotoRepository : IFotoRepository
 {
     private FotoContext _fotoContext;
 
-    public FotoRepository(FotoContext fotoContext)
-    {
-        _fotoContext = fotoContext;
-    }
+    public FotoRepository(FotoContext fotoContext) { _fotoContext = fotoContext; }
 
 
     public async Task<FotoData> Insert(FotoData fotoData)
@@ -24,7 +22,6 @@ public class FotoRepository : IFotoRepository
     public async Task<FotoData> Update(FotoData fotoData)
     {
         var recordToUpdate = await _fotoContext.Fotos.FindAsync(fotoData);
-        recordToUpdate = fotoData;
 
         await _fotoContext.SaveChangesAsync();
 
@@ -47,5 +44,4 @@ public class FotoRepository : IFotoRepository
 
         await _fotoContext.SaveChangesAsync();
     }
-
 }

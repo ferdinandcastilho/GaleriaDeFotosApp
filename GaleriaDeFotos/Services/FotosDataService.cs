@@ -16,10 +16,7 @@ public class FotosDataService : IFotosDataService
 
     #region IFotosDataService Members
 
-    public FotosDataService(FotoContext? fotoContext)
-    {
-        _fotoContext = fotoContext;
-    }
+    public FotosDataService(FotoContext? fotoContext) { _fotoContext = fotoContext; }
 
     public async Task<IEnumerable<string>> GetImagesFromFolderAsync(string? imagePath = null)
     {
@@ -38,7 +35,6 @@ public class FotosDataService : IFotosDataService
             .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
 
         return files;
-
     }
 
     public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
@@ -47,7 +43,7 @@ public class FotosDataService : IFotosDataService
         var photos = await SetupPhotosAsync(files);
 
 #if DEBUG
-
+        if (_fotoContext == null) return photos;
         foreach (var cat in _fotoContext.Fotos.ToList())
             Debug.WriteLine($"Id= {cat.ImageId}, Uri = {cat.ImageUri}");
 #endif
@@ -56,6 +52,7 @@ public class FotosDataService : IFotosDataService
 
     public async void SetFavorite(Foto foto, bool isFavorite)
     {
+        if (_fotoContext == null) return;
         var fotoData = _fotoContext.Fotos.First(data => data.ImageId == foto.ImageId);
         fotoData.IsFavorite = isFavorite;
         await _fotoContext.SaveChangesAsync();
@@ -67,6 +64,7 @@ public class FotosDataService : IFotosDataService
     {
         var listToAdd = new List<FotoData>();
         var retList = new List<Foto>();
+        if (_fotoContext == null) return retList;
         foreach (var file in files)
         {
             var hash = CreateHash(file);
@@ -84,6 +82,7 @@ public class FotosDataService : IFotosDataService
 
     public IEnumerable<Foto> Select(Expression<Func<FotoData, bool>> predicate)
     {
+        if (_fotoContext == null) return new List<Foto>();
         var fotoDatas = _fotoContext.Fotos.Where(predicate);
         return fotoDatas.Select(foto => new Foto(foto));
     }
