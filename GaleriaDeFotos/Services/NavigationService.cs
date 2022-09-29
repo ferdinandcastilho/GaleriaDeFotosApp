@@ -16,7 +16,10 @@ public class NavigationService : INavigationService
     private Frame? _frame;
     private object? _lastParameterUsed;
 
-    public NavigationService(IPageService pageService) { _pageService = pageService; }
+    public NavigationService(IPageService pageService)
+    {
+        _pageService = pageService;
+    }
 
     #region INavigationService Members
 

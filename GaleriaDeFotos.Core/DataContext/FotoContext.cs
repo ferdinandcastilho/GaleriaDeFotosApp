@@ -44,13 +44,6 @@ public sealed class FotoContext : DbContext
         Database.EnsureCreated();
     }
 
-    public void Clear()
-    {
-        var list = Fotos.ToList();
-        Fotos.RemoveRange(list);
-        SaveChangesAsync();
-    }
-
     public void Recreate()
     {
         Database.EnsureDeleted();

@@ -1,9 +1,9 @@
 ﻿using System.Data.SQLite;
-using Windows.Storage;
 using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.Settings;
 using GaleriaDeFotos.Core.Contracts.Services;
+using GaleriaDeFotos.Core.DataContext;
 using GaleriaDeFotos.Core.Services;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Models;
@@ -15,8 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using Windows.Storage;
 using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArgs;
-using GaleriaDeFotos.Core.DataContext;
 
 namespace GaleriaDeFotos;
 
@@ -84,9 +84,15 @@ public partial class App
         //db.Recreate();
     }
 
-    public IConfigurationRoot Configuration { get; }
+    public IConfigurationRoot Configuration
+    {
+        get;
+    }
 
-    public IHost Host { get; }
+    public IHost Host
+    {
+        get;
+    }
 
     public static WindowEx MainWindow { get; } = new MainWindow();
 

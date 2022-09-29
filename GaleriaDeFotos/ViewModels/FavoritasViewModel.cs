@@ -44,7 +44,9 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 

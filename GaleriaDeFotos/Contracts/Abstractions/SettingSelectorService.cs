@@ -5,8 +5,14 @@ namespace GaleriaDeFotos.Contracts.Abstractions;
 
 public abstract class SettingSelectorService<T> where T : struct, Enum
 {
-    public T Setting { get; private set; }
-    protected abstract string SettingKey { get; }
+    public T Setting
+    {
+        get; private set;
+    }
+    protected abstract string SettingKey
+    {
+        get;
+    }
 
     private readonly ILocalSettingsService _localSettingsService;
 
@@ -21,7 +27,10 @@ public abstract class SettingSelectorService<T> where T : struct, Enum
         await SaveObjectInSettingsAsync();
     }
 
-    public async Task InitializeAsync() { Setting = await LoadObjectFromSettingsAsync(); }
+    public async Task InitializeAsync()
+    {
+        Setting = await LoadObjectFromSettingsAsync();
+    }
 
     private async Task<T> LoadObjectFromSettingsAsync()
     {

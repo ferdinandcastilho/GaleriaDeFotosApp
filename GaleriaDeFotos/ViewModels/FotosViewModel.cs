@@ -5,12 +5,12 @@ using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
-using Windows.Storage.Pickers;
 using GaleriaDeFotos.EnumTypes;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.Services.Settings;
 using Microsoft.UI.Xaml;
+using Windows.Storage.Pickers;
 using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -31,7 +31,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     {
         get => Source.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
 
@@ -40,7 +42,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         get =>
             PickFolderVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService,
@@ -76,7 +80,9 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         }
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 
