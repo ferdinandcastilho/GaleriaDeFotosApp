@@ -136,6 +136,18 @@ public partial class App
         base.OnLaunched(args);
 
         await GetService<IActivationService>().ActivateAsync(args);
+
+        var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
+        var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+        var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+        if (appWindow is null) return;
+        var displayArea = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(windowId,
+            Microsoft.UI.Windowing.DisplayAreaFallback.Nearest);
+        if (displayArea is null) return;
+        var centeredPosition = appWindow.Position;
+        centeredPosition.X = ((displayArea.WorkArea.Width - appWindow.Size.Width) / 2);
+        centeredPosition.Y = ((displayArea.WorkArea.Height - appWindow.Size.Height) / 2);
+        appWindow.Move(centeredPosition);
     }
 
     private static IConfigurationBuilder GetAppSettingsBuilder()
