@@ -14,28 +14,9 @@ public class FotosDataService : IFotosDataService
     private readonly FotoContext? _fotoContext;
     private string _lastPath = string.Empty;
 
-    #region IFotosDataService Members
-
     public FotosDataService(FotoContext? fotoContext) { _fotoContext = fotoContext; }
 
-    public async Task<IEnumerable<string>> GetImagesFromFolderAsync(string? imagePath = null)
-    {
-        if (string.IsNullOrWhiteSpace(imagePath))
-        {
-            imagePath = string.IsNullOrWhiteSpace(_lastPath)
-                ? Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
-                : _lastPath;
-        }
-
-        _lastPath = imagePath;
-
-        await Task.CompletedTask;
-
-        var files = Directory.GetFiles(imagePath)
-            .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
-
-        return files;
-    }
+    #region IFotosDataService Members
 
     public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
     {
@@ -58,7 +39,31 @@ public class FotosDataService : IFotosDataService
         await _fotoContext.SaveChangesAsync();
     }
 
+    public IEnumerable<Foto> Select(Expression<Func<FotoData, bool>> predicate)
+    {
+        if (_fotoContext == null) return new List<Foto>();
+        var fotoDatas = _fotoContext.Fotos.Where(predicate);
+        return fotoDatas.Select(foto => new Foto(foto));
+    }
+
     #endregion
+
+    public async Task<IEnumerable<string>> GetImagesFromFolderAsync(string? imagePath = null)
+    {
+        if (string.IsNullOrWhiteSpace(imagePath))
+            imagePath = string.IsNullOrWhiteSpace(_lastPath)
+                ? Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+                : _lastPath;
+
+        _lastPath = imagePath;
+
+        await Task.CompletedTask;
+
+        var files = Directory.GetFiles(imagePath)
+            .Where(file => Path.GetExtension(file) is ".png" or ".jpg");
+
+        return files;
+    }
 
     private async Task<List<Foto>> SetupPhotosAsync(IEnumerable<string> files)
     {
@@ -78,13 +83,6 @@ public class FotosDataService : IFotosDataService
         await _fotoContext.Fotos.AddRangeAsync(listToAdd);
         await _fotoContext.SaveChangesAsync();
         return retList;
-    }
-
-    public IEnumerable<Foto> Select(Expression<Func<FotoData, bool>> predicate)
-    {
-        if (_fotoContext == null) return new List<Foto>();
-        var fotoDatas = _fotoContext.Fotos.Where(predicate);
-        return fotoDatas.Select(foto => new Foto(foto));
     }
 
     private static string CreateHash(string file)

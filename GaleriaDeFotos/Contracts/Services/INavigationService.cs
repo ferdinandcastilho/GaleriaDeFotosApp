@@ -5,15 +5,9 @@ namespace GaleriaDeFotos.Contracts.Services;
 
 public interface INavigationService
 {
-    bool CanGoBack
-    {
-        get;
-    }
+    bool CanGoBack { get; }
 
-    Frame? Frame
-    {
-        get; set;
-    }
+    Frame? Frame { get; set; }
 
     event NavigatedEventHandler Navigated;
 

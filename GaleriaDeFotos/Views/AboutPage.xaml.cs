@@ -11,8 +11,5 @@ public sealed partial class AboutPage
     }
 
     // ReSharper disable once UnusedAutoPropertyAccessor.Global
-    public AboutViewModel ViewModel
-    {
-        get;
-    }
+    public AboutViewModel ViewModel { get; }
 }

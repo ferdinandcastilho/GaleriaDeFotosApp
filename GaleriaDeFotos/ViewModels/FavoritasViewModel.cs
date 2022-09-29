@@ -14,18 +14,18 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
 
-    public string BottomBar
-    {
-        get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
-        // ReSharper disable once ValueParameterNotUsed
-        set { }
-    }
-
     public FavoritasViewModel(INavigationService navigationService,
         IFotosDataService fotosDataService)
     {
         _navigationService = navigationService;
         _fotosDataService = fotosDataService;
+    }
+
+    public string BottomBar
+    {
+        get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
+        // ReSharper disable once ValueParameterNotUsed
+        set { }
     }
 
     public ObservableCollection<Foto> Source { get; } = new();
@@ -36,17 +36,12 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
     {
         var favorites = _fotosDataService.Select(data => data.IsFavorite);
         Source.Clear();
-        foreach (var favorite in favorites)
-        {
-            Source.Add(favorite);
-        }
+        foreach (var favorite in favorites) Source.Add(favorite);
 
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
 
     #endregion
 

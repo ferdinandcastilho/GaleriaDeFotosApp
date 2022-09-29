@@ -10,8 +10,5 @@ public sealed partial class FavoritasPage
         InitializeComponent();
     }
 
-    public FavoritasViewModel ViewModel
-    {
-        get;
-    }
+    public FavoritasViewModel ViewModel { get; }
 }

@@ -57,7 +57,7 @@
                     <TextBlock x:Uid="AboutPage_MemberOccupationFernando"
                                FontSize="24" />
                     <TextBlock x:Uid="AboutPage_MemberDescriptionFernando"
-                             FontSize="24" />
+                               FontSize="24" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

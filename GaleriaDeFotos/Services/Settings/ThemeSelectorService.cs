@@ -13,9 +13,9 @@ public class ThemeSelectorService : SettingSelectorService<ElementTheme>, ITheme
     {
     }
 
-    #region IThemeSelectorService Members
-
     protected override string SettingKey => nameof(ElementTheme);
+
+    #region IThemeSelectorService Members
 
     public async Task SetThemeAsync(ElementTheme theme)
     {

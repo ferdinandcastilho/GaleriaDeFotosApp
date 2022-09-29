@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Windows.Storage.Pickers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Services;
@@ -10,7 +11,6 @@ using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.Services.Settings;
 using Microsoft.UI.Xaml;
-using Windows.Storage.Pickers;
 using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -18,34 +18,14 @@ namespace GaleriaDeFotos.ViewModels;
 public partial class FotosViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
-    private readonly INavigationService _navigationService;
     private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
+    private readonly INavigationService _navigationService;
     private bool _folderAlreadyPicked;
-
-    [ObservableProperty] private ObservableCollection<Foto> _source = new();
-    [ObservableProperty] private Foto? _selectedFoto;
     [ObservableProperty] private bool _isLoading;
     [ObservableProperty] private bool _needToPickFolder;
+    [ObservableProperty] private Foto? _selectedFoto;
 
-    public Visibility PickFolderVisibility
-    {
-        get => Source.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        // ReSharper disable once ValueParameterNotUsed
-        set
-        {
-        }
-    }
-
-
-    public Visibility NotPickFolderVisibility
-    {
-        get =>
-            PickFolderVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        // ReSharper disable once ValueParameterNotUsed
-        set
-        {
-        }
-    }
+    [ObservableProperty] private ObservableCollection<Foto> _source = new();
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService,
         LastFolderOptionSelectorService lastFolderOptionSelectorService)
@@ -61,6 +41,22 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         };
     }
 
+    public Visibility PickFolderVisibility
+    {
+        get => Source.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        // ReSharper disable once ValueParameterNotUsed
+        set { }
+    }
+
+
+    public Visibility NotPickFolderVisibility
+    {
+        get =>
+            PickFolderVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        // ReSharper disable once ValueParameterNotUsed
+        set { }
+    }
+
     public string BottomBar
     {
         get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
@@ -74,15 +70,10 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     {
         var option = _lastFolderOptionSelectorService.Setting;
         NeedToPickFolder = option == LastFolderOption.AlwaysPick;
-        if (!NeedToPickFolder || _folderAlreadyPicked)
-        {
-            await OpenLastOpenedFolder();
-        }
+        if (!NeedToPickFolder || _folderAlreadyPicked) await OpenLastOpenedFolder();
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
 
     #endregion
 
@@ -129,10 +120,7 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         IsLoading = true;
         var dbPhotos = (await _fotosDataService.GetPhotosAsync(path)).ToList();
         Source.Clear();
-        foreach (var photo in dbPhotos)
-        {
-            Source.Add(photo);
-        }
+        foreach (var photo in dbPhotos) Source.Add(photo);
 
         await Task.Delay(1000);
         IsLoading = false;

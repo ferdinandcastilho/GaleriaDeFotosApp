@@ -23,23 +23,19 @@
                                  GroupName="LastFolderBehaviorGroup"
                                  IsChecked="{x:Bind ViewModel.LastFolderOption, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=UseLastFolder, Mode=OneWay}"
                                  Command="{x:Bind ViewModel.SwitchLastFolderOptionCommand}"
-                                 CommandParameter="{x:Bind enum:LastFolderOption.UseLastFolder}">
-                    </RadioButton>
+                                 CommandParameter="{x:Bind enum:LastFolderOption.UseLastFolder}" />
                     <RadioButton x:Uid="SettingsPage_FolderBehavior_SelectFolder"
                                  FontSize="15"
                                  GroupName="LastFolderBehaviorGroup"
                                  IsChecked="{x:Bind ViewModel.LastFolderOption, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=AlwaysPick, Mode=OneWay}"
                                  Command="{x:Bind ViewModel.SwitchLastFolderOptionCommand}"
-                                 CommandParameter="{x:Bind enum:LastFolderOption.AlwaysPick}">
-
-                    </RadioButton>
+                                 CommandParameter="{x:Bind enum:LastFolderOption.AlwaysPick}" />
                     <RadioButton x:Uid="SettingsPage_FolderBehavior_Default"
                                  FontSize="15"
                                  GroupName="LastFolderBehaviorGroup"
                                  IsChecked="{x:Bind ViewModel.LastFolderOption, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}"
                                  Command="{x:Bind ViewModel.SwitchLastFolderOptionCommand}"
-                                 CommandParameter="{x:Bind enum:LastFolderOption.Default}">
-                    </RadioButton>
+                                 CommandParameter="{x:Bind enum:LastFolderOption.Default}" />
                 </StackPanel>
             </StackPanel>
             <!-- Seleção do Tema -->

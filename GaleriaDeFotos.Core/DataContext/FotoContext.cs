@@ -17,11 +17,7 @@ public sealed class FotoContext : DbContext
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options) { }
 
-    [UsedImplicitly]
-    public DbSet<FotoData> Fotos
-    {
-        get; set;
-    }
+    [UsedImplicitly] public DbSet<FotoData> Fotos { get; set; }
 
     public static void SetConnectionString(string connectionString)
     {
@@ -39,10 +35,7 @@ public sealed class FotoContext : DbContext
         base.OnModelCreating(builder);
     }
 
-    public void EnsureCreated()
-    {
-        Database.EnsureCreated();
-    }
+    public void EnsureCreated() { Database.EnsureCreated(); }
 
     public void Recreate()
     {

@@ -1,5 +1,4 @@
 using GaleriaDeFotos.Core.DataContext;
-using GaleriaDeFotos.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -13,8 +12,7 @@ public class DatabaseTests
         //TODO: Maikeu - Setup database connection
         // Arrange
         var options = new DbContextOptionsBuilder<FotoContext>()
-            .UseInMemoryDatabase(databaseName: "FotoListDatabase")
-            .Options;
+            .UseInMemoryDatabase("FotoListDatabase").Options;
 
         var configurator = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", true, true).Build();
@@ -23,12 +21,10 @@ public class DatabaseTests
         await using var context = new FotoContext(options);
         var connectionString = configurator["ConnectionSqlite:SqliteConnectionString"];
         FotoContext.SetConnectionString(connectionString);
-        List<FotoData> listOfPictures = await context.Fotos.ToListAsync();
+        var listOfPictures = await context.Fotos.ToListAsync();
 
 
         // Assert
         Assert.NotEmpty(listOfPictures);
     }
-
-
 }

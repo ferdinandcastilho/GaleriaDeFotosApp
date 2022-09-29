@@ -26,9 +26,7 @@ public partial class FotosDetailViewModel : ObservableRecipient, INavigationAwar
         }
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
 
     #endregion
 }

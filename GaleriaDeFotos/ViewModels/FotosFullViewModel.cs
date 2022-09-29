@@ -11,9 +11,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
+    [ObservableProperty] private bool _isFavorite;
     [ObservableProperty] private Foto? _item;
     [ObservableProperty] private Foto? _selectedFoto;
-    [ObservableProperty] private bool _isFavorite;
 
     public FotosFullViewModel(INavigationService navigationService,
         IFotosDataService fotosDataService)
@@ -35,9 +35,7 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
 
     #endregion
 

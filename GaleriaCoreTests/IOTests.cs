@@ -9,7 +9,7 @@ public class IoTests
     {
         // Arrange
         FotosDataService fotosDataService = new(null); // No need for a valid DbContext
-        string imageFolderPath = @"Z:\Users\Ferdi\OneDrive\Imagens\Saved Pictures\Wallpaper";
+        var imageFolderPath = @"Z:\Users\Ferdi\OneDrive\Imagens\Saved Pictures\Wallpaper";
 
         // Act
         var imageFileList = await fotosDataService.GetImagesFromFolderAsync(imageFolderPath);

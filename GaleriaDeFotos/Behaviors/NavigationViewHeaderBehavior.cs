@@ -32,15 +32,10 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
             new PropertyMetadata(null, (_, _) => _current!.UpdateHeaderTemplate()));
 
     private Page? _currentPage;
-    public NavigationViewHeaderBehavior()
-    {
-        DefaultHeaderTemplate = DefaultHeaderTemplate;
-    }
 
-    public DataTemplate? DefaultHeaderTemplate
-    {
-        get; set;
-    }
+    public NavigationViewHeaderBehavior() { DefaultHeaderTemplate = DefaultHeaderTemplate; }
+
+    public DataTemplate? DefaultHeaderTemplate { get; set; }
 
     public object DefaultHeader
     {
@@ -116,8 +111,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
             {
                 AssociatedObject.Header = null;
                 AssociatedObject.AlwaysShowHeader = false;
-            }
-            else
+            } else
             {
                 var headerFromPage = GetHeaderContext(_currentPage);
                 AssociatedObject.Header = headerFromPage;

@@ -19,13 +19,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\GaleriaDeFotos.Core\GaleriaDeFotos.Core.csproj" />
         <Content Include="Assets\Images\*.*">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <Content Update="Assets\Images\home.jpg">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <ProjectReference Include="..\GaleriaDeFotos.Core\GaleriaDeFotos.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>

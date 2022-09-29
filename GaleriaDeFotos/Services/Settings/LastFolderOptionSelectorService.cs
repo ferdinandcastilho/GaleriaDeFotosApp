@@ -6,10 +6,10 @@ namespace GaleriaDeFotos.Services.Settings;
 
 public class LastFolderOptionSelectorService : SettingSelectorService<LastFolderOption>
 {
-    protected override string SettingKey => nameof(LastFolderOption);
-
     public LastFolderOptionSelectorService(ILocalSettingsService localSettingsService) : base(
         localSettingsService)
     {
     }
+
+    protected override string SettingKey => nameof(LastFolderOption);
 }

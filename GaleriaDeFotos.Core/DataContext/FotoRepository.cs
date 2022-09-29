@@ -5,10 +5,11 @@ namespace GaleriaDeFotos.Core.DataContext;
 
 public class FotoRepository : IFotoRepository
 {
-    private FotoContext _fotoContext;
+    private readonly FotoContext _fotoContext;
 
     public FotoRepository(FotoContext fotoContext) { _fotoContext = fotoContext; }
 
+    #region IFotoRepository Members
 
     public async Task<FotoData> Insert(FotoData fotoData)
     {
@@ -44,4 +45,6 @@ public class FotoRepository : IFotoRepository
 
         await _fotoContext.SaveChangesAsync();
     }
+
+    #endregion
 }

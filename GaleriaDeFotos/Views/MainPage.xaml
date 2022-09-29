@@ -7,7 +7,7 @@
     mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Image Stretch="Fill" Source="/Assets/Images/photography.png"/>
+        <Image Stretch="Fill" Source="/Assets/Images/photography.png" />
     </Grid>
 
 </Page>

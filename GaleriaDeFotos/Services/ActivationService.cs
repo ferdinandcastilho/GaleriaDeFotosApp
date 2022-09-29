@@ -12,13 +12,14 @@ public class ActivationService : IActivationService
 {
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
-    private readonly IThemeSelectorService _themeSelectorService;
     private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
+    private readonly IThemeSelectorService _themeSelectorService;
     private UIElement? _shell;
 
     public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
         IEnumerable<IActivationHandler> activationHandlers,
-        IThemeSelectorService themeSelectorService, LastFolderOptionSelectorService lastFolderOptionSelectorService)
+        IThemeSelectorService themeSelectorService,
+        LastFolderOptionSelectorService lastFolderOptionSelectorService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;

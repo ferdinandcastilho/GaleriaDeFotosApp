@@ -1,4 +1,5 @@
 ﻿using System.Data.SQLite;
+using Windows.Storage;
 using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.Settings;
@@ -15,7 +16,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-using Windows.Storage;
 using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace GaleriaDeFotos;
@@ -84,15 +84,9 @@ public partial class App
         //db.Recreate();
     }
 
-    public IConfigurationRoot Configuration
-    {
-        get;
-    }
+    public IConfigurationRoot Configuration { get; }
 
-    public IHost Host
-    {
-        get;
-    }
+    public IHost Host { get; }
 
     public static WindowEx MainWindow { get; } = new MainWindow();
 
@@ -114,10 +108,7 @@ public partial class App
         var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
         var connectionStringBuilder = new SQLiteConnectionStringBuilder(connection);
         var baseFolder = string.Empty;
-        if (RuntimeHelper.IsMsix)
-        {
-            baseFolder = ApplicationData.Current.LocalFolder.Path;
-        }
+        if (RuntimeHelper.IsMsix) baseFolder = ApplicationData.Current.LocalFolder.Path;
 
         var dbPath = Path.Combine(baseFolder, connectionStringBuilder.DataSource);
         connectionStringBuilder.DataSource = dbPath;
