@@ -5,6 +5,7 @@ namespace GaleriaDeFotos.Views;
 
 public sealed partial class FotosPage
 {
+    
     public FotosPage()
     {
         ViewModel = App.GetService<FotosViewModel>();
@@ -12,12 +13,4 @@ public sealed partial class FotosPage
     }
 
     public FotosViewModel ViewModel { get; }
-
-    private async void SelectFolderOnTapped(object sender, TappedRoutedEventArgs e)
-    {
-        if (ViewModel.SelectDirectoryCommand.CanExecute(null))
-        {
-            await ViewModel.SelectDirectoryCommand.ExecuteAsync(null);
-        }
-    }
 }

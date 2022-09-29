@@ -10,6 +10,7 @@ using GaleriaDeFotos.EnumTypes;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.Services.Settings;
+using Microsoft.UI.Xaml;
 using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
@@ -26,13 +27,34 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
     [ObservableProperty] private bool _isLoading;
     [ObservableProperty] private bool _needToPickFolder;
 
+    public Visibility PickFolderVisibility
+    {
+        get => Source.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        // ReSharper disable once ValueParameterNotUsed
+        set { }
+    }
+
+
+    public Visibility NotPickFolderVisibility
+    {
+        get =>
+            PickFolderVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        // ReSharper disable once ValueParameterNotUsed
+        set { }
+    }
+
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService,
         LastFolderOptionSelectorService lastFolderOptionSelectorService)
     {
         _lastFolderOptionSelectorService = lastFolderOptionSelectorService;
         _navigationService = navigationService;
         _fotosDataService = fotosDataService;
-        Source.CollectionChanged += (_, _) => OnPropertyChanged(nameof(BottomBar));
+        Source.CollectionChanged += (_, _) =>
+        {
+            OnPropertyChanged(nameof(BottomBar));
+            OnPropertyChanged(nameof(PickFolderVisibility));
+            OnPropertyChanged(nameof(NotPickFolderVisibility));
+        };
     }
 
     public string BottomBar => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
