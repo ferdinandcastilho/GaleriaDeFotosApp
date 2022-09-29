@@ -15,6 +15,7 @@ public class IoTests
         var imageFileList = await fotosDataService.GetImagesFromFolderAsync(imageFolderPath);
 
         // Assert
-        Assert.True(imageFileList.Count() == 19); // Replace by the number of png and jpg files in your choosen folder
+        Assert.True(imageFileList.Count() ==
+                    19); // Replace by the number of png and jpg files in your choosen folder
     }
 }

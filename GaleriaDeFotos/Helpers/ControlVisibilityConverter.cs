@@ -1,5 +1,4 @@
-﻿using Windows.Networking.NetworkOperators;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 
 namespace GaleriaDeFotos.Helpers;

@@ -11,12 +11,12 @@ namespace GaleriaDeFotos.Services;
 public class FotosDataService : IFotosDataService
 {
     private const string Salt = "MaikeuFernando";
-    private readonly FotoContext _fotoContext;
+    private readonly FotoContext? _fotoContext;
     private string _lastPath = string.Empty;
 
     #region IFotosDataService Members
 
-    public FotosDataService(FotoContext fotoContext)
+    public FotosDataService(FotoContext? fotoContext)
     {
         _fotoContext = fotoContext;
     }

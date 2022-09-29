@@ -1,5 +1,4 @@
 ﻿using GaleriaDeFotos.ViewModels;
-using Microsoft.UI.Xaml.Input;
 
 namespace GaleriaDeFotos.Views;
 
