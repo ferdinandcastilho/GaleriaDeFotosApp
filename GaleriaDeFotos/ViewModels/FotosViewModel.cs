@@ -57,7 +57,12 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
         };
     }
 
-    public string BottomBar => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
+    public string BottomBar
+    {
+        get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
+        // ReSharper disable once ValueParameterNotUsed
+        set { }
+    }
 
     #region INavigationAware Members
 

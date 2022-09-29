@@ -5,6 +5,7 @@ using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
+using GaleriaDeFotos.Helpers;
 
 namespace GaleriaDeFotos.ViewModels;
 
@@ -12,6 +13,13 @@ public partial class FavoritasViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly INavigationService _navigationService;
+
+    public string BottomBar
+    {
+        get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
+        // ReSharper disable once ValueParameterNotUsed
+        set { }
+    }
 
     public FavoritasViewModel(INavigationService navigationService,
         IFotosDataService fotosDataService)

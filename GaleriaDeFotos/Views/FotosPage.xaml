@@ -107,7 +107,8 @@
                HorizontalAlignment="Stretch"
                BorderThickness="0,1,0,0"
                BorderBrush="Black">
-            <TextBlock Text='{x:Bind ViewModel.BottomBar, Mode=OneWay}' VerticalAlignment="Center" />
+            <TextBlock Text='{x:Bind ViewModel.BottomBar, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}'
+                       VerticalAlignment="Center" />
         </Frame>
     </Grid>
 </Page>

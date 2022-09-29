@@ -9,7 +9,7 @@
     xmlns:models="using:GaleriaDeFotos.Core.Models"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid RowDefinitions="*,50">
         <controls:AdaptiveGridView
             animations:Connected.ListItemElementName="itemThumbnail"
             animations:Connected.ListItemKey="animationKeyContentGrid"
@@ -36,5 +36,9 @@
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>
+        <Frame Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Black">
+            <TextBlock Text='{x:Bind ViewModel.BottomBar, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}'
+                       VerticalAlignment="Center" />
+        </Frame>
     </Grid>
 </Page>
