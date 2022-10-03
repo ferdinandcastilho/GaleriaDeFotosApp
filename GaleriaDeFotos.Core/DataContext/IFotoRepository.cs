@@ -8,4 +8,5 @@ public interface IFotoRepository
     Task<FotoData> Update(FotoData fotoData);
     Task<bool> Delete(FotoData fotoData);
     Task ClearAll();
+    Task<List<FotoData>> GetAllFotos();
 }

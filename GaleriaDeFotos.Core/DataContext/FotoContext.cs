@@ -1,32 +1,46 @@
-﻿using GaleriaDeFotos.Core.Models;
+﻿using System.Data.SQLite;
+using System.Diagnostics;
+using GaleriaDeFotos.Core.Models;
+using GaleriaDeFotos.Core.Services;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace GaleriaDeFotos.Core.DataContext;
 
 public sealed class FotoContext : DbContext
 {
-    private static bool _created;
     private static string _connectionString;
-
-    public FotoContext()
+    private IConfigurationRoot Configuration
     {
-        if (_created) return;
-        _created = true;
+        get;
     }
 
-    public FotoContext(DbContextOptions<FotoContext> options) : base(options) { }
-
-    [UsedImplicitly] public DbSet<FotoData> Fotos { get; set; }
-
-    public static void SetConnectionString(string connectionString)
+    [UsedImplicitly]
+    public DbSet<FotoData> Fotos
     {
-        _connectionString = connectionString;
+        get; set;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    public FotoContext(DbContextOptions<FotoContext> options) : base(options)
     {
-        options.UseSqlite(_connectionString);
+        Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
+
+        var dbPath = GetDbPath();
+
+        if (!File.Exists(dbPath))
+        {
+            SQLiteConnection.CreateFile(dbPath);
+        }
+
+        Database.EnsureCreated();
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+            .UseSqlite(_connectionString)
+            .LogTo(message => Debug.WriteLine(message));
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -35,7 +49,21 @@ public sealed class FotoContext : DbContext
         base.OnModelCreating(builder);
     }
 
-    public void EnsureCreated() { Database.EnsureCreated(); }
+    private string GetDbPath()
+    {
+
+        var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
+
+        var connectionStringBuilder = new SQLiteConnectionStringBuilder(connection);
+        var baseFolder = RuntimeConfigData.IsMsix ? RuntimeConfigData.ApplicationFolder : Environment.CurrentDirectory;
+
+        var dbPath = Path.Combine(baseFolder, connectionStringBuilder.DataSource);
+
+        connectionStringBuilder.DataSource = dbPath;
+        _connectionString = connectionStringBuilder.ConnectionString;
+
+        return dbPath;
+    }
 
     public void Recreate()
     {
