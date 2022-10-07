@@ -51,30 +51,37 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                    <Slider x:Name="SizeSlider" Width="100" ValueChanged="SizeSlider_OnValueChanged"
+                            VerticalAlignment="Center" HorizontalAlignment="Right" />
+                    <TextBlock Text="Tamanho" FontSize="16" VerticalAlignment="Center"
+                               FontWeight="100" />
+                </StackPanel>
             </StackPanel>
         </Frame>
-        <controls:AdaptiveGridView Grid.Row="1"
+        <controls:AdaptiveGridView Grid.Row="1" x:Name="AdaptiveGridView"
                                    animations:Connected.ListItemElementName="itemThumbnail"
                                    animations:Connected.ListItemKey="animationKeyContentGrid"
-                                   DesiredWidth="180"
-                                   ItemHeight="160"
+                                   DesiredWidth="330"
+                                   ItemHeight="210"
                                    IsItemClickEnabled="True"
                                    ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
-                                   ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
+                                   ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
                                    SelectionMode="None"
                                    StretchContentForSingleRow="False">
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Foto">
-                    <Grid
-                        x:Name="itemThumbnail"
-                        Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image>
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind ImageUri}" />
-                                </Image.Source>
-                            </Image>
-                        </StackPanel>
+                    <Grid VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          x:Name="ItemThumbnail"
+                          Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
+                        <Image HorizontalAlignment="Center"
+                               VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="{x:Bind ImageUri}" />
+                            </Image.Source>
+                        </Image>
+
                     </Grid>
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>

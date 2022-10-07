@@ -8,7 +8,8 @@ namespace GaleriaDeFotos.ViewModels;
 
 public abstract partial class BaseFotosViewModel : ObservableRecipient
 {
-    // ReSharper disable once InconsistentNaming
+    // ReSharper disable InconsistentNaming
+    // ReSharper disable MemberCanBePrivate.Global
     [ObservableProperty] protected bool _isLoading;
     [ObservableProperty] private ObservableCollection<Foto> _source = new();
     protected abstract Task LoadPhotos();
