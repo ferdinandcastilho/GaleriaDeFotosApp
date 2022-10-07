@@ -1,18 +1,14 @@
-﻿using System.Data.SQLite;
-using Windows.Storage;
-using GaleriaDeFotos.Activation;
+﻿using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.Settings;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.DataContext;
 using GaleriaDeFotos.Core.Services;
-using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Models;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.Services.Settings;
 using GaleriaDeFotos.ViewModels;
 using GaleriaDeFotos.Views;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -20,32 +16,33 @@ using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArg
 
 namespace GaleriaDeFotos;
 
-// To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App
 {
+
+    public IHost Host
+    {
+        get;
+    }
+
+    public static WindowEx MainWindow { get; } = new MainWindow();
     public App()
     {
         InitializeComponent();
-        //Set AppSettings.json
-        var builder = GetAppSettingsBuilder();
-        Configuration = builder.Build();
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
             .UseContentRoot(AppContext.BaseDirectory).ConfigureServices((context, services) =>
             {
                 // Default Activation Handler
-                services
-                    .AddTransient<ActivationHandler<LaunchActivatedEventArgs>,
-                        DefaultActivationHandler>();
-
-                // Other Activation Handlers
+                services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
                 // Settings
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
                 services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
                 services.AddSingleton<LastFolderOptionSelectorService>();
-                // Services
+                services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
 
+                // Services
                 services.AddTransient<INavigationViewService, NavigationViewService>();
+                services.AddDbContext<FotoContext>();
 
                 services.AddSingleton<IActivationService, ActivationService>();
                 services.AddSingleton<IPageService, PageService>();
@@ -72,48 +69,10 @@ public partial class App
                 services.AddTransient<MainPage>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
-                ConfigureDb(services);
 
-                // Configuration
-                services.Configure<LocalSettingsOptions>(
-                    context.Configuration.GetSection(nameof(LocalSettingsOptions)));
             }).Build();
+
         UnhandledException += App_UnhandledException;
-        var db = GetService<FotoContext>();
-        db.EnsureCreated();
-        //db.Recreate();
-    }
-
-    public IConfigurationRoot Configuration { get; }
-
-    public IHost Host { get; }
-
-    public static WindowEx MainWindow { get; } = new MainWindow();
-
-    private void ConfigureDb(IServiceCollection services)
-    {
-        var dbPath = GetConnectionString(out var connectionString);
-        FotoContext.SetConnectionString(connectionString);
-        if (!File.Exists(dbPath))
-        {
-            SQLiteConnection.CreateFile(dbPath);
-            var _ = new FotoContext();
-        }
-
-        services.AddSqlite<FotoContext>(connectionString);
-    }
-
-    private string GetConnectionString(out string connectionString)
-    {
-        var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
-        var connectionStringBuilder = new SQLiteConnectionStringBuilder(connection);
-        var baseFolder = string.Empty;
-        if (RuntimeHelper.IsMsix) baseFolder = ApplicationData.Current.LocalFolder.Path;
-
-        var dbPath = Path.Combine(baseFolder, connectionStringBuilder.DataSource);
-        connectionStringBuilder.DataSource = dbPath;
-        connectionString = connectionStringBuilder.ConnectionString;
-        return dbPath;
     }
 
     public static T GetService<T>() where T : class
@@ -131,7 +90,7 @@ public partial class App
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
     }
 
-    protected override async void OnLaunched(LaunchActivatedEventArgs args)
+    protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
 
@@ -148,11 +107,5 @@ public partial class App
         centeredPosition.X = ((displayArea.WorkArea.Width - appWindow.Size.Width) / 2);
         centeredPosition.Y = ((displayArea.WorkArea.Height - appWindow.Size.Height) / 2);
         appWindow.Move(centeredPosition);
-    }
-
-    private static IConfigurationBuilder GetAppSettingsBuilder()
-    {
-        return new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile("appsettings.json", true, true);
     }
 }

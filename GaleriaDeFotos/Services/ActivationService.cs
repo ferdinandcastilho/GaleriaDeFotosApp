@@ -1,10 +1,13 @@
 ﻿using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.Settings;
+using GaleriaDeFotos.Core.Services;
+using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services.Settings;
 using GaleriaDeFotos.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Storage;
 
 namespace GaleriaDeFotos.Services;
 
@@ -74,6 +77,10 @@ public class ActivationService : IActivationService
     private async Task StartupAsync()
     {
         await _themeSelectorService.SetRequestedThemeAsync();
+
+        RuntimeConfigData.IsMsix = RuntimeHelper.IsMsix;
+        RuntimeConfigData.ApplicationFolder = ApplicationData.Current.LocalFolder.Path;
+
         await Task.CompletedTask;
     }
 }

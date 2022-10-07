@@ -35,7 +35,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom() { }
+    public void OnNavigatedFrom()
+    {
+    }
 
     #endregion
 

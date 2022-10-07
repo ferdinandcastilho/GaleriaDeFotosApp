@@ -13,7 +13,10 @@ public sealed partial class FotosFullPage
         InitializeComponent();
     }
 
-    public FotosFullViewModel ViewModel { get; }
+    public FotosFullViewModel ViewModel
+    {
+        get;
+    }
 
     private void ShowHideTeachingTip(object sender, RoutedEventArgs e)
     {
@@ -26,7 +29,8 @@ public sealed partial class FotosFullPage
         {
             teachingTipTitle = "FotosFullPage_TeachingTip_FavoritedTitle".GetLocalized();
             teachingTipSubtitle = "FotosFullPage_TeachingTip_FavoritedSubtitle".GetLocalized();
-        } else
+        }
+        else
         {
             teachingTipTitle = "FotosFullPage_TeachingTip_UnfavoritedTitle".GetLocalized();
             teachingTipSubtitle = "FotosFullPage_TeachingTip_UnfavoritedSubtitle".GetLocalized();

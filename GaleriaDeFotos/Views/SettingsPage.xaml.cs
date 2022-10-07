@@ -11,5 +11,8 @@ public sealed partial class SettingsPage
         InitializeComponent();
     }
 
-    public SettingsViewModel ViewModel { get; }
+    public SettingsViewModel ViewModel
+    {
+        get;
+    }
 }

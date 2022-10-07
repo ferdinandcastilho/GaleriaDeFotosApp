@@ -7,7 +7,10 @@ public class FotoRepository : IFotoRepository
 {
     private readonly FotoContext _fotoContext;
 
-    public FotoRepository(FotoContext fotoContext) { _fotoContext = fotoContext; }
+    public FotoRepository(FotoContext fotoContext)
+    {
+        _fotoContext = fotoContext;
+    }
 
     #region IFotoRepository Members
 
@@ -44,6 +47,11 @@ public class FotoRepository : IFotoRepository
         _fotoContext.Fotos.RemoveRange(list);
 
         await _fotoContext.SaveChangesAsync();
+    }
+
+    public async Task<List<FotoData>> GetAllFotos()
+    {
+        return await _fotoContext.Fotos.AsNoTracking().ToListAsync();
     }
 
     #endregion

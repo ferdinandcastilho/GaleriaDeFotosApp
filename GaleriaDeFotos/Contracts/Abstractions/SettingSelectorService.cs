@@ -12,9 +12,15 @@ public abstract class SettingSelectorService<T> where T : struct, Enum
         _localSettingsService = localSettingsService;
     }
 
-    public T Setting { get; private set; }
+    public T Setting
+    {
+        get; private set;
+    }
 
-    protected abstract string SettingKey { get; }
+    protected abstract string SettingKey
+    {
+        get;
+    }
 
     public async Task SetSetting(T value)
     {
@@ -22,7 +28,10 @@ public abstract class SettingSelectorService<T> where T : struct, Enum
         await SaveObjectInSettingsAsync();
     }
 
-    public async Task InitializeAsync() { Setting = await LoadObjectFromSettingsAsync(); }
+    public async Task InitializeAsync()
+    {
+        Setting = await LoadObjectFromSettingsAsync();
+    }
 
     private async Task<T> LoadObjectFromSettingsAsync()
     {

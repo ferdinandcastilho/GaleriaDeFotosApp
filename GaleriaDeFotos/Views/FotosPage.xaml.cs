@@ -10,5 +10,8 @@ public sealed partial class FotosPage
         InitializeComponent();
     }
 
-    public FotosViewModel ViewModel { get; }
+    public FotosViewModel ViewModel
+    {
+        get;
+    }
 }

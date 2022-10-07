@@ -33,9 +33,15 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 
     private Page? _currentPage;
 
-    public NavigationViewHeaderBehavior() { DefaultHeaderTemplate = DefaultHeaderTemplate; }
+    public NavigationViewHeaderBehavior()
+    {
+        DefaultHeaderTemplate = DefaultHeaderTemplate;
+    }
 
-    public DataTemplate? DefaultHeaderTemplate { get; set; }
+    public DataTemplate? DefaultHeaderTemplate
+    {
+        get; set;
+    }
 
     public object DefaultHeader
     {
@@ -111,7 +117,8 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
             {
                 AssociatedObject.Header = null;
                 AssociatedObject.AlwaysShowHeader = false;
-            } else
+            }
+            else
             {
                 var headerFromPage = GetHeaderContext(_currentPage);
                 AssociatedObject.Header = headerFromPage;

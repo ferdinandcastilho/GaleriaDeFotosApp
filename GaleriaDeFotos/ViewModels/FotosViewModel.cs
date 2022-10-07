@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Windows.Storage;
-using Windows.Storage.Pickers;
+﻿using Windows.Storage.Pickers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Services;
@@ -8,7 +6,6 @@ using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.EnumTypes;
-using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services;
 using GaleriaDeFotos.Services.Settings;
 using Microsoft.UI.Xaml;
@@ -53,13 +50,6 @@ public partial class FotosViewModel : BaseFotosViewModel, INavigationAware
     {
         get =>
             PickFolderVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        // ReSharper disable once ValueParameterNotUsed
-        set { }
-    }
-
-    public string BottomBar
-    {
-        get => $"{Source.Count} {"FotosPage_Items".GetLocalized()}";
         // ReSharper disable once ValueParameterNotUsed
         set { }
     }
