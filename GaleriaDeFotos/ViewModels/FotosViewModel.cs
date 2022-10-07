@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Windows.Storage;
 using Windows.Storage.Pickers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,17 +16,16 @@ using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
 
-public partial class FotosViewModel : ObservableRecipient, INavigationAware
+public partial class FotosViewModel : BaseFotosViewModel, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
     private readonly INavigationService _navigationService;
     private bool _folderAlreadyPicked;
-    [ObservableProperty] private bool _isLoading;
+    private string? _currentFolder = string.Empty;
+
     [ObservableProperty] private bool _needToPickFolder;
     [ObservableProperty] private Foto? _selectedFoto;
-
-    [ObservableProperty] private ObservableCollection<Foto> _source = new();
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService,
         LastFolderOptionSelectorService lastFolderOptionSelectorService)
@@ -104,14 +104,19 @@ public partial class FotosViewModel : ObservableRecipient, INavigationAware
             _folderAlreadyPicked = true;
             await ReadPhotosFromFolder(folder.Path);
         }
+
+        _currentFolder = folder?.Path;
     }
+
+    [RelayCommand]
+    private async Task Refresh() { await ReadPhotosFromFolder(_currentFolder); }
 
     private async Task OpenLastOpenedFolder()
     {
         var settings = App.GetService<ILocalSettingsService>();
         var folderToReadPhotos =
             await settings.ReadSettingAsync<string?>(LocalSettingsService.LastFolderKey);
-
+        _currentFolder = folderToReadPhotos;
         await ReadPhotosFromFolder(folderToReadPhotos);
     }
 

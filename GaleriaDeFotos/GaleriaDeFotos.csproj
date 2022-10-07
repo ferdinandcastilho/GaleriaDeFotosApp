@@ -36,6 +36,9 @@
     <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
         <ProjectCapability Include="Msix" />
     </ItemGroup>
+    <ItemGroup>
+      <Resource Remove="Templates\TopBar.xaml" />
+    </ItemGroup>
 
     <PropertyGroup>
         <ApplicationIcon>Assets/WindowIcon.ico</ApplicationIcon>

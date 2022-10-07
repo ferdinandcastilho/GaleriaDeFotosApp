@@ -38,20 +38,36 @@
                HorizontalAlignment="Stretch"
                BorderThickness="0,0,0,1"
                BorderBrush="Black">
-            <Button Background="Transparent"
-                    BorderBrush="Transparent"
-                    Command="{x:Bind ViewModel.SelectDirectoryCommand}" CornerRadius="20"
-                    VerticalAlignment="Center">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Viewbox MaxHeight="25" MaxWidth="30" VerticalAlignment="Center">
-                            <SymbolIcon Symbol="Folder" />
-                        </Viewbox>
-                        <TextBlock x:Uid="FotosPage_ClickToSelectFolder" FontSize="16" FontWeight="200"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+            <StackPanel Orientation="Horizontal">
+                <Button Background="Transparent"
+                        BorderBrush="Transparent"
+                        Command="{x:Bind ViewModel.SelectDirectoryCommand}" CornerRadius="20"
+                        VerticalAlignment="Center">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Viewbox MaxHeight="25" MaxWidth="30" VerticalAlignment="Center">
+                                <SymbolIcon Symbol="Folder" />
+                            </Viewbox>
+                            <TextBlock x:Uid="FotosPage_ClickToSelectFolder" FontSize="16" FontWeight="200"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Background="Transparent"
+                        BorderBrush="Transparent"
+                        Command="{x:Bind ViewModel.RefreshCommand}" CornerRadius="20"
+                        VerticalAlignment="Center">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Viewbox MaxHeight="25" MaxWidth="30" VerticalAlignment="Center">
+                                <SymbolIcon Symbol="Refresh" />
+                            </Viewbox>
+                            <TextBlock Text="Atualizar" FontSize="16" FontWeight="200"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
         </Frame>
         <Grid Grid.Row="1" Margin="10"
               Visibility="{x:Bind ViewModel.PickFolderVisibility, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"

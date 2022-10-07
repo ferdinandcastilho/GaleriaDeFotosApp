@@ -7,19 +7,62 @@
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:models="using:GaleriaDeFotos.Core.Models"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
     mc:Ignorable="d">
 
-    <Grid RowDefinitions="*,50">
-        <controls:AdaptiveGridView
-            animations:Connected.ListItemElementName="itemThumbnail"
-            animations:Connected.ListItemKey="animationKeyContentGrid"
-            DesiredWidth="180"
-            ItemHeight="160"
-            IsItemClickEnabled="True"
-            ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
-            ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
-            SelectionMode="None"
-            StretchContentForSingleRow="False">
+    <Grid RowDefinitions="50,*,50" RowSpacing="2">
+        <!--Loading Grid-->
+        <controls:Loading Grid.Row="0" Grid.RowSpan="3"
+                          IsLoading="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
+            <ContentControl>
+                <StackPanel Orientation="Horizontal"
+                            Padding="12"
+                            VerticalAlignment="Center">
+                    <ProgressRing IsActive="True"
+                                  Margin="0,0,12,0"
+                                  Foreground="White" />
+                    <TextBlock x:Uid="FotosPage_LoadingItems"
+                               VerticalAlignment="Center"
+                               Foreground="White" />
+                </StackPanel>
+            </ContentControl>
+            <controls:Loading.Background>
+                <media:AcrylicBrush TintColor="Black"
+                                    TintOpacity="0.4"
+                                    BlurAmount="8" />
+            </controls:Loading.Background>
+        </controls:Loading>
+        <Frame Grid.Row="0" Height="45"
+               HorizontalAlignment="Stretch"
+               BorderThickness="0,0,0,1"
+               BorderBrush="Black">
+            <StackPanel Orientation="Horizontal">
+                <Button Background="Transparent"
+                        BorderBrush="Transparent"
+                        Command="{x:Bind ViewModel.RefreshCommand}" CornerRadius="20"
+                        VerticalAlignment="Center">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Viewbox MaxHeight="25" MaxWidth="30" VerticalAlignment="Center">
+                                <SymbolIcon Symbol="Refresh" />
+                            </Viewbox>
+                            <TextBlock Text="Atualizar" FontSize="16" FontWeight="200"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Frame>
+        <controls:AdaptiveGridView Grid.Row="1"
+                                   animations:Connected.ListItemElementName="itemThumbnail"
+                                   animations:Connected.ListItemKey="animationKeyContentGrid"
+                                   DesiredWidth="180"
+                                   ItemHeight="160"
+                                   IsItemClickEnabled="True"
+                                   ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
+                                   ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
+                                   SelectionMode="None"
+                                   StretchContentForSingleRow="False">
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Foto">
                     <Grid
@@ -36,9 +79,9 @@
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>
-        <Frame Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Black">
+        <Frame Grid.Row="2" HorizontalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Black">
             <TextBlock Text='{x:Bind ViewModel.BottomBar, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}'
-                       VerticalAlignment="Center" FontSize="16"/>
+                       VerticalAlignment="Center" FontSize="16" />
         </Frame>
     </Grid>
 </Page>
