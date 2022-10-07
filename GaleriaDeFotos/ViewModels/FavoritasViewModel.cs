@@ -23,18 +23,17 @@ public partial class FavoritasViewModel : BaseFotosViewModel, INavigationAware
 
     public async void OnNavigatedTo(object parameter)
     {
-        GetPhotos();
+        await LoadPhotos();
 
         await Task.CompletedTask;
     }
 
-    private void GetPhotos()
+    protected override async Task LoadPhotos()
     {
-        IsLoading = true;
         var favorites = _fotosDataService.Select(data => data.IsFavorite);
         Source.Clear();
         foreach (var favorite in favorites) Source.Add(favorite);
-        IsLoading = false;
+        await Task.CompletedTask;
     }
 
     public void OnNavigatedFrom() { }
@@ -48,7 +47,4 @@ public partial class FavoritasViewModel : BaseFotosViewModel, INavigationAware
         _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
         _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
     }
-
-    [RelayCommand]
-    private void Refresh() { GetPhotos(); }
 }

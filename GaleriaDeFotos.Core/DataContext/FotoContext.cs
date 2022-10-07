@@ -11,20 +11,14 @@ namespace GaleriaDeFotos.Core.DataContext;
 public sealed class FotoContext : DbContext
 {
     private static string _connectionString;
-    private IConfigurationRoot Configuration
-    {
-        get;
-    }
+    private IConfigurationRoot Configuration { get; }
 
-    [UsedImplicitly]
-    public DbSet<FotoData> Fotos
-    {
-        get; set;
-    }
+    [UsedImplicitly] public DbSet<FotoData> Fotos { get; set; }
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options)
     {
-        Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
+        Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true)
+            .Build();
 
         var dbPath = GetDbPath();
 
@@ -38,9 +32,7 @@ public sealed class FotoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder
-            .UseSqlite(_connectionString)
-            .LogTo(message => Debug.WriteLine(message));
+        optionsBuilder.UseSqlite(_connectionString).LogTo(message => Debug.WriteLine(message));
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -51,11 +43,10 @@ public sealed class FotoContext : DbContext
 
     private string GetDbPath()
     {
-
         var connection = Configuration["ConnectionSqlite:SqliteConnectionString"];
 
         var connectionStringBuilder = new SQLiteConnectionStringBuilder(connection);
-        var baseFolder = RuntimeConfigData.IsMsix ? RuntimeConfigData.ApplicationFolder : Environment.CurrentDirectory;
+        var baseFolder = RuntimeConfigData.ApplicationFolder;
 
         var dbPath = Path.Combine(baseFolder, connectionStringBuilder.DataSource);
 

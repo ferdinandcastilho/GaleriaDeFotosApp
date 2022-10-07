@@ -79,7 +79,9 @@ public class ActivationService : IActivationService
         await _themeSelectorService.SetRequestedThemeAsync();
 
         RuntimeConfigData.IsMsix = RuntimeHelper.IsMsix;
-        RuntimeConfigData.ApplicationFolder = ApplicationData.Current.LocalFolder.Path;
+        RuntimeConfigData.ApplicationFolder = RuntimeHelper.IsMsix
+            ? ApplicationData.Current.LocalFolder.Path
+            : Environment.CurrentDirectory;
 
         await Task.CompletedTask;
     }

@@ -98,8 +98,7 @@ public partial class FotosViewModel : BaseFotosViewModel, INavigationAware
         _currentFolder = folder?.Path;
     }
 
-    [RelayCommand]
-    private async Task Refresh() { await ReadPhotosFromFolder(_currentFolder); }
+    protected override async Task LoadPhotos() { await ReadPhotosFromFolder(_currentFolder); }
 
     private async Task OpenLastOpenedFolder()
     {
