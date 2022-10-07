@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Windows.ApplicationModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Settings;
@@ -6,7 +7,6 @@ using GaleriaDeFotos.EnumTypes;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.Services.Settings;
 using Microsoft.UI.Xaml;
-using Windows.ApplicationModel;
 
 namespace GaleriaDeFotos.ViewModels;
 
@@ -66,8 +66,7 @@ public partial class SettingsViewModel : ObservableRecipient
 
             version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build,
                 packageVersion.Revision);
-        }
-        else
+        } else
         {
             version = Assembly.GetExecutingAssembly().GetName().Version!;
         }

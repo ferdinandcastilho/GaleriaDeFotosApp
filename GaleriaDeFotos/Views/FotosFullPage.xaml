@@ -11,7 +11,15 @@
     </Page.Resources>
 
     <Grid RowDefinitions="*,auto">
-        <Viewbox>
+        <SplitView Grid.Row="0" PaneBackground="Transparent"
+                   IsPaneOpen="{x:Bind ViewModel.IsShowingDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   DisplayMode="Inline" PanePlacement="Right"
+                   OpenPaneLength="300">
+            <SplitView.Pane>
+                <TextBlock Text="Size: 720 x 640"
+                           FontSize="24"
+                           HorizontalAlignment="Center" />
+            </SplitView.Pane>
             <Image Height="450"
                    Width="720"
                    Stretch="UniformToFill">
@@ -19,9 +27,7 @@
                     <BitmapImage UriSource="{x:Bind ViewModel.Item.ImageUri}" />
                 </Image.Source>
             </Image>
-
-        </Viewbox>
-
+        </SplitView>
         <CommandBar Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -39,7 +45,7 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Details"
                               Icon="Zoom"
-                              Command="{x:Bind ViewModel.GetDetailsCommand}" CornerRadius="20" />
+                              Command="{x:Bind ViewModel.ToggleDetailsCommand}" CornerRadius="20" />
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Favorite"
                               Icon="SolidStar"
                               ToolTipService.ToolTip='Favoritar Imagem'

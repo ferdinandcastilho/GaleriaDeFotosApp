@@ -7,10 +7,7 @@ public class FotoRepository : IFotoRepository
 {
     private readonly FotoContext _fotoContext;
 
-    public FotoRepository(FotoContext fotoContext)
-    {
-        _fotoContext = fotoContext;
-    }
+    public FotoRepository(FotoContext fotoContext) { _fotoContext = fotoContext; }
 
     #region IFotoRepository Members
 

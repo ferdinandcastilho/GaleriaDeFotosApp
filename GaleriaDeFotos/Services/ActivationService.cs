@@ -1,4 +1,5 @@
-﻿using GaleriaDeFotos.Activation;
+﻿using Windows.Storage;
+using GaleriaDeFotos.Activation;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.Settings;
 using GaleriaDeFotos.Core.Services;
@@ -7,7 +8,6 @@ using GaleriaDeFotos.Services.Settings;
 using GaleriaDeFotos.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Windows.Storage;
 
 namespace GaleriaDeFotos.Services;
 

@@ -10,8 +10,5 @@ public sealed partial class MainPage
         InitializeComponent();
     }
 
-    public MainViewModel ViewModel
-    {
-        get;
-    }
+    public MainViewModel ViewModel { get; }
 }

@@ -4,10 +4,7 @@ namespace GaleriaDeFotos.Contracts.Settings;
 
 public interface IThemeSelectorService
 {
-    ElementTheme Setting
-    {
-        get;
-    }
+    ElementTheme Setting { get; }
 
     Task InitializeAsync();
 

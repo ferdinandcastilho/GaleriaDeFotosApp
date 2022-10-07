@@ -8,6 +8,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:models="using:GaleriaDeFotos.Core.Models"
     xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Grid RowDefinitions="50,*,50" RowSpacing="2">

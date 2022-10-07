@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
@@ -10,15 +9,19 @@ namespace GaleriaDeFotos.ViewModels;
 public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
-    private readonly INavigationService _navigationService;
+    [ObservableProperty] private string _fotoHeight = string.Empty;
+
+    //Propriedades da Foto
+    [ObservableProperty] private string _fotoWidth = string.Empty;
     [ObservableProperty] private bool _isFavorite;
+
+    [ObservableProperty] private bool _isShowingDetails;
     [ObservableProperty] private Foto? _item;
     [ObservableProperty] private Foto? _selectedFoto;
+    [ObservableProperty] private string _sizeString = string.Empty;
 
-    public FotosFullViewModel(INavigationService navigationService,
-        IFotosDataService fotosDataService)
+    public FotosFullViewModel(IFotosDataService fotosDataService)
     {
-        _navigationService = navigationService;
         _fotosDataService = fotosDataService;
     }
 
@@ -35,18 +38,15 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
+    public void OnNavigatedFrom() { }
 
     #endregion
 
     [RelayCommand]
-    private void GetDetails()
+    private void ToggleDetails()
     {
         if (Item == null) return;
-        _navigationService.SetListDataItemForNextConnectedAnimation(Item);
-        _navigationService.NavigateTo(typeof(FotosDetailViewModel).FullName!, Item.ImageId);
+        IsShowingDetails = !IsShowingDetails;
     }
 
     [RelayCommand]

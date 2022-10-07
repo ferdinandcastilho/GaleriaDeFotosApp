@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
+using Windows.UI;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
-using Windows.UI;
 using WinRT.Interop;
 
 namespace GaleriaDeFotos.Helpers;
@@ -88,8 +88,7 @@ internal class TitleBarHelper
             {
                 SendMessage(hwnd, Wmactivate, Wainactive, IntPtr.Zero);
                 SendMessage(hwnd, Wmactivate, Waactive, IntPtr.Zero);
-            }
-            else
+            } else
             {
                 SendMessage(hwnd, Wmactivate, Waactive, IntPtr.Zero);
                 SendMessage(hwnd, Wmactivate, Wainactive, IntPtr.Zero);

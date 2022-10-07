@@ -11,9 +11,6 @@ namespace GaleriaDeFotos.Core.DataContext;
 public sealed class FotoContext : DbContext
 {
     private static string _connectionString;
-    private IConfigurationRoot Configuration { get; }
-
-    [UsedImplicitly] public DbSet<FotoData> Fotos { get; set; }
 
     public FotoContext(DbContextOptions<FotoContext> options) : base(options)
     {
@@ -22,13 +19,14 @@ public sealed class FotoContext : DbContext
 
         var dbPath = GetDbPath();
 
-        if (!File.Exists(dbPath))
-        {
-            SQLiteConnection.CreateFile(dbPath);
-        }
+        if (!File.Exists(dbPath)) SQLiteConnection.CreateFile(dbPath);
 
         Database.EnsureCreated();
     }
+
+    private IConfigurationRoot Configuration { get; }
+
+    [UsedImplicitly] public DbSet<FotoData> Fotos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

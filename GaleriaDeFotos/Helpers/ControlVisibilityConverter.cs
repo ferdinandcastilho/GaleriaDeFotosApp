@@ -17,20 +17,20 @@ public class ControlVisibilityConverter : IValueConverter
         switch (value)
         {
             case bool boolValue:
-                {
-                    result = boolValue;
-                    result = inverter ? !result : result;
+            {
+                result = boolValue;
+                result = inverter ? !result : result;
 
-                    return result ? Visibility.Visible : Visibility.Collapsed;
-                }
+                return result ? Visibility.Visible : Visibility.Collapsed;
+            }
             case int intValue:
-                {
-                    result = intValue is 0;
+            {
+                result = intValue is 0;
 
-                    result = inverter ? !result : result;
+                result = inverter ? !result : result;
 
-                    return result ? Visibility.Visible : Visibility.Collapsed;
-                }
+                return result ? Visibility.Visible : Visibility.Collapsed;
+            }
             default:
                 return Visibility.Collapsed;
         }

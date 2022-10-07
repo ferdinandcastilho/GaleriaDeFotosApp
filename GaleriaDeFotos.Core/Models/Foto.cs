@@ -35,7 +35,7 @@ public partial class Foto : ObservableObject
     public static double GetStartSliderWidth()
     {
         var widthRange = MaxWidth - MinWidth;
-        return ((StartWidth - MinWidth) / widthRange) * 100;
+        return (StartWidth - MinWidth) / widthRange * 100;
     }
 
     public static double GetUpdatedWidth(double percent)

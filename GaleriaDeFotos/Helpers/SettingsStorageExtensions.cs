@@ -1,6 +1,6 @@
-﻿using GaleriaDeFotos.Core.Helpers;
-using Windows.Storage;
+﻿using Windows.Storage;
 using Windows.Storage.Streams;
+using GaleriaDeFotos.Core.Helpers;
 
 namespace GaleriaDeFotos.Helpers;
 
@@ -94,8 +94,5 @@ public static class SettingsStorageExtensions
         return bytes;
     }
 
-    private static string GetFileName(string name)
-    {
-        return string.Concat(name, FileExtension);
-    }
+    private static string GetFileName(string name) { return string.Concat(name, FileExtension); }
 }

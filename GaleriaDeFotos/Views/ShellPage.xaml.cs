@@ -1,11 +1,11 @@
-﻿using GaleriaDeFotos.Contracts.Services;
+﻿using Windows.System;
+using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Windows.System;
 
 namespace GaleriaDeFotos.Views;
 
@@ -29,10 +29,7 @@ public sealed partial class ShellPage
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
     }
 
-    public ShellViewModel ViewModel
-    {
-        get;
-    }
+    public ShellViewModel ViewModel { get; }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {

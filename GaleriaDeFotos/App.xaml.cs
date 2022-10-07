@@ -11,20 +11,16 @@ using GaleriaDeFotos.ViewModels;
 using GaleriaDeFotos.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using WinRT.Interop;
 using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace GaleriaDeFotos;
 
 public partial class App
 {
-
-    public IHost Host
-    {
-        get;
-    }
-
-    public static WindowEx MainWindow { get; } = new MainWindow();
     public App()
     {
         InitializeComponent();
@@ -32,13 +28,16 @@ public partial class App
             .UseContentRoot(AppContext.BaseDirectory).ConfigureServices((context, services) =>
             {
                 // Default Activation Handler
-                services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+                services
+                    .AddTransient<ActivationHandler<LaunchActivatedEventArgs>,
+                        DefaultActivationHandler>();
 
                 // Settings
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
                 services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
                 services.AddSingleton<LastFolderOptionSelectorService>();
-                services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+                services.Configure<LocalSettingsOptions>(
+                    context.Configuration.GetSection(nameof(LocalSettingsOptions)));
 
                 // Services
                 services.AddTransient<INavigationViewService, NavigationViewService>();
@@ -59,8 +58,6 @@ public partial class App
                 services.AddTransient<AboutPage>();
                 services.AddTransient<FavoritasViewModel>();
                 services.AddTransient<FavoritasPage>();
-                services.AddTransient<FotosDetailViewModel>();
-                services.AddTransient<FotosDetailPage>();
                 services.AddTransient<FotosFullPage>();
                 services.AddTransient<FotosFullViewModel>();
                 services.AddTransient<FotosViewModel>();
@@ -69,11 +66,14 @@ public partial class App
                 services.AddTransient<MainPage>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
-
             }).Build();
 
         UnhandledException += App_UnhandledException;
     }
+
+    public IHost Host { get; }
+
+    public static WindowEx MainWindow { get; } = new MainWindow();
 
     public static T GetService<T>() where T : class
     {
@@ -96,16 +96,15 @@ public partial class App
 
         await GetService<IActivationService>().ActivateAsync(args);
 
-        var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
-        var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-        var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+        var hWnd = WindowNative.GetWindowHandle(MainWindow);
+        var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+        var appWindow = AppWindow.GetFromWindowId(windowId);
         if (appWindow is null) return;
-        var displayArea = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(windowId,
-            Microsoft.UI.Windowing.DisplayAreaFallback.Nearest);
+        var displayArea = DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest);
         if (displayArea is null) return;
         var centeredPosition = appWindow.Position;
-        centeredPosition.X = ((displayArea.WorkArea.Width - appWindow.Size.Width) / 2);
-        centeredPosition.Y = ((displayArea.WorkArea.Height - appWindow.Size.Height) / 2);
+        centeredPosition.X = (displayArea.WorkArea.Width - appWindow.Size.Width) / 2;
+        centeredPosition.Y = (displayArea.WorkArea.Height - appWindow.Size.Height) / 2;
         appWindow.Move(centeredPosition);
     }
 }

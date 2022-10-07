@@ -12,7 +12,7 @@
         <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
-        <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
+        <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
         <PackageReference Include="SQLite" Version="3.13.0" />
         <PackageReference Include="System.Data.SQLite.Core" Version="1.0.116" />
         <PackageReference Include="WinUIEx" Version="1.8.0" />
@@ -37,7 +37,7 @@
         <ProjectCapability Include="Msix" />
     </ItemGroup>
     <ItemGroup>
-      <Resource Remove="Templates\TopBar.xaml" />
+        <Resource Remove="Templates\TopBar.xaml" />
     </ItemGroup>
 
     <PropertyGroup>
@@ -45,6 +45,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <EnableMsixTooling>true</EnableMsixTooling>
         <ImplicitUsings>enable</ImplicitUsings>
+        <NeutralLanguage>pt-BR</NeutralLanguage>
         <Nullable>enable</Nullable>
         <OutputType>WinExe</OutputType>
         <Platforms>x64</Platforms>
@@ -53,10 +54,10 @@
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
         <SelfContained>true</SelfContained>
         <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
-        <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
         <!-- This bundles the .NET Core libraries -->
-        <UseWinUI>true</UseWinUI>
+        <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
         <!-- This bundles the WinUI3 components -->
+        <UseWinUI>true</UseWinUI>
         <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     </PropertyGroup>
 

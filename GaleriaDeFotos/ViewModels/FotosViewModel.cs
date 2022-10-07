@@ -18,8 +18,8 @@ public partial class FotosViewModel : BaseFotosViewModel, INavigationAware
     private readonly IFotosDataService _fotosDataService;
     private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
     private readonly INavigationService _navigationService;
-    private bool _folderAlreadyPicked;
     private string? _currentFolder = string.Empty;
+    private bool _folderAlreadyPicked;
 
     [ObservableProperty] private bool _needToPickFolder;
     [ObservableProperty] private Foto? _selectedFoto;

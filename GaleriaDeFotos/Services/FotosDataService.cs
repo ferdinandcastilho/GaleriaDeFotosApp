@@ -14,10 +14,7 @@ public class FotosDataService : IFotosDataService
     private readonly FotoContext? _fotoContext;
     private string _lastPath = string.Empty;
 
-    public FotosDataService(FotoContext? fotoContext)
-    {
-        _fotoContext = fotoContext;
-    }
+    public FotosDataService(FotoContext? fotoContext) { _fotoContext = fotoContext; }
 
     #region IFotosDataService Members
 

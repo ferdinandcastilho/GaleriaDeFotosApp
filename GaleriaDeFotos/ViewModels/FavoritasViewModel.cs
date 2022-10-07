@@ -18,7 +18,6 @@ public partial class FavoritasViewModel : BaseFotosViewModel, INavigationAware
         _fotosDataService = fotosDataService;
     }
 
-
     #region INavigationAware Members
 
     public async void OnNavigatedTo(object parameter)
@@ -28,6 +27,10 @@ public partial class FavoritasViewModel : BaseFotosViewModel, INavigationAware
         await Task.CompletedTask;
     }
 
+    public void OnNavigatedFrom() { }
+
+    #endregion
+
     protected override async Task LoadPhotos()
     {
         var favorites = _fotosDataService.Select(data => data.IsFavorite);
@@ -35,10 +38,6 @@ public partial class FavoritasViewModel : BaseFotosViewModel, INavigationAware
         foreach (var favorite in favorites) Source.Add(favorite);
         await Task.CompletedTask;
     }
-
-    public void OnNavigatedFrom() { }
-
-    #endregion
 
     [RelayCommand]
     private void ItemClick(Foto? clickedItem)
