@@ -63,10 +63,6 @@ jobs:
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
         
-    #Run Tests
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
-    
     # Remove the pfx
     - name: Remove the pfx
       run: Remove-Item -path GitHubActionsWorkflow.pfx
