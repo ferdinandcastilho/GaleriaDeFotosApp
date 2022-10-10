@@ -72,16 +72,21 @@
                               Command="{x:Bind ViewModel.ToggleDetailsCommand}" CornerRadius="20" />
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Favorite"
                               Icon="SolidStar"
-                              ToolTipService.ToolTip='Favoritar Imagem'
+                              ToolTipService.ToolTip='Adicionar aos Favoritos'
                               Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}, ConverterParameter=True}"
                               Command="{x:Bind ViewModel.SetFavoriteCommand}"
                               Click="ShowHideTeachingTip" CornerRadius="20" />
                 <AppBarButton x:Uid="FotosFullPage_CommandBar_Unfavorite"
                               Icon="OutlineStar"
-                              ToolTipService.ToolTip='Desfavoritar Imagem'
+                              ToolTipService.ToolTip='Remover dos Favoritos'
                               Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}}"
                               Command="{x:Bind ViewModel.UnSetFavoriteCommand}"
                               Click="ShowHideTeachingTip" CornerRadius="20" />
+                <AppBarButton x:Uid="FotosFullPage_CommandBar_Unfavorite"
+                              Icon="FullScreen"
+                              ToolTipService.ToolTip='Redimensionar Imagem'
+                              Command="{x:Bind ViewModel.OpenResizeWindowCommand}"
+                              CornerRadius="20" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
 

@@ -38,4 +38,9 @@ public sealed partial class FotosFullPage
         FavoriteTeachingTip.Target = e.OriginalSource as AppBarButton;
         FavoriteTeachingTip.IsOpen = true;
     }
+
+    private void ResizeButton_Click(object sender, RoutedEventArgs e)
+    {
+        
+    }
 }
