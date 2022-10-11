@@ -1,9 +1,13 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Drawing;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
+using GaleriaDeFotos.Templates;
 using ImageProcessor;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.ViewModels;
 
@@ -11,11 +15,14 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
     [ObservableProperty] private bool _isFavorite;
-
     [ObservableProperty] private bool _isShowingDetails;
+    [ObservableProperty] private int _imageWidth;
+    [ObservableProperty] private int _imageHeight;
+    [ObservableProperty] private double _imageAspectRatio;
     [ObservableProperty] private Foto? _item;
-
     [ObservableProperty] private Foto? _selectedFoto;
+
+    [ObservableProperty] private ImageFactory _imageFactory = new();
     //Propriedades
 
     public FotosFullViewModel(IFotosDataService fotosDataService)
@@ -32,13 +39,8 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
                 return string.Empty;
             }
 
-            using var imageStream = File.OpenRead(Item.ImageUri.AbsolutePath);
-            using var imageFactory = new ImageFactory();
-            imageFactory.Load(imageStream).AutoRotate(); //takes care of ex-if
-            var height = imageFactory.Image.Height;
-            var width = imageFactory.Image.Width;
-
-            return $"{width} x {height}";
+            var size = _imageFactory.Image.Size;
+            return $"{size.Width} x {size.Height}";
         }
         // ReSharper disable once ValueParameterNotUsed
         set { }
@@ -86,6 +88,11 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         if (parameter is string imageId)
         {
             Item = _fotosDataService.Select(fotoData => fotoData.ImageId == imageId).First();
+            await using var imageStream = File.OpenRead(Item.ImageUri.AbsolutePath);
+            _imageFactory.Load(imageStream).AutoRotate();
+            _imageWidth = _imageFactory.Image.Width;
+            _imageHeight = _imageFactory.Image.Height;
+            _imageAspectRatio = (double)_imageHeight / _imageWidth;
             IsFavorite = Item.IsFavorite;
         }
 
@@ -95,6 +102,28 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
     public void OnNavigatedFrom() { }
 
     #endregion
+
+    public void UpdateResizeHeight() { ImageHeight = (int)(_imageWidth * ImageAspectRatio); }
+
+    private async void ResizeImage()
+    {
+        if (Item == null) return;
+        var filePath = Item.ImageUri.AbsolutePath;
+        var photoBytes = File.ReadAllBytes(filePath);
+        using var inStream = new MemoryStream(photoBytes);
+        using var outStream = new MemoryStream();
+        using var imageFactory = new ImageFactory(preserveExifData: true);
+        var extension = Path.GetExtension(filePath);
+        var newFileNoExtension = filePath.Remove(filePath.IndexOf('.'));
+        var newFilePath = $"{newFileNoExtension + "_edited" + extension}";
+        imageFactory.Load(inStream);
+        var size = new Size(_imageWidth, _imageHeight);
+        imageFactory.Resize(size).Save(newFilePath);
+        var fileName = Path.GetFileName(newFilePath);
+        if (MainWindow.Instance == null) return;
+        await MainWindow.Instance.ShowMessageDialogAsync(
+            $"Image Redimensionada salva como \n{fileName}", "Imagem Redimensionada");
+    }
 
     [RelayCommand]
     private void ToggleDetails()
@@ -116,5 +145,20 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
     {
         _fotosDataService.SetFavorite(Item, false);
         IsFavorite = false;
+    }
+
+    [RelayCommand]
+    private async void OpenResizeWindow()
+    {
+        if (MainWindow.Instance == null) return;
+        var messageDialog = new ResizeBox
+        {
+            Title = "Redimensionamento de Imagem",
+            XamlRoot = MainWindow.Instance.Content.XamlRoot,
+            PrimaryButtonText = "Ok",
+            CloseButtonText = "Cancelar"
+        };
+        var result = await messageDialog.ShowAsync();
+        if (result == ContentDialogResult.Primary) ResizeImage();
     }
 }
