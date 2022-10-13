@@ -7,4 +7,6 @@ public class FotoData
     public string ImageUri { get; set; }
 
     public bool IsFavorite { get; set; }
+
+    public string Folder { get; set; }
 }

@@ -70,10 +70,14 @@ public class FotosDataService : IFotosDataService
         var listToAdd = new List<FotoData>();
         var retList = new List<Foto>();
         if (_fotoContext == null) return retList;
-        foreach (var file in files)
+        var filesList = files.ToList();
+        var sampleFile = filesList.First();
+        var fileName = Path.GetFileName(sampleFile);
+        var folder = sampleFile.Replace(fileName, "");
+        foreach (var file in filesList)
         {
             var hash = CreateHash(file);
-            var item = new Foto { ImageId = hash, ImageUri = new Uri(file) };
+            var item = new Foto { ImageId = hash, ImageUri = new Uri(file), Folder = folder };
             if (retList.Exists(foto => foto.ImageId == item.ImageId)) continue;
             retList.Add(item);
             if (await _fotoContext.Fotos.FindAsync(item.ImageId) != null) continue;
@@ -82,8 +86,13 @@ public class FotosDataService : IFotosDataService
 
         //Remove os que não estão mais na pasta
         foreach (var foto in _fotoContext.Fotos)
-            if (!retList.Exists(f => f.ImageId == foto.ImageId))
+        {
+            if (foto.Folder != folder) continue;
+            if (!retList.Exists(retFoto => retFoto.ImageId == foto.ImageId))
+            {
                 _fotoContext.Fotos.Remove(foto);
+            }
+        }
 
         await _fotoContext.Fotos.AddRangeAsync(listToAdd);
         await _fotoContext.SaveChangesAsync();
