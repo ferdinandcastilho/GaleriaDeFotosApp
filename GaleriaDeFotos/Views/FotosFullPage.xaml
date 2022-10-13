@@ -44,11 +44,12 @@
                 </StackPanel>
 
             </SplitView.Pane>
-            <Image Height="450"
-                   Width="720"
-                   Stretch="UniformToFill">
+            <Image Height="600"
+                   Width="800"
+                   Stretch="Uniform">
                 <Image.Source>
-                    <BitmapImage UriSource="{x:Bind ViewModel.Item.ImageUri}" />
+                    <BitmapImage CreateOptions="IgnoreImageCache"
+                        UriSource="{x:Bind ViewModel.Item.ImageUri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Image.Source>
             </Image>
         </SplitView>
@@ -75,24 +76,23 @@
                               Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}, ConverterParameter=True}"
                               Command="{x:Bind ViewModel.SetFavoriteCommand}"
                               Click="ShowHideTeachingTip" CornerRadius="20" />
-                <AppBarButton x:Name="UnFavoriteButton" 
+                <AppBarButton x:Name="UnFavoriteButton"
                               x:Uid="FotosFullPage_CommandBar_UnFavorite"
                               Icon="OutlineStar"
                               Visibility="{x:Bind ViewModel.IsFavorite, Mode=OneWay, Converter={StaticResource ControlVisibilityConverter}}"
                               Command="{x:Bind ViewModel.UnSetFavoriteCommand}"
                               Click="ShowHideTeachingTip" CornerRadius="20" />
-                <AppBarButton x:Name="ResizeButton"  x:Uid="FotosFullPage_CommandBar_Resize"
+                <AppBarButton x:Name="ResizeButton" x:Uid="FotosFullPage_CommandBar_Resize"
                               Icon="FullScreen"
                               Command="{x:Bind ViewModel.OpenResizeWindowCommand}"
                               CornerRadius="20" />
-                <AppBarButton x:Name="DeleteButton"  x:Uid="FotosFullPage_CommandBar_Delete"
+                <AppBarButton x:Name="DeleteButton" x:Uid="FotosFullPage_CommandBar_Delete"
                               Icon="Delete"
                               Command="{x:Bind ViewModel.DeleteImageCommand}"
                               Click="ShowHideTeachingTip" CornerRadius="20" />
-                <AppBarButton x:Name="RotateButton"  x:Uid="FotosFullPage_CommandBar_Rotate"
+                <AppBarButton x:Name="RotateButton" x:Uid="FotosFullPage_CommandBar_Rotate"
                               Icon="Rotate"
-                              Command="{x:Bind ViewModel.OpenResizeWindowCommand}"
-                              Click="ShowHideTeachingTip" CornerRadius="20" />
+                              Command="{x:Bind ViewModel.RotateImageCommand}" CornerRadius="20" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
 

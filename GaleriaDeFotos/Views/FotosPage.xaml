@@ -101,8 +101,6 @@
                                    Visibility="{x:Bind ViewModel.NotPickFolderVisibility, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
                                    animations:Connected.ListItemElementName="itemThumbnail"
                                    animations:Connected.ListItemKey="animationKeyContentGrid"
-                                   DesiredWidth="330"
-                                   ItemHeight="210"
                                    IsItemClickEnabled="True"
                                    ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
                                    ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
@@ -117,7 +115,7 @@
                         <Image HorizontalAlignment="Center"
                                VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="{x:Bind ImageUri}" />
+                                <BitmapImage CreateOptions="IgnoreImageCache" UriSource="{x:Bind ImageUri}" />
                             </Image.Source>
                         </Image>
 

@@ -11,7 +11,7 @@ public sealed partial class FotosPage
         ViewModel = App.GetService<FotosViewModel>();
         InitializeComponent();
         SizeSlider.Value = Foto.GetStartSliderWidth();
-        AdaptiveGridView.ItemHeight = Foto.StartWidth * 9 / 16;
+        AdaptiveGridView.ItemHeight = Foto.StartWidth * 3 / 4;
         AdaptiveGridView.DesiredWidth = Foto.StartWidth;
     }
 
@@ -20,7 +20,7 @@ public sealed partial class FotosPage
     private void SizeSlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
     {
         var width = Foto.GetUpdatedWidth(e.NewValue);
-        AdaptiveGridView.ItemHeight = width * 9 / 16;
+        AdaptiveGridView.ItemHeight = width * 3 / 4;
         AdaptiveGridView.DesiredWidth = width;
     }
 }

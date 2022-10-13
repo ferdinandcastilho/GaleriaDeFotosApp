@@ -29,7 +29,7 @@ public class FavoritasViewModel : BaseFotosViewModel
     protected override async Task LoadPhotos()
     {
         Source.Clear();
-        var favorites = _fotosDataService.Select(data => data.IsFavorite);
+        var favorites = await _fotosDataService.SelectAsync(data => data.IsFavorite);
 
         foreach (var favorite in favorites) Source.Add(favorite);
         await Task.CompletedTask;

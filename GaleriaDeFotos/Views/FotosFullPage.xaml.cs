@@ -2,6 +2,8 @@
 using GaleriaDeFotos.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Timer = System.Timers.Timer;
 
 namespace GaleriaDeFotos.Views;
 
@@ -27,7 +29,7 @@ public sealed partial class FotosFullPage
 
     public FotosFullViewModel ViewModel { get; }
 
-    private void ShowHideTeachingTip(object sender, RoutedEventArgs e)
+    private async void ShowHideTeachingTip(object sender, RoutedEventArgs e)
     {
         var teachingTipTitle = string.Empty;
         var teachingTipSubtitle = string.Empty;
@@ -57,5 +59,7 @@ public sealed partial class FotosFullPage
 
         FavoriteTeachingTip.Target = e.OriginalSource as AppBarButton;
         FavoriteTeachingTip.IsOpen = true;
+        await Task.Delay(1000);
+        FavoriteTeachingTip.IsOpen = false;
     }
 }

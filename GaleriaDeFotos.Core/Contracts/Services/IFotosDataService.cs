@@ -7,6 +7,6 @@ namespace GaleriaDeFotos.Core.Contracts.Services;
 public interface IFotosDataService
 {
     Task<IEnumerable<Foto>> GetPhotosAsync(string imagePath);
-    IEnumerable<Foto> Select(Expression<Func<FotoData, bool>> predicate);
+    Task<IEnumerable<Foto>> SelectAsync(Expression<Func<FotoData, bool>> predicate);
     void SetFavorite(Foto foto, bool isFavorite);
 }

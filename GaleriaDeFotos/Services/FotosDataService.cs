@@ -17,8 +17,9 @@ public class FotosDataService : IFotosDataService
 
     #region IFotosDataService Members
 
-    public async Task<IEnumerable<Foto>> GetPhotosAsync(string imagePath)
+    public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
     {
+        imagePath ??= _lastPath;
         var files = await GetImagesFromFolderAsync(imagePath);
         if (_fotoContext == null) return new List<Foto>();
         var photos = await SetupPhotosAsync(files);
@@ -37,9 +38,10 @@ public class FotosDataService : IFotosDataService
         await _fotoContext.SaveChangesAsync();
     }
 
-    public IEnumerable<Foto> Select(Expression<Func<FotoData, bool>> predicate)
+    public async Task<IEnumerable<Foto>> SelectAsync(Expression<Func<FotoData, bool>> predicate)
     {
         if (_fotoContext == null) return new List<Foto>();
+        await GetPhotosAsync();
         var fotoDatas = _fotoContext.Fotos.Where(predicate);
         return fotoDatas.Select(foto => new Foto(foto));
     }
@@ -80,10 +82,8 @@ public class FotosDataService : IFotosDataService
 
         //Remove os que não estão mais na pasta
         foreach (var foto in _fotoContext.Fotos)
-        {
             if (!retList.Exists(f => f.ImageId == foto.ImageId))
                 _fotoContext.Fotos.Remove(foto);
-        }
 
         await _fotoContext.Fotos.AddRangeAsync(listToAdd);
         await _fotoContext.SaveChangesAsync();
