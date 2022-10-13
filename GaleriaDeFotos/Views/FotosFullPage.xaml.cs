@@ -36,20 +36,20 @@ public sealed partial class FotosFullPage
         if (appBarButton == null) return;
         if (appBarButton.Label == "FotosFullPage_CommandBar_Favorite_Label".GetLocalized())
         {
-            teachingTipTitle = "FotosFullPage_TeachingTip_UnFavoriteTitle".GetLocalized();
-            teachingTipSubtitle = "FotosFullPage_TeachingTip_UnFavoriteSubtitle".GetLocalized();
-        } else if (appBarButton.Label == "FotosFullPage_CommandBar_UnFavorite_Label".GetLocalized())
-        {
             teachingTipTitle = "FotosFullPage_TeachingTip_FavoriteTitle".GetLocalized();
             teachingTipSubtitle = "FotosFullPage_TeachingTip_FavoriteSubtitle".GetLocalized();
+        } else if (appBarButton.Label == "FotosFullPage_CommandBar_UnFavorite_Label".GetLocalized())
+        {
+            teachingTipTitle = "FotosFullPage_TeachingTip_UnFavoriteTitle".GetLocalized();
+            teachingTipSubtitle = "FotosFullPage_TeachingTip_UnFavoriteSubtitle".GetLocalized();
         } else if (appBarButton.Label == "FotosFullPage_CommandBar_Delete_Label".GetLocalized())
         {
             teachingTipTitle = "FotosFullPage_TeachingTip_DeleteTitle".GetLocalized();
             teachingTipSubtitle = "FotosFullPage_TeachingTip_DeleteSubtitle".GetLocalized();
         } else if (appBarButton.Label == "FotosFullPage_CommandBar_Rotate_Label".GetLocalized())
         {
-            teachingTipTitle = "FotosFullPage_TeachingTip_DeleteTitle".GetLocalized();
-            teachingTipSubtitle = "FotosFullPage_TeachingTip_DeleteSubtitle".GetLocalized();
+            teachingTipTitle = "FotosFullPage_TeachingTip_RotateTitle".GetLocalized();
+            teachingTipSubtitle = "FotosFullPage_TeachingTip_RotateSubtitle".GetLocalized();
         }
 
         FavoriteTeachingTip.Title = teachingTipTitle;

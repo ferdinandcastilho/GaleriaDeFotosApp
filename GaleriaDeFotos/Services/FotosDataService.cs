@@ -10,7 +10,6 @@ namespace GaleriaDeFotos.Services;
 
 public class FotosDataService : IFotosDataService
 {
-    private const string Salt = "MaikeuFernando";
     private readonly FotoContext? _fotoContext;
     private string _lastPath = string.Empty;
 
@@ -18,13 +17,12 @@ public class FotosDataService : IFotosDataService
 
     #region IFotosDataService Members
 
-    public async Task<IEnumerable<Foto>> GetPhotosAsync(string? imagePath = null)
+    public async Task<IEnumerable<Foto>> GetPhotosAsync(string imagePath)
     {
         var files = await GetImagesFromFolderAsync(imagePath);
+        if (_fotoContext == null) return new List<Foto>();
         var photos = await SetupPhotosAsync(files);
-
 #if DEBUG
-        if (_fotoContext == null) return photos;
         foreach (var cat in _fotoContext.Fotos.ToList())
             Debug.WriteLine($"Id= {cat.ImageId}, Uri = {cat.ImageUri}");
 #endif
@@ -74,10 +72,17 @@ public class FotosDataService : IFotosDataService
         {
             var hash = CreateHash(file);
             var item = new Foto { ImageId = hash, ImageUri = new Uri(file) };
-            if (retList.Find(foto => foto.ImageId == item.ImageId) != null) continue;
+            if (retList.Exists(foto => foto.ImageId == item.ImageId)) continue;
             retList.Add(item);
-            if (await _fotoContext.Fotos.FindAsync(hash) != null) continue;
+            if (await _fotoContext.Fotos.FindAsync(item.ImageId) != null) continue;
             listToAdd.Add(item.ToData());
+        }
+
+        //Remove os que não estão mais na pasta
+        foreach (var foto in _fotoContext.Fotos)
+        {
+            if (!retList.Exists(f => f.ImageId == foto.ImageId))
+                _fotoContext.Fotos.Remove(foto);
         }
 
         await _fotoContext.Fotos.AddRangeAsync(listToAdd);
@@ -90,7 +95,8 @@ public class FotosDataService : IFotosDataService
         using var md5 = MD5.Create();
         using var stream = File.OpenRead(file);
         var byteArrayHash = md5.ComputeHash(stream);
-        var hashids = new Hashids(Salt);
+        var filename = Path.GetFileName(file);
+        var hashids = new Hashids(filename);
         var bytesAsInts = byteArrayHash.Select(x => (int)x).ToArray();
         return hashids.Encode(bytesAsInts);
     }

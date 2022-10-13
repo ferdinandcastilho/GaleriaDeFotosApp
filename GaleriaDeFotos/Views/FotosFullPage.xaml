@@ -87,7 +87,7 @@
                               CornerRadius="20" />
                 <AppBarButton x:Name="DeleteButton"  x:Uid="FotosFullPage_CommandBar_Delete"
                               Icon="Delete"
-                              Command="{x:Bind ViewModel.OpenResizeWindowCommand}"
+                              Command="{x:Bind ViewModel.DeleteImageCommand}"
                               Click="ShowHideTeachingTip" CornerRadius="20" />
                 <AppBarButton x:Name="RotateButton"  x:Uid="FotosFullPage_CommandBar_Rotate"
                               Icon="Rotate"

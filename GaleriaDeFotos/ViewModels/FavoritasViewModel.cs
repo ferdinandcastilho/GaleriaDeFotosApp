@@ -1,49 +1,37 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using GaleriaDeFotos.Contracts.Services;
-using GaleriaDeFotos.Contracts.ViewModels;
+﻿using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Core.Contracts.Services;
-using GaleriaDeFotos.Core.Models;
 
 namespace GaleriaDeFotos.ViewModels;
 
-public partial class FavoritasViewModel : BaseFotosViewModel, INavigationAware
+public class FavoritasViewModel : BaseFotosViewModel
 {
     private readonly IFotosDataService _fotosDataService;
-    private readonly INavigationService _navigationService;
 
     public FavoritasViewModel(INavigationService navigationService,
-        IFotosDataService fotosDataService)
+        IFotosDataService fotosDataService) : base(navigationService)
     {
-        _navigationService = navigationService;
         _fotosDataService = fotosDataService;
     }
 
     #region INavigationAware Members
 
-    public async void OnNavigatedTo(object parameter)
+    protected override async void OnNavigatedToChild(object parameter)
     {
         await LoadPhotos();
 
         await Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom() { }
+    protected override void OnNavigatedFromChild() { }
 
     #endregion
 
     protected override async Task LoadPhotos()
     {
-        var favorites = _fotosDataService.Select(data => data.IsFavorite);
         Source.Clear();
+        var favorites = _fotosDataService.Select(data => data.IsFavorite);
+
         foreach (var favorite in favorites) Source.Add(favorite);
         await Task.CompletedTask;
-    }
-
-    [RelayCommand]
-    private void ItemClick(Foto? clickedItem)
-    {
-        if (clickedItem == null) return;
-        _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-        _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
     }
 }

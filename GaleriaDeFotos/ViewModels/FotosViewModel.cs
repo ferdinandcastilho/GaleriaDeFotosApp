@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Services;
-using GaleriaDeFotos.Contracts.ViewModels;
 using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.EnumTypes;
@@ -13,11 +12,11 @@ using WinRT.Interop;
 
 namespace GaleriaDeFotos.ViewModels;
 
-public partial class FotosViewModel : BaseFotosViewModel, INavigationAware
+public partial class FotosViewModel : BaseFotosViewModel
 {
     private readonly IFotosDataService _fotosDataService;
     private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
-    private readonly INavigationService _navigationService;
+
     private string? _currentFolder = string.Empty;
     private bool _folderAlreadyPicked;
 
@@ -25,10 +24,10 @@ public partial class FotosViewModel : BaseFotosViewModel, INavigationAware
     [ObservableProperty] private Foto? _selectedFoto;
 
     public FotosViewModel(INavigationService navigationService, IFotosDataService fotosDataService,
-        LastFolderOptionSelectorService lastFolderOptionSelectorService)
+        LastFolderOptionSelectorService lastFolderOptionSelectorService) : base(navigationService)
     {
         _lastFolderOptionSelectorService = lastFolderOptionSelectorService;
-        _navigationService = navigationService;
+
         _fotosDataService = fotosDataService;
         Source.CollectionChanged += (_, _) =>
         {
@@ -56,24 +55,16 @@ public partial class FotosViewModel : BaseFotosViewModel, INavigationAware
 
     #region INavigationAware Members
 
-    public async void OnNavigatedTo(object parameter)
+    protected override async void OnNavigatedToChild(object parameter)
     {
         var option = _lastFolderOptionSelectorService.Setting;
         NeedToPickFolder = option == LastFolderOption.AlwaysPick;
         if (!NeedToPickFolder || _folderAlreadyPicked) await OpenLastOpenedFolder();
     }
 
-    public void OnNavigatedFrom() { }
+    protected override void OnNavigatedFromChild() { }
 
     #endregion
-
-    [RelayCommand]
-    private void ItemClick(Foto? clickedItem)
-    {
-        if (clickedItem == null) return;
-        _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-        _navigationService.NavigateTo(typeof(FotosFullViewModel).FullName!, clickedItem.ImageId);
-    }
 
     [RelayCommand]
     private async Task SelectDirectory()
