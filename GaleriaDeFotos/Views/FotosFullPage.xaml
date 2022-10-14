@@ -49,7 +49,7 @@
                    Stretch="Uniform">
                 <Image.Source>
                     <BitmapImage CreateOptions="IgnoreImageCache"
-                        UriSource="{x:Bind ViewModel.Item.ImageUri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                 UriSource="{x:Bind ViewModel.Item.ImageUri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Image.Source>
             </Image>
         </SplitView>

@@ -2,6 +2,10 @@
 
 namespace GaleriaDeFotos.Views;
 
+/// <inheritdoc cref="Microsoft.UI.Xaml.Controls.Page" />
+/// <summary>
+///     Página de Sobre
+/// </summary>
 public sealed partial class AboutPage
 {
     public AboutPage()

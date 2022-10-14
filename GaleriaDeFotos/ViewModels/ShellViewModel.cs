@@ -5,6 +5,10 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace GaleriaDeFotos.ViewModels;
 
+/// <inheritdoc />
+/// <summary>
+///     Shell
+/// </summary>
 public class ShellViewModel : ObservableRecipient
 {
     private bool _isBackEnabled;

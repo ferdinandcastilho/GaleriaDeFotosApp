@@ -4,6 +4,10 @@ using Microsoft.UI.Xaml;
 
 namespace GaleriaDeFotos.Activation;
 
+/// <summary>
+///     Classe Padrão da Ativação do Aplicativo
+///     Veja: https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md
+/// </summary>
 public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
 {
     private readonly INavigationService _navigationService;

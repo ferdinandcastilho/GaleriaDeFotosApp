@@ -10,6 +10,10 @@ using Microsoft.UI.Xaml;
 
 namespace GaleriaDeFotos.ViewModels;
 
+/// <inheritdoc />
+/// <summary>
+///     ViewModel das Configurações
+/// </summary>
 public partial class SettingsViewModel : ObservableRecipient
 {
     private readonly LastFolderOptionSelectorService _lastFolderOptionSelectorService;
@@ -28,12 +32,19 @@ public partial class SettingsViewModel : ObservableRecipient
         _versionDescription = GetVersionDescription();
     }
 
+    /// <summary>
+    ///     Descrição da Versão
+    /// </summary>
     public string VersionDescription
     {
         get => _versionDescription;
         set => SetProperty(ref _versionDescription, value);
     }
 
+    /// <summary>
+    ///     Muda a opção de Última Pasta
+    /// </summary>
+    /// <param name="option">Opção</param>
     [RelayCommand]
     private async void SwitchLastFolderOption(LastFolderOption option)
     {
@@ -46,16 +57,24 @@ public partial class SettingsViewModel : ObservableRecipient
         await Task.CompletedTask;
     }
 
+    /// <summary>
+    ///     Troca Tema
+    /// </summary>
+    /// <param name="theme">Tema Escolhido</param>
     [RelayCommand]
-    private async void SwitchTheme(ElementTheme param)
+    private async void SwitchTheme(ElementTheme theme)
     {
-        if (ElementTheme != param)
+        if (ElementTheme != theme)
         {
-            ElementTheme = param;
-            await _themeSelectorService.SetThemeAsync(param);
+            ElementTheme = theme;
+            await _themeSelectorService.SetThemeAsync(theme);
         }
     }
 
+    /// <summary>
+    ///     Obtém Descrição da Versão
+    /// </summary>
+    /// <returns></returns>
     private static string GetVersionDescription()
     {
         Version version;

@@ -7,9 +7,11 @@ using WinRT.Interop;
 
 namespace GaleriaDeFotos.Helpers;
 
-// Helper class to workaround custom title bar bugs.
-// DISCLAIMER: The resource key names and color values used below are subject to change. Do not depend on them.
-// https://github.com/microsoft/TemplateStudio/issues/4516
+/// <summary>
+///     Helper class to workaround custom title bar bugs.
+///     DISCLAIMER: The resource key names and color values used below are subject to change. Do not depend on them.
+///     https://github.com/microsoft/TemplateStudio/issues/4516
+/// </summary>
 internal class TitleBarHelper
 {
     private const int Wainactive = 0x00;

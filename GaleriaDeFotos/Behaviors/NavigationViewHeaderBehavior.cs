@@ -6,6 +6,10 @@ using Microsoft.Xaml.Interactivity;
 
 namespace GaleriaDeFotos.Behaviors;
 
+/// <inheritdoc />
+/// <summary>
+///     Classe responsável pelo comportamento na NavigationView
+/// </summary>
 public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 {
     private static NavigationViewHeaderBehavior? _current;

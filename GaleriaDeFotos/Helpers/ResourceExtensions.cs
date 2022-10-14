@@ -2,6 +2,9 @@
 
 namespace GaleriaDeFotos.Helpers;
 
+/// <summary>
+///     Extensões para obtenção dos Recursos
+/// </summary>
 public static class ResourceExtensions
 {
     private static readonly ResourceLoader ResourceLoader = new();

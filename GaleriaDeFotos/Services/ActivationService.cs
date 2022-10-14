@@ -11,6 +11,10 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.Services;
 
+/// <inheritdoc />
+/// <summary>
+///     Serviço de Ativação
+/// </summary>
 public class ActivationService : IActivationService
 {
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
@@ -67,6 +71,9 @@ public class ActivationService : IActivationService
             await _defaultHandler.HandleAsync(activationArgs);
     }
 
+    /// <summary>
+    ///     Executado na Inicialização
+    /// </summary>
     private async Task InitializeAsync()
     {
         await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
@@ -74,6 +81,9 @@ public class ActivationService : IActivationService
         await Task.CompletedTask;
     }
 
+    /// <summary>
+    ///     Executado no Início do Programa
+    /// </summary>
     private async Task StartupAsync()
     {
         await _themeSelectorService.SetRequestedThemeAsync();

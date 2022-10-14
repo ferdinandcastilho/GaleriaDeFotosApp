@@ -8,8 +8,11 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace GaleriaDeFotos.Services;
 
-// For more information on navigation between pages see
-// https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
+/// <inheritdoc />
+/// <summary>
+///     For more information on navigation between pages see
+///     https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
+/// </summary>
 public class NavigationService : INavigationService
 {
     private readonly IPageService _pageService;
@@ -90,27 +93,36 @@ public class NavigationService : INavigationService
 
     #endregion
 
+    /// <summary>
+    ///     Registra eventos do Frame
+    /// </summary>
     private void RegisterFrameEvents()
     {
         if (_frame != null) _frame.Navigated += OnNavigated;
     }
 
+    /// <summary>
+    ///     Remove registro de eventos de Frame
+    /// </summary>
     private void UnregisterFrameEvents()
     {
         if (_frame != null) _frame.Navigated -= OnNavigated;
     }
 
+    /// <summary>
+    ///     Executado ao navegar para a página
+    /// </summary>
+    /// <param name="sender">Objeto de origem do evento</param>
+    /// <param name="e">Argumentos do Evento, veja <see cref="NavigationEventArgs" /></param>
     private void OnNavigated(object sender, NavigationEventArgs e)
     {
-        if (sender is Frame frame)
-        {
-            var clearNavigation = (bool)frame.Tag;
-            if (clearNavigation) frame.BackStack.Clear();
+        if (sender is not Frame frame) return;
+        var clearNavigation = (bool)frame.Tag;
+        if (clearNavigation) frame.BackStack.Clear();
 
-            if (frame.GetPageViewModel() is INavigationAware navigationAware)
-                navigationAware.OnNavigatedTo(e.Parameter);
+        if (frame.GetPageViewModel() is INavigationAware navigationAware)
+            navigationAware.OnNavigatedTo(e.Parameter);
 
-            Navigated?.Invoke(sender, e);
-        }
+        Navigated?.Invoke(sender, e);
     }
 }

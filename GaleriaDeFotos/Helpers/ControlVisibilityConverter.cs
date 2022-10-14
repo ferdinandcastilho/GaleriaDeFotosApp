@@ -7,6 +7,7 @@ public class ControlVisibilityConverter : IValueConverter
 {
     #region IValueConverter Members
 
+    /// <inheritdoc />
     public object Convert(object value, Type targetType, object parameter, string language)
     {
         // Will only parse to True if it's passed an argument of True to the converter in Xaml
@@ -36,6 +37,7 @@ public class ControlVisibilityConverter : IValueConverter
         }
     }
 
+    /// <inheritdoc />
     public object? ConvertBack(object value, Type targetType, object parameter, string language)
     {
         return null;

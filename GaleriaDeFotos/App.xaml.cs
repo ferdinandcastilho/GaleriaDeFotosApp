@@ -19,6 +19,10 @@ using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArg
 
 namespace GaleriaDeFotos;
 
+/// <inheritdoc />
+/// <summary>
+///     Aplicação Principal
+/// </summary>
 public partial class App
 {
     public App()

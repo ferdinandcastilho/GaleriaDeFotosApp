@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 
 namespace GaleriaDeFotos.Services.Settings;
 
+/// <inheritdoc cref="GaleriaDeFotos.Contracts.Settings.IThemeSelectorService" />
 public class ThemeSelectorService : SettingSelectorService<ElementTheme>, IThemeSelectorService
 {
     public ThemeSelectorService(ILocalSettingsService localSettingsService) : base(

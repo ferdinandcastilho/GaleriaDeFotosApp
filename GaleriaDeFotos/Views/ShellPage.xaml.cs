@@ -9,7 +9,10 @@ using Microsoft.UI.Xaml.Media;
 
 namespace GaleriaDeFotos.Views;
 
-// TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
+/// <inheritdoc cref="Microsoft.UI.Xaml.Controls.Page" />
+/// <summary>
+///     Página de Shell
+/// </summary>
 public sealed partial class ShellPage
 {
     public ShellPage(ShellViewModel viewModel)
