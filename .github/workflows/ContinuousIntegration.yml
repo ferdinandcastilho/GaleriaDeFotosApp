@@ -72,14 +72,3 @@ jobs:
       with:
         name: MSIX Package
         path: ${{ env.Solution_Name }}\\Packages
-    
-    #Generate Documentation
-    - name: Generate Documentation
-      uses: FuLagann/csharp-docs-generator@v1.0
-      with:
-        build-tasks: dotnet build
-        cleanup-tasks: dotnet clean
-        binaries: \GaleriaDeFotos\bin\x64\Debug\net6.0-windows10.0.19041.0\win10-x64\GaleriaDeFotos.exe
-        output-path: docs/api
-        user-email: maikramer@gmail.com
-        user-name: maikramer
