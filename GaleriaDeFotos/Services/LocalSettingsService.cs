@@ -8,10 +8,19 @@ using Microsoft.Extensions.Options;
 
 namespace GaleriaDeFotos.Services;
 
+/// <inheritdoc />
 public class LocalSettingsService : ILocalSettingsService
 {
+    /// <summary>
+    ///     Pasta com os dados da aplicação
+    /// </summary>
     private const string DefaultApplicationDataFolder = "GaleriaDeFotos/ApplicationData";
+
+    /// <summary>
+    ///     Arquivo com as configurações do Aplicativo
+    /// </summary>
     private const string DefaultLocalSettingsFile = "LocalSettings.json";
+
     public const string LastFolderKey = nameof(LastFolderKey);
     private readonly string _applicationDataFolder;
 
@@ -78,6 +87,9 @@ public class LocalSettingsService : ILocalSettingsService
 
     #endregion
 
+    /// <summary>
+    ///     Inicializa o Serviço
+    /// </summary>
     private async Task InitializeAsync()
     {
         if (!_isInitialized)

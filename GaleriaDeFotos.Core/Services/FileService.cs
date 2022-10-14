@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace GaleriaDeFotos.Core.Services;
 
+/// <inheritdoc />
 public class FileService : IFileService
 {
     #region IFileService Members

@@ -8,6 +8,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace GaleriaDeFotos.Core.DataContext;
 
+/// <inheritdoc />
+/// <summary>
+///     Context do Banco de Dados
+/// </summary>
 public sealed class FotoContext : DbContext
 {
     private static string _connectionString;
@@ -52,11 +56,5 @@ public sealed class FotoContext : DbContext
         _connectionString = connectionStringBuilder.ConnectionString;
 
         return dbPath;
-    }
-
-    public void Recreate()
-    {
-        Database.EnsureDeleted();
-        Database.EnsureCreated();
     }
 }

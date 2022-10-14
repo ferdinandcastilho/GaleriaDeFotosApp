@@ -5,6 +5,9 @@ namespace GaleriaCoreTests;
 
 public class DatabaseTests
 {
+    /// <summary>
+    ///     Testa Se as Imagens estão sendo lidas
+    /// </summary>
     [Fact]
     public async Task ListAllPicturesData()
     {

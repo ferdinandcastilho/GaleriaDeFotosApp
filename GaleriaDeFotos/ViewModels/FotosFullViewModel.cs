@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Contracts.ViewModels;
-using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.Models;
 using GaleriaDeFotos.Templates;
@@ -15,18 +14,44 @@ namespace GaleriaDeFotos.ViewModels;
 public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IFotosDataService _fotosDataService;
-    private BaseFotosViewModel? _lastViewModel;
     private readonly INavigationService _navigationService;
-    [ObservableProperty] private bool _isFavorite;
-    [ObservableProperty] private bool _isShowingDetails;
-    [ObservableProperty] private int _imageWidth;
-    [ObservableProperty] private int _imageHeight;
-    [ObservableProperty] private double _imageAspectRatio;
-    [ObservableProperty] private Foto _item = new();
-    [ObservableProperty] private Foto? _selectedFoto;
 
-    [ObservableProperty] private ImageFactory _imageFactory = new(preserveExifData: true);
-    //Propriedades
+    /// <summary>
+    ///     Aspect Ratio da Imagem
+    /// </summary>
+    [ObservableProperty] private double _imageAspectRatio;
+
+    /// <summary>
+    ///     Image Factory para executar operações de Image Processing
+    /// </summary>
+    [ObservableProperty] private ImageFactory _imageFactory = new(true);
+
+    /// <summary>
+    ///     Altura da Imagem
+    /// </summary>
+    [ObservableProperty] private int _imageHeight;
+
+    /// <summary>
+    ///     Largura da Imagem
+    /// </summary>
+    [ObservableProperty] private int _imageWidth;
+
+    /// <summary>
+    ///     Status de Favorito da Foto
+    /// </summary>
+    [ObservableProperty] private bool _isFavorite;
+
+    /// <summary>
+    ///     Está mostrando Detalhes?
+    /// </summary>
+    [ObservableProperty] private bool _isShowingDetails;
+
+    /// <summary>
+    ///     Imagem Carregada
+    /// </summary>
+    [ObservableProperty] private Foto _item = new();
+
+    private BaseFotosViewModel? _lastViewModel;
 
     public FotosFullViewModel(INavigationService navigationService,
         IFotosDataService fotosDataService)
@@ -35,6 +60,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         _fotosDataService = fotosDataService;
     }
 
+    /// <summary>
+    ///     Texto do tamanho da Foto para apresentação
+    /// </summary>
     public string FotoSizeString
     {
         get
@@ -46,6 +74,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         set { }
     }
 
+    /// <summary>
+    ///     Texto do tamanho de Arquivo para apresentação
+    /// </summary>
     public string FileSizeString
     {
         get
@@ -60,6 +91,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         set { }
     }
 
+    /// <summary>
+    ///     Texto de Data de Criação da Foto para apresentação
+    /// </summary>
     public string FileCreatedString
     {
         get
@@ -69,53 +103,6 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         }
         // ReSharper disable once ValueParameterNotUsed
         set { }
-    }
-
-    /// <summary>
-    /// Carrega a Imagem para o ViewModel
-    /// </summary>
-    /// <param name="image"></param>
-    /// <returns>True se Carregado com Sucesso, False se não</returns>
-    private async Task<bool> LoadImageAsync(Foto image)
-    {
-        var photoBytes = await File.ReadAllBytesAsync(image.ImageUri.LocalPath);
-        using var imageStream = new MemoryStream(photoBytes);
-        _imageFactory.Load(imageStream).AutoRotate();
-        _imageWidth = _imageFactory.Image.Width;
-        _imageHeight = _imageFactory.Image.Height;
-        _imageAspectRatio = (double)_imageHeight / _imageWidth;
-        var dumb = new Foto();
-        Item = dumb;
-        Item = image;
-        return true;
-    }
-
-    /// <summary>
-    /// Carrega a Imagem para o ViewModel
-    /// </summary>
-    /// <param name="imageId">Id da Imagem no DB</param>
-    /// <returns>True se Carregado com Sucesso, False se não</returns>
-    private async Task<bool> LoadImageAsync(string imageId)
-    {
-        var found = await _fotosDataService.SelectAsync(fotoData => fotoData.ImageId == imageId);
-        var item = found.FirstOrDefault();
-        if (item == null) return false;
-        return await LoadImageAsync(item);
-    }
-
-    /// <summary>
-    /// Carrega a Imagem para o ViewModel
-    /// </summary>
-    /// <param name="imageUri">Endereço da Imagem</param>
-    /// <returns>True se Carregado com Sucesso, False se não</returns>
-    private async Task<bool> LoadImageAsync(Uri imageUri)
-    {
-        var found =
-            await _fotosDataService.SelectAsync(fotoData =>
-                fotoData.ImageUri == imageUri.LocalPath);
-        var item = found.FirstOrDefault();
-        if (item == null) return false;
-        return await LoadImageAsync(item);
     }
 
     #region INavigationAware Members
@@ -135,8 +122,61 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
 
     #endregion
 
+    /// <summary>
+    ///     Carrega a Imagem para o ViewModel
+    /// </summary>
+    /// <param name="image">Imagem a ser carregada</param>
+    /// <returns>True se Carregado com Sucesso, False se não</returns>
+    private async Task<bool> LoadImageAsync(Foto image)
+    {
+        var photoBytes = await File.ReadAllBytesAsync(image.ImageUri.LocalPath);
+        using var imageStream = new MemoryStream(photoBytes);
+        _imageFactory.Load(imageStream).AutoRotate();
+        _imageWidth = _imageFactory.Image.Width;
+        _imageHeight = _imageFactory.Image.Height;
+        _imageAspectRatio = (double)_imageHeight / _imageWidth;
+        var dumb = new Foto();
+        Item = dumb;
+        Item = image;
+        return true;
+    }
+
+    /// <summary>
+    ///     Carrega a Imagem para o ViewModel
+    /// </summary>
+    /// <param name="imageId">Id da Imagem no DB</param>
+    /// <returns>True se Carregado com Sucesso, False se não</returns>
+    private async Task<bool> LoadImageAsync(string imageId)
+    {
+        var found = await _fotosDataService.SelectAsync(fotoData => fotoData.ImageId == imageId);
+        var item = found.FirstOrDefault();
+        if (item == null) return false;
+        return await LoadImageAsync(item);
+    }
+
+    /// <summary>
+    ///     Carrega a Imagem para o ViewModel
+    /// </summary>
+    /// <param name="imageUri">Endereço da Imagem</param>
+    /// <returns>True se Carregado com Sucesso, False se não</returns>
+    private async Task<bool> LoadImageAsync(Uri imageUri)
+    {
+        var found =
+            await _fotosDataService.SelectAsync(fotoData =>
+                fotoData.ImageUri == imageUri.LocalPath);
+        var item = found.FirstOrDefault();
+        if (item == null) return false;
+        return await LoadImageAsync(item);
+    }
+
+    /// <summary>
+    ///     Atualiza a altura da imagem após modificação
+    /// </summary>
     public void UpdateResizeHeight() { ImageHeight = (int)(_imageWidth * ImageAspectRatio); }
 
+    /// <summary>
+    ///     Redimensiona Imagem
+    /// </summary>
     private async void ResizeImage()
     {
         var size = new Size(_imageWidth, _imageHeight);
@@ -144,6 +184,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         await SaveEditedAsync();
     }
 
+    /// <summary>
+    ///     Salva Imagem Editada
+    /// </summary>
     private async Task SaveEditedAsync()
     {
         using var outStream = new MemoryStream();
@@ -173,9 +216,15 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         await MainWindow.Instance.ShowMessageDialogAsync(content, title);
     }
 
+    /// <summary>
+    ///     Alterna "Mostrar Detalhes"
+    /// </summary>
     [RelayCommand]
     private void ToggleDetails() { IsShowingDetails = !IsShowingDetails; }
 
+    /// <summary>
+    ///     Seta Favorito na Imagem
+    /// </summary>
     [RelayCommand]
     private void SetFavorite()
     {
@@ -183,7 +232,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         IsFavorite = true;
     }
 
-
+    /// <summary>
+    ///     Reseta Favorito na Imagem
+    /// </summary>
     [RelayCommand]
     private void UnSetFavorite()
     {
@@ -191,6 +242,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         IsFavorite = false;
     }
 
+    /// <summary>
+    ///     Abre Redimensionamento de Imagem
+    /// </summary>
     [RelayCommand]
     private async void OpenResizeWindow()
     {
@@ -206,13 +260,13 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         if (result == ContentDialogResult.Primary) ResizeImage();
     }
 
+    /// <summary>
+    ///     Apaga Imagem
+    /// </summary>
     [RelayCommand]
     private async void DeleteImage()
     {
-        if (Item.IsFavorite)
-        {
-            UnSetFavorite();
-        }
+        if (Item.IsFavorite) UnSetFavorite();
 
         File.Delete(Item.ImageUri.LocalPath);
         if (_lastViewModel == null) return;
@@ -220,6 +274,9 @@ public partial class FotosFullViewModel : ObservableRecipient, INavigationAware
         _navigationService.NavigateTo(_lastViewModel.GetType().FullName!, true);
     }
 
+    /// <summary>
+    ///     Rotaciona Imagem
+    /// </summary>
     [RelayCommand]
     private async void RotateImage()
     {

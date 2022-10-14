@@ -3,8 +3,14 @@ using System.Text;
 
 namespace GaleriaDeFotos.Helpers;
 
-public class RuntimeHelper
+/// <summary>
+///     Acessórios sobre informações de Tempo de Execução
+/// </summary>
+public static class RuntimeHelper
 {
+    /// <summary>
+    ///     Retorna se a aplicação é um Pacote do Windows
+    /// </summary>
     public static bool IsMsix
     {
         get

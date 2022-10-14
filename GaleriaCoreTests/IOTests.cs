@@ -2,20 +2,22 @@
 
 namespace GaleriaCoreTests;
 
+/// <summary>
+///     Testes de IO
+/// </summary>
 public class IoTests
 {
     [Fact]
     public async Task ReadImagesFromFolder()
     {
         // Arrange
-        FotosDataService fotosDataService = new(null); // No need for a valid DbContext
-        var imageFolderPath = @"Z:\Users\Ferdi\OneDrive\Imagens\Saved Pictures\Wallpaper";
+        FotosDataService fotosDataService = new(null);
+        var imageFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
         // Act
         var imageFileList = await fotosDataService.GetImagesFromFolderAsync(imageFolderPath);
 
         // Assert
-        Assert.True(imageFileList.Count() ==
-                    19); // Replace by the number of png and jpg files in your choosen folder
+        Assert.True(imageFileList.Count() == 19);
     }
 }

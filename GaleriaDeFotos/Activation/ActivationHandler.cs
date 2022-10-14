@@ -1,7 +1,10 @@
 ﻿namespace GaleriaDeFotos.Activation;
 
-// Extend this class to implement new ActivationHandlers. See DefaultActivationHandler for an example.
-// https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md
+/// <summary>
+///     Classe abstrata base da Ativação do Aplicativo
+///     Veja: https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public abstract class ActivationHandler<T> : IActivationHandler where T : class
 {
     #region IActivationHandler Members

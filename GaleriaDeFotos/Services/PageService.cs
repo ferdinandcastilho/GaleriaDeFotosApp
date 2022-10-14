@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.Services;
 
+/// <inheritdoc />
 public class PageService : IPageService
 {
     private readonly Dictionary<string, Type> _pages = new();
@@ -37,6 +38,12 @@ public class PageService : IPageService
 
     #endregion
 
+    /// <summary>
+    ///     Configura a Página
+    /// </summary>
+    /// <typeparam name="TVm">View Model</typeparam>
+    /// <typeparam name="TV">View</typeparam>
+    /// <exception cref="ArgumentException">Tipo já configurado com esta chave</exception>
     private void Configure<TVm, TV>() where TVm : ObservableObject where TV : Page
     {
         lock (_pages)

@@ -3,13 +3,14 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.Helpers;
 
-// Helper class to set the navigation target for a NavigationViewItem.
-//
-// Usage in XAML:
-// <NavigationViewItem x:Uid="Shell_Main" Icon="Document" helpers:NavigationHelper.NavigateTo="AppName.ViewModels.MainViewModel" />
-//
-// Usage in code:
-// NavigationHelper.SetNavigateTo(navigationViewItem, typeof(MainViewModel).FullName);
+/// <summary>
+///     Helper class to set the navigation target for a NavigationViewItem.
+///     Usage in XAML:
+///     <NavigationViewItem x:Uid="Shell_Main" Icon="Document"
+///         helpers:NavigationHelper.NavigateTo="AppName.ViewModels.MainViewModel" />
+///     Usage in code:
+///     NavigationHelper.SetNavigateTo(navigationViewItem, typeof(MainViewModel).FullName);
+/// </summary>
 public class NavigationHelper
 {
     public static readonly DependencyProperty NavigateToProperty =

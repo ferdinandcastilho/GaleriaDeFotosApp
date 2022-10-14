@@ -1,5 +1,4 @@
 ﻿using GaleriaDeFotos.Contracts.Services;
-using GaleriaDeFotos.Core.Contracts.Services;
 
 namespace GaleriaDeFotos.ViewModels;
 
@@ -13,8 +12,6 @@ public class FavoritasViewModel : BaseFotosViewModel
         _fotosDataService = fotosDataService;
     }
 
-    #region INavigationAware Members
-
     protected override async void OnNavigatedToChild(object parameter)
     {
         await LoadPhotos();
@@ -23,8 +20,6 @@ public class FavoritasViewModel : BaseFotosViewModel
     }
 
     protected override void OnNavigatedFromChild() { }
-
-    #endregion
 
     protected override async Task LoadPhotos()
     {

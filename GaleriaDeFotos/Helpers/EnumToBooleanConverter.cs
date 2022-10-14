@@ -3,8 +3,9 @@ using Microsoft.UI.Xaml.Data;
 
 namespace GaleriaDeFotos.Helpers;
 
+/// <inheritdoc />
 /// <summary>
-///     Convert an <see cref="Enum" /> to corresponding <see cref="bool" />
+///     Convert an <see cref="T:System.Enum" /> to corresponding <see cref="T:System.Boolean" />
 /// </summary>
 public class EnumToBoolConverter : IValueConverter
 {
@@ -55,7 +56,7 @@ public class EnumToBoolConverter : IValueConverter
         }
     }
 
-
+    /// <inheritdoc />
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
         throw new NotImplementedException();

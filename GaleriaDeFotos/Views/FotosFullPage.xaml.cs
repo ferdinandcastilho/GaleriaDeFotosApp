@@ -2,11 +2,13 @@
 using GaleriaDeFotos.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Timer = System.Timers.Timer;
 
 namespace GaleriaDeFotos.Views;
 
+/// <inheritdoc cref="Microsoft.UI.Xaml.Controls.Page" />
+/// <summary>
+///     Página de Imagem em Tela Aumentada
+/// </summary>
 public sealed partial class FotosFullPage
 {
     public FotosFullPage()
@@ -29,6 +31,11 @@ public sealed partial class FotosFullPage
 
     public FotosFullViewModel ViewModel { get; }
 
+    /// <summary>
+    ///     Mostra ou esconde a Barra de Informações
+    /// </summary>
+    /// <param name="sender">Não Utilizado</param>
+    /// <param name="e">Não Utilizado</param>
     private async void ShowHideTeachingTip(object sender, RoutedEventArgs e)
     {
         var teachingTipTitle = string.Empty;

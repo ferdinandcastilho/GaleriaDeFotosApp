@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GaleriaDeFotos.Contracts.Services;
-using GaleriaDeFotos.Core.Contracts.Services;
 using GaleriaDeFotos.Core.Models;
 using GaleriaDeFotos.EnumTypes;
 using GaleriaDeFotos.Services;
@@ -53,8 +52,6 @@ public partial class FotosViewModel : BaseFotosViewModel
         set { }
     }
 
-    #region INavigationAware Members
-
     protected override async void OnNavigatedToChild(object parameter)
     {
         var option = _lastFolderOptionSelectorService.Setting;
@@ -63,8 +60,6 @@ public partial class FotosViewModel : BaseFotosViewModel
     }
 
     protected override void OnNavigatedFromChild() { }
-
-    #endregion
 
     [RelayCommand]
     private async Task SelectDirectory()
@@ -103,6 +98,7 @@ public partial class FotosViewModel : BaseFotosViewModel
     private async Task ReadPhotosFromFolder(string? path)
     {
         IsLoading = true;
+        if (path == null) return;
         var dbPhotos = (await _fotosDataService.GetPhotosAsync(path)).ToList();
         Source.Clear();
         foreach (var photo in dbPhotos) Source.Add(photo);

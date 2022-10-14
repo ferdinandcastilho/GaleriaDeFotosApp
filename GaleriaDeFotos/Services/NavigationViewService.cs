@@ -2,10 +2,15 @@
 using GaleriaDeFotos.Contracts.Services;
 using GaleriaDeFotos.Helpers;
 using GaleriaDeFotos.ViewModels;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GaleriaDeFotos.Services;
 
+/// <inheritdoc />
+/// <summary>
+///     Serviço de Navegação de Páginas
+/// </summary>
 public class NavigationViewService : INavigationViewService
 {
     private readonly INavigationService _navigationService;
@@ -54,6 +59,11 @@ public class NavigationViewService : INavigationViewService
 
     #endregion
 
+    /// <summary>
+    ///     Executado quando o Comando Voltar é acionado
+    /// </summary>
+    /// <param name="sender">Entidade que enviou o Comando</param>
+    /// <param name="args">Argumentos da Navegação de Back</param>
     private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
     {
         _navigationService.GoBack();
@@ -73,6 +83,12 @@ public class NavigationViewService : INavigationViewService
         }
     }
 
+    /// <summary>
+    ///     Obtém o item selecionado
+    /// </summary>
+    /// <param name="menuItems">Itens do Menu</param>
+    /// <param name="pageType">Tipo de Página</param>
+    /// <returns>Item Selecionado</returns>
     private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
     {
         foreach (var item in menuItems.OfType<NavigationViewItem>())
@@ -86,7 +102,7 @@ public class NavigationViewService : INavigationViewService
         return null;
     }
 
-    private bool IsMenuItemForPageType(NavigationViewItem menuItem, Type sourcePageType)
+    private bool IsMenuItemForPageType(DependencyObject menuItem, Type sourcePageType)
     {
         if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
             return _pageService.GetPageType(pageKey) == sourcePageType;

@@ -2,7 +2,10 @@
 
 namespace GaleriaDeFotos.Views;
 
-// TODO: Set the URL for your privacy policy by updating SettingsPage_PrivacyTermsLink.NavigateUri in Resources.resw.
+/// <inheritdoc cref="Microsoft.UI.Xaml.Controls.Page" />
+/// <summary>
+///     Página de Opções
+/// </summary>
 public sealed partial class SettingsPage
 {
     public SettingsPage()

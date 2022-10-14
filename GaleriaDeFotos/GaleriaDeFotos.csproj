@@ -61,6 +61,7 @@
         <!-- This bundles the WinUI3 components -->
         <UseWinUI>true</UseWinUI>
         <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
