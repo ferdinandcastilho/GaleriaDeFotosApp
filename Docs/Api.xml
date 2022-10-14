@@ -1,0 +1,1043 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GaleriaDeFotos</name>
+    </assembly>
+    <members>
+        <member name="T:GaleriaDeFotos.Activation.ActivationHandler`1">
+            <summary>
+                Classe abstrata base da Ativação do Aplicativo
+                Veja: https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:GaleriaDeFotos.Activation.DefaultActivationHandler">
+            <summary>
+                Classe Padrão da Ativação do Aplicativo
+                Veja: https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Activation.IActivationHandler">
+            <summary>
+                Interface da Ativação do Aplicativo
+                Veja: https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.App">
+            <inheritdoc />
+            <summary>
+                Aplicação Principal
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.App.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.App.GetXamlType(System.Type)">
+            <summary>
+            GetXamlType(Type)
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.App.GetXamlType(System.String)">
+            <summary>
+            GetXamlType(String)
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.App.GetXmlnsDefinitions">
+            <summary>
+            GetXmlnsDefinitions()
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Behaviors.NavigationViewHeaderBehavior">
+            <inheritdoc />
+            <summary>
+                Classe responsável pelo comportamento na NavigationView
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Behaviors.NavigationViewHeaderMode">
+            <summary>
+                Modos da Navigation View Utilizados na <see cref="T:GaleriaDeFotos.Behaviors.NavigationViewHeaderMode" />
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Abstractions.SettingSelectorService`1">
+            <summary>
+                Esta classe serve como base para uma configuração que funciona por meio de seletores
+            </summary>
+            <typeparam name="T">Tipo que será usado no Seletor</typeparam>
+        </member>
+        <member name="P:GaleriaDeFotos.Contracts.Abstractions.SettingSelectorService`1.Setting">
+            <summary>
+                Opção atualmente selecionada
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Contracts.Abstractions.SettingSelectorService`1.SettingKey">
+            <summary>
+                Chave para a opção atualmente selecionada
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Abstractions.SettingSelectorService`1.SetSetting(`0)">
+            <summary>
+                Seta a opção desejada
+            </summary>
+            <param name="value">Opção a ser setada</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Abstractions.SettingSelectorService`1.InitializeAsync">
+            <summary>
+                Inicializa esta configuração
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Abstractions.SettingSelectorService`1.LoadObjectFromSettingsAsync">
+            <summary>
+                Carrega opção das configurações
+            </summary>
+            <returns>Opção que foi carregada do Disco</returns>
+            <exception cref="T:System.InvalidOperationException">A conversão foi mal sucedida</exception>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Abstractions.SettingSelectorService`1.SaveObjectInSettingsAsync">
+            <summary>
+                Salva Opção no Disco
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Services.IActivationService">
+            <summary>
+                Interface base para o serviço de Ativação do Aplicativo
+                Veja: https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Services.IFotosDataService">
+            <summary>
+                Serviço que controla o Banco de Dados de Imagens
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.IFotosDataService.GetPhotosAsync(System.String)">
+            <summary>
+                Obtém as Fotos do Banco de Dados ou cadastra as fotos da pasta no Banco
+            </summary>
+            <param name="imagePath">Pasta para Carregar as Imagens</param>
+            <returns>Fotos da Pasta Atual</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.IFotosDataService.SelectAsync(System.Linq.Expressions.Expression{System.Func{GaleriaDeFotos.Core.Models.FotoData,System.Boolean}})">
+            <summary>
+                Executa uma condicional para obter uma Foto banco de imagens
+            </summary>
+            <param name="predicate">Condicional para obtenção da Foto</param>
+            <returns>Foto que atende à condicional</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.IFotosDataService.SetFavorite(GaleriaDeFotos.Core.Models.Foto,System.Boolean)">
+            <summary>
+                Seta a condição de favorito da foto
+            </summary>
+            <param name="foto">Foto a ser setada/resetada como favorita</param>
+            <param name="isFavorite">Condição de favorita</param>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Services.ILocalSettingsService">
+            <summary>
+                Interface para Configurações que são lidas do disco
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Services.INavigationService">
+            <summary>
+                Interface para o Serviço de Navegação para Paginas
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Contracts.Services.INavigationService.CanGoBack">
+            <summary>
+                Obtém se a view aceita que volte a página anterior
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Contracts.Services.INavigationService.Frame">
+            <summary>
+                Suporta a navegação, veja: <see cref="P:GaleriaDeFotos.Contracts.Services.INavigationService.Frame" />
+            </summary>
+        </member>
+        <member name="E:GaleriaDeFotos.Contracts.Services.INavigationService.Navigated">
+            <summary>
+                Evento Disparado quando a navegação é efetuada
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.INavigationService.NavigateTo(System.String,System.Object,System.Boolean)">
+            <summary>
+                Navega para um página
+            </summary>
+            <param name="pageKey">Chave da página</param>
+            <param name="parameter">Parâmetro para passar para a página para a qual está sendo navegada</param>
+            <param name="clearNavigation">Limpa o Histórico de Navegação</param>
+            <returns></returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.INavigationService.GoBack">
+            <summary>
+                Volta para a página Anterior
+            </summary>
+            <returns>Retorna se a navegação pode ser feita, veja <see cref="P:GaleriaDeFotos.Contracts.Services.INavigationService.CanGoBack" /></returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.INavigationService.SetListDataItemForNextConnectedAnimation(System.Object)">
+            <summary>
+                Acessório para animação
+            </summary>
+            <param name="item">Para quem a animação vai ser voltada</param>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Services.INavigationViewService">
+            <summary>
+                Interface para o Serviço responsável pela Navigation View
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Contracts.Services.INavigationViewService.MenuItems">
+            <summary>
+                Itens do Menu
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Contracts.Services.INavigationViewService.SettingsItem">
+            <summary>
+                Item do Menu Responsável pelas Configurações
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.INavigationViewService.Initialize(Microsoft.UI.Xaml.Controls.NavigationView)">
+            <summary>
+                Inicializa o Serviço
+            </summary>
+            <param name="navigationView">View responsável pelo serviço</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.INavigationViewService.UnregisterEvents">
+            <summary>
+                Remover registros dos eventos
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.INavigationViewService.GetSelectedItem(System.Type)">
+            <summary>
+                Obtém o item que está selecionado
+            </summary>
+            <param name="pageType">Tipo de página a obter</param>
+            <returns>Item da navegação</returns>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Services.IPageService">
+            <summary>
+                Interface do Serviço de páginas
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Services.IPageService.GetPageType(System.String)">
+            <summary>
+                Obtém o Tipo de Página
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.Settings.IThemeSelectorService">
+            <summary>
+                Interface do Serviço de Seleção de Temas
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Contracts.Settings.IThemeSelectorService.Setting">
+            <summary>
+                Obtém o Tema Selecionado
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Settings.IThemeSelectorService.InitializeAsync">
+            <summary>
+                Inicializa o Serviço
+            </summary>
+            <returns>Task para Async</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Settings.IThemeSelectorService.SetThemeAsync(Microsoft.UI.Xaml.ElementTheme)">
+            <summary>
+                Seta o Tema Desejado
+            </summary>
+            <param name="theme">Tema Desejado</param>
+            <returns>Task para Async</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.Settings.IThemeSelectorService.SetRequestedThemeAsync">
+            <summary>
+                Executa o necessário para a seleção do Tema
+            </summary>
+            <returns>Task para Async</returns>
+        </member>
+        <member name="T:GaleriaDeFotos.Contracts.ViewModels.INavigationAware">
+            <summary>
+                Interface para Páginas que estão cientes de Navegação
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.ViewModels.INavigationAware.OnNavigatedTo(System.Object)">
+            <summary>
+                Disparado quando uma página navega para esta
+            </summary>
+            <param name="parameter">Parametro enviado da Página anterior</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Contracts.ViewModels.INavigationAware.OnNavigatedFrom">
+            <summary>
+                Disparado quando esta página navega para outra
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.EnumTypes.LastFolderOption">
+            <summary>
+                Opções de Última pasta
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Helpers.ControlVisibilityConverter.Convert(System.Object,System.Type,System.Object,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:GaleriaDeFotos.Helpers.ControlVisibilityConverter.ConvertBack(System.Object,System.Type,System.Object,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:GaleriaDeFotos.Helpers.EnumToBoolConverter">
+            <inheritdoc />
+            <summary>
+                Convert an <see cref="T:System.Enum" /> to corresponding <see cref="T:System.Boolean" />
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Helpers.EnumToBoolConverter.TrueValues">
+            <summary>
+                Enum values, that converts to <c>true</c> (optional)
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Helpers.EnumToBoolConverter.Convert(System.Object,System.Type,System.Object,System.String)">
+            <summary>
+                Convert an <see cref="T:System.Enum" /> to corresponding <see cref="T:System.Boolean" />
+            </summary>
+            <param name="value"><see cref="T:System.Enum" /> value to convert</param>
+            <param name="targetType">The type of the binding target property. This is not implemented.</param>
+            <param name="parameter">
+                Additional parameter for converter. Can be used for comparison instead of
+                <see cref="P:GaleriaDeFotos.Helpers.EnumToBoolConverter.TrueValues" />
+            </param>
+            <param name="culture">The culture to use in the converter. This is not implemented.</param>
+            <returns>
+                False, if the value is not in <see cref="P:GaleriaDeFotos.Helpers.EnumToBoolConverter.TrueValues" />. False, if <see cref="P:GaleriaDeFotos.Helpers.EnumToBoolConverter.TrueValues" /> is empty and
+                value not equal to parameter.
+            </returns>
+            <exception cref="T:System.ArgumentException">If value is not an <see cref="T:System.Enum" /></exception>
+        </member>
+        <member name="M:GaleriaDeFotos.Helpers.EnumToBoolConverter.ConvertBack(System.Object,System.Type,System.Object,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:GaleriaDeFotos.Helpers.FrameExtensions">
+            <summary>
+                Extensões para o Frame, veja <see cref="T:Microsoft.UI.Xaml.Controls.Frame" />
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Helpers.FrameExtensions.GetPageViewModel(Microsoft.UI.Xaml.Controls.Frame)">
+            <summary>
+                Obtém a ViewModel da Página
+            </summary>
+            <param name="frame">Frame responsável</param>
+            <returns>A ViewModel da Página</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:GaleriaDeFotos.Helpers.NavigationHelper" -->
+        <member name="T:GaleriaDeFotos.Helpers.ResourceExtensions">
+            <summary>
+                Extensões para obtenção dos Recursos
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Helpers.RuntimeHelper">
+            <summary>
+                Acessórios sobre informações de Tempo de Execução
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.Helpers.RuntimeHelper.IsMsix">
+            <summary>
+                Retorna se a aplicação é um Pacote do Windows
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Helpers.SettingsStorageExtensions">
+            <summary>
+                Use these extension methods to store and retrieve local and roaming app data
+                More details regarding storing and retrieving app data at
+                https://docs.microsoft.com/windows/apps/design/app-settings/store-and-retrieve-app-data
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Helpers.TitleBarHelper">
+            <summary>
+                Helper class to workaround custom title bar bugs.
+                DISCLAIMER: The resource key names and color values used below are subject to change. Do not depend on them.
+                https://github.com/microsoft/TemplateStudio/issues/4516
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.MainWindow.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.MainWindow.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Models.FotoParameters">
+            <summary>
+                Parâmetros para passar para a FullViewModel
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Models.LocalSettingsOptions">
+            <summary>
+                Opções para as configurações
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.ActivationService">
+            <inheritdoc />
+            <summary>
+                Serviço de Ativação
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.ActivationService.InitializeAsync">
+            <summary>
+                Executado na Inicialização
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.ActivationService.StartupAsync">
+            <summary>
+                Executado no Início do Programa
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.FotosDataService">
+            <inheritdoc />
+        </member>
+        <member name="M:GaleriaDeFotos.Services.FotosDataService.GetImagesFromFolderAsync(System.String)">
+            <summary>
+                Obtém uma lista com os arquivos que são fotos
+            </summary>
+            <param name="imagePath">Pasta a ser pesquisada</param>
+            <returns>Arquivos que são fotos</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.FotosDataService.SetupPhotosAsync(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+                Configura as Fotos no banco de dados
+            </summary>
+            <param name="files">Arquivos que contém fotos</param>
+            <returns>Lista com as fotos após a configuração</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.FotosDataService.CreateHash(System.String)">
+            <summary>
+                Cria um hash único para as fotos
+            </summary>
+            <param name="file">Arquivo que contém a foto</param>
+            <returns>Hash Único da foto</returns>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.LocalSettingsService">
+            <inheritdoc />
+        </member>
+        <member name="F:GaleriaDeFotos.Services.LocalSettingsService.DefaultApplicationDataFolder">
+            <summary>
+                Pasta com os dados da aplicação
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.Services.LocalSettingsService.DefaultLocalSettingsFile">
+            <summary>
+                Arquivo com as configurações do Aplicativo
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.LocalSettingsService.InitializeAsync">
+            <summary>
+                Inicializa o Serviço
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.NavigationService">
+            <inheritdoc />
+            <summary>
+                For more information on navigation between pages see
+                https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.NavigationService.RegisterFrameEvents">
+            <summary>
+                Registra eventos do Frame
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.NavigationService.UnregisterFrameEvents">
+            <summary>
+                Remove registro de eventos de Frame
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.NavigationService.OnNavigated(System.Object,Microsoft.UI.Xaml.Navigation.NavigationEventArgs)">
+            <summary>
+                Executado ao navegar para a página
+            </summary>
+            <param name="sender">Objeto de origem do evento</param>
+            <param name="e">Argumentos do Evento, veja <see cref="T:Microsoft.UI.Xaml.Navigation.NavigationEventArgs" /></param>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.NavigationViewService">
+            <inheritdoc />
+            <summary>
+                Serviço de Navegação de Páginas
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.NavigationViewService.OnBackRequested(Microsoft.UI.Xaml.Controls.NavigationView,Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs)">
+            <summary>
+                Executado quando o Comando Voltar é acionado
+            </summary>
+            <param name="sender">Entidade que enviou o Comando</param>
+            <param name="args">Argumentos da Navegação de Back</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Services.NavigationViewService.GetSelectedItem(System.Collections.Generic.IEnumerable{System.Object},System.Type)">
+            <summary>
+                Obtém o item selecionado
+            </summary>
+            <param name="menuItems">Itens do Menu</param>
+            <param name="pageType">Tipo de Página</param>
+            <returns>Item Selecionado</returns>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.PageService">
+            <inheritdoc />
+        </member>
+        <member name="M:GaleriaDeFotos.Services.PageService.Configure``2">
+            <summary>
+                Configura a Página
+            </summary>
+            <typeparam name="TVm">View Model</typeparam>
+            <typeparam name="TV">View</typeparam>
+            <exception cref="T:System.ArgumentException">Tipo já configurado com esta chave</exception>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.Settings.LastFolderOptionSelectorService">
+            <inheritdoc />
+            <summary>
+                Serviço que controla o seletor do Última Pasta
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Services.Settings.ThemeSelectorService">
+            <inheritdoc cref="T:GaleriaDeFotos.Contracts.Settings.IThemeSelectorService" />
+        </member>
+        <member name="T:GaleriaDeFotos.Templates.ResizeBox">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.ContentDialog" />
+            <summary>
+                Caixa de diálogo para modificar o tamanho da Imagem
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Templates.ResizeBox.ImageWidthOnChanged(System.Object,Microsoft.UI.Xaml.Controls.TextChangedEventArgs)">
+            <summary>
+                Executada para atualizar a altura da imagem enquanto se modifica a largura
+            </summary>
+            <param name="sender">Não Utilizado</param>
+            <param name="e">Não Utilizado</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Templates.ResizeBox.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Templates.ResizeBox.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Templates.ResizeBox.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.ViewModels.AboutViewModel">
+            <inheritdoc />
+            <summary>
+                ViewModel para a tela de About
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.ViewModels.BaseFotosViewModel">
+            <inheritdoc cref="T:GaleriaDeFotos.Contracts.ViewModels.INavigationAware" />
+            <summary>
+                View Model Base Para páginas que manipulam fotos
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.BaseFotosViewModel._isLoading">
+            <summary>
+                Identifica se a tela está carregando
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.BaseFotosViewModel._source">
+            <summary>
+                Fonte das fotos
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.LoadPhotos">
+            <summary>
+                Carrega as Fotos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.BaseFotosViewModel.BottomBar">
+            <summary>
+                Barra Inferior
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.Refresh">
+            <summary>
+                Comando que atualiza as modificações das fotos
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.ItemClick(GaleriaDeFotos.Core.Models.Foto)">
+            <summary>
+                Executado ao clicar em uma foto
+            </summary>
+            <param name="clickedItem">Foto Clicada</param>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.OnNavigatedToChild(System.Object)">
+            <summary>
+                Disparado ao navegar para esta página <see cref="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.OnNavigatedTo(System.Object)" />
+            </summary>
+            <param name="parameter">
+                <see cref="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.OnNavigatedTo(System.Object)" />
+            </param>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.OnNavigatedFromChild">
+            <summary>
+                Disparado ao navegar desta página <see cref="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.OnNavigatedFrom" />
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.BaseFotosViewModel.IsLoading">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.BaseFotosViewModel._isLoading"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.BaseFotosViewModel.Source">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.BaseFotosViewModel._source"/>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.BaseFotosViewModel.refreshCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.BaseFotosViewModel.RefreshCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.BaseFotosViewModel.RefreshCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.Refresh"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.BaseFotosViewModel.itemClickCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.BaseFotosViewModel.ItemClickCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.BaseFotosViewModel.ItemClickCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.BaseFotosViewModel.ItemClick(GaleriaDeFotos.Core.Models.Foto)"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageAspectRatio">
+            <summary>
+                Aspect Ratio da Imagem
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageFactory">
+            <summary>
+                Image Factory para executar operações de Image Processing
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageHeight">
+            <summary>
+                Altura da Imagem
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageWidth">
+            <summary>
+                Largura da Imagem
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._isFavorite">
+            <summary>
+                Status de Favorito da Foto
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._isShowingDetails">
+            <summary>
+                Está mostrando Detalhes?
+            </summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._item">
+            <summary>
+                Imagem Carregada
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.FotoSizeString">
+            <summary>
+                Texto do tamanho da Foto para apresentação
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.FileSizeString">
+            <summary>
+                Texto do tamanho de Arquivo para apresentação
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.FileCreatedString">
+            <summary>
+                Texto de Data de Criação da Foto para apresentação
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.LoadImageAsync(GaleriaDeFotos.Core.Models.Foto)">
+            <summary>
+                Carrega a Imagem para o ViewModel
+            </summary>
+            <param name="image">Imagem a ser carregada</param>
+            <returns>True se Carregado com Sucesso, False se não</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.LoadImageAsync(System.String)">
+            <summary>
+                Carrega a Imagem para o ViewModel
+            </summary>
+            <param name="imageId">Id da Imagem no DB</param>
+            <returns>True se Carregado com Sucesso, False se não</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.LoadImageAsync(System.Uri)">
+            <summary>
+                Carrega a Imagem para o ViewModel
+            </summary>
+            <param name="imageUri">Endereço da Imagem</param>
+            <returns>True se Carregado com Sucesso, False se não</returns>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.UpdateResizeHeight">
+            <summary>
+                Atualiza a altura da imagem após modificação
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.ResizeImage">
+            <summary>
+                Redimensiona Imagem
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.SaveEditedAsync">
+            <summary>
+                Salva Imagem Editada
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.ToggleDetails">
+            <summary>
+                Alterna "Mostrar Detalhes"
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.SetFavorite">
+            <summary>
+                Seta Favorito na Imagem
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.UnSetFavorite">
+            <summary>
+                Reseta Favorito na Imagem
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.OpenResizeWindow">
+            <summary>
+                Abre Redimensionamento de Imagem
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.DeleteImage">
+            <summary>
+                Apaga Imagem
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.RotateImage">
+            <summary>
+                Rotaciona Imagem
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.ImageAspectRatio">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageAspectRatio"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.ImageFactory">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageFactory"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.ImageHeight">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageHeight"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.ImageWidth">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._imageWidth"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.IsFavorite">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._isFavorite"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.IsShowingDetails">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._isShowingDetails"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.Item">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosFullViewModel._item"/>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel.toggleDetailsCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.ToggleDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.ToggleDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.ToggleDetails"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel.setFavoriteCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.SetFavoriteCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.SetFavoriteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.SetFavorite"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel.unSetFavoriteCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.UnSetFavoriteCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.UnSetFavoriteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.UnSetFavorite"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel.openResizeWindowCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.OpenResizeWindowCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.OpenResizeWindowCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.OpenResizeWindow"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel.deleteImageCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.DeleteImageCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.DeleteImageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.DeleteImage"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosFullViewModel.rotateImageCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.RotateImageCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosFullViewModel.RotateImageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.FotosFullViewModel.RotateImage"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosViewModel.NeedToPickFolder">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosViewModel._needToPickFolder"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosViewModel.SelectedFoto">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.FotosViewModel._selectedFoto"/>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.FotosViewModel.selectDirectoryCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.FotosViewModel.SelectDirectoryCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.FotosViewModel.SelectDirectoryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.FotosViewModel.SelectDirectory"/>.</summary>
+        </member>
+        <member name="T:GaleriaDeFotos.ViewModels.MainViewModel">
+            <inheritdoc />
+            <summary>
+                View Model da MainPage
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.ViewModels.SettingsViewModel">
+            <inheritdoc />
+            <summary>
+                ViewModel das Configurações
+            </summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.SettingsViewModel.VersionDescription">
+            <summary>
+                Descrição da Versão
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchLastFolderOption(GaleriaDeFotos.EnumTypes.LastFolderOption)">
+            <summary>
+                Muda a opção de Última Pasta
+            </summary>
+            <param name="option">Opção</param>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchTheme(Microsoft.UI.Xaml.ElementTheme)">
+            <summary>
+                Troca Tema
+            </summary>
+            <param name="theme">Tema Escolhido</param>
+        </member>
+        <member name="M:GaleriaDeFotos.ViewModels.SettingsViewModel.GetVersionDescription">
+            <summary>
+                Obtém Descrição da Versão
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.SettingsViewModel.ElementTheme">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.SettingsViewModel._elementTheme"/>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.SettingsViewModel.LastFolderOption">
+            <inheritdoc cref="F:GaleriaDeFotos.ViewModels.SettingsViewModel._lastFolderOption"/>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.SettingsViewModel.switchLastFolderOptionCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchLastFolderOptionCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchLastFolderOptionCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchLastFolderOption(GaleriaDeFotos.EnumTypes.LastFolderOption)"/>.</summary>
+        </member>
+        <member name="F:GaleriaDeFotos.ViewModels.SettingsViewModel.switchThemeCommand">
+            <summary>The backing field for <see cref="P:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchThemeCommand"/>.</summary>
+        </member>
+        <member name="P:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchThemeCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:GaleriaDeFotos.ViewModels.SettingsViewModel.SwitchTheme(Microsoft.UI.Xaml.ElementTheme)"/>.</summary>
+        </member>
+        <member name="T:GaleriaDeFotos.ViewModels.ShellViewModel">
+            <inheritdoc />
+            <summary>
+                Shell
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Views.AboutPage">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.Page" />
+            <summary>
+                Página de Sobre
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.AboutPage.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.AboutPage.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.AboutPage.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Views.FavoritasPage">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.Page" />
+            <summary>
+                Página de Favoritos
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FavoritasPage.SizeSlider_OnValueChanged(System.Object,Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs)">
+            <summary>
+                Executada quando o valor do Slider de Tamanho é Modificado
+            </summary>
+            <param name="sender">Não Utilizado</param>
+            <param name="e">Não Utilizado</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FavoritasPage.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FavoritasPage.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FavoritasPage.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Views.FotosFullPage">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.Page" />
+            <summary>
+                Página de Imagem em Tela Aumentada
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosFullPage.ShowHideTeachingTip(System.Object,Microsoft.UI.Xaml.RoutedEventArgs)">
+            <summary>
+                Mostra ou esconde a Barra de Informações
+            </summary>
+            <param name="sender">Não Utilizado</param>
+            <param name="e">Não Utilizado</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosFullPage.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosFullPage.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosFullPage.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Views.FotosPage">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.Page" />
+            <summary>
+                Página de Sobre
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosPage.SizeSlider_OnValueChanged(System.Object,Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs)">
+            <summary>
+                Executada quando o valor do Slider de Tamanho é Modificado
+            </summary>
+            <param name="sender">Não Utilizado</param>
+            <param name="e">Não Utilizado</param>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosPage.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosPage.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.FotosPage.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Views.MainPage">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.Page" />
+            <summary>
+                Página de Entrada
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.MainPage.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.MainPage.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.MainPage.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Views.SettingsPage">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.Page" />
+            <summary>
+                Página de Opções
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.SettingsPage.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.SettingsPage.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.SettingsPage.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Views.ShellPage">
+            <inheritdoc cref="T:Microsoft.UI.Xaml.Controls.Page" />
+            <summary>
+                Página de Shell
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.ShellPage.InitializeComponent">
+            <summary>
+            InitializeComponent()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.ShellPage.Connect(System.Int32,System.Object)">
+            <summary>
+            Connect()
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.Views.ShellPage.GetBindingConnector(System.Int32,System.Object)">
+            <summary>
+            GetBindingConnector(int connectionId, object target)
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.Program">
+            <summary>
+            Program class
+            </summary>
+        </member>
+        <member name="T:GaleriaDeFotos.GaleriaDeFotos_XamlTypeInfo.XamlMetaDataProvider">
+            <summary>
+            Main class for providing metadata for the app or library
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.GaleriaDeFotos_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.Type)">
+            <summary>
+            GetXamlType(Type)
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.GaleriaDeFotos_XamlTypeInfo.XamlMetaDataProvider.GetXamlType(System.String)">
+            <summary>
+            GetXamlType(String)
+            </summary>
+        </member>
+        <member name="M:GaleriaDeFotos.GaleriaDeFotos_XamlTypeInfo.XamlMetaDataProvider.GetXmlnsDefinitions">
+            <summary>
+            GetXmlnsDefinitions()
+            </summary>
+        </member>
+    </members>
+</doc>

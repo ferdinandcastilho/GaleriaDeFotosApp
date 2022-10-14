@@ -63,6 +63,9 @@
         <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
         <SDKIdentifier>Windows</SDKIdentifier>
         <SDKVersion>6.0.402</SDKVersion>
+        <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <DocumentationFile>\Docs\Api.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
