@@ -23,5 +23,6 @@
         <Platforms>AnyCPU;x64;x86</Platforms>
         <RootNamespace>GaleriaDeFotos.Core</RootNamespace>
         <TargetFramework>net6.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 </Project>
