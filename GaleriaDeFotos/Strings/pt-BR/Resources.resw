@@ -194,8 +194,53 @@
     <data name="FotosFullPage_CommandBar_Favorite.Label" xml:space="preserve">
     <value>Favoritar</value>
   </data>
-    <data name="FotosFullPage_CommandBar_Unfavorite.Label" xml:space="preserve">
+    <data name="FotosFullPage_CommandBar_UnFavorite.Label" xml:space="preserve">
     <value>Desfavoritar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Resize.Label" xml:space="preserve">
+    <value>Redimensionar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Delete.Label" xml:space="preserve">
+    <value>Apagar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Rotate.Label" xml:space="preserve">
+    <value>Girar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Details_Label" xml:space="preserve">
+    <value>Detalhes</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Favorite_Label" xml:space="preserve">
+    <value>Favoritar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_UnFavorite_Label" xml:space="preserve">
+    <value>Desfavoritar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Resize_Label" xml:space="preserve">
+    <value>Redimensionar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Delete_Label" xml:space="preserve">
+    <value>Apagar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Rotate_Label" xml:space="preserve">
+    <value>Girar</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Details_ToolTip" xml:space="preserve">
+    <value>Detalhes da Imagem</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Favorite_ToolTip" xml:space="preserve">
+    <value>Adicionar aos Favoritos</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_UnFavorite_ToolTip" xml:space="preserve">
+    <value>Remover dos Favoritos</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Resize_ToolTip" xml:space="preserve">
+    <value>Redimensionar Imagem</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Delete_ToolTip" xml:space="preserve">
+    <value>Apagar Imagem</value>
+  </data>
+    <data name="FotosFullPage_CommandBar_Rotate_ToolTip" xml:space="preserve">
+    <value>Girar Imagem</value>
   </data>
     <data name="Shell_About.Content" xml:space="preserve">
     <value>Sobre</value>
@@ -203,20 +248,32 @@
     <data name="FotosFullPage_CommandBar_AddToFavorites.Text" xml:space="preserve">
     <value>Nos Favoritos 📂</value>
   </data>
-    <data name="FotosFullPage_TeachingTip_FavoritedSubtitle" xml:space="preserve">
+    <data name="FotosFullPage_TeachingTip_FavoriteSubtitle" xml:space="preserve">
     <value>Adicionada à página de favoritos</value>
   </data>
-    <data name="FotosFullPage_TeachingTip_FavoritedTitle" xml:space="preserve">
+    <data name="FotosFullPage_TeachingTip_FavoriteTitle" xml:space="preserve">
     <value>Favoritada 💕</value>
   </data>
-    <data name="FotosFullPage_TeachingTip_UnfavoritedSubtitle" xml:space="preserve">
+    <data name="FotosFullPage_TeachingTip_UnFavoriteSubtitle" xml:space="preserve">
     <value>Removida da página de favoritos</value>
   </data>
-    <data name="FotosFullPage_TeachingTip_UnfavoritedTitle" xml:space="preserve">
+    <data name="FotosFullPage_TeachingTip_UnFavoriteTitle" xml:space="preserve">
     <value>Desfavoritada 🧹</value>
   </data>
+    <data name="FotosFullPage_TeachingTip_DeleteTitle" xml:space="preserve">
+    <value>Apagada</value>
+  </data>
+    <data name="FotosFullPage_TeachingTip_DeleteSubTitle" xml:space="preserve">
+    <value>Imagem Apagada da Pasta</value>
+  </data>
+    <data name="FotosFullPage_TeachingTip_RotateTitle" xml:space="preserve">
+    <value>Rotacionada</value>
+  </data>
+    <data name="FotosFullPage_TeachingTip_RotateSubTitle" xml:space="preserve">
+    <value>Imagem Rotacionada 90°</value>
+  </data>
     <data name="AboutPage_MemberDescriptionFernando.Text" xml:space="preserve">
-    <value>dotNET com foco em aplições desktop</value>
+    <value>dotNET com foco em aplicações desktop</value>
   </data>
     <data name="AboutPage_MemberDescriptionMaikeu.Text" xml:space="preserve">
     <value>Apaixonado por Programação</value>

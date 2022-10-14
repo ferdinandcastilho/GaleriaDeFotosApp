@@ -7,7 +7,9 @@ public partial class Foto : ObservableObject
     public const double StartWidth = 320;
     public const double MinWidth = 100;
     public const double MaxWidth = 400;
-    [ObservableProperty] private string _imageId;
+
+    [NotifyPropertyChangedFor(nameof(ImageUri))] [ObservableProperty]
+    private string _imageId;
 
     [ObservableProperty] private Uri _imageUri;
     [ObservableProperty] private bool _isFavorite;
