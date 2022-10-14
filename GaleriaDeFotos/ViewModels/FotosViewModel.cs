@@ -40,7 +40,9 @@ public partial class FotosViewModel : BaseFotosViewModel
     {
         get => Source.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
 
@@ -49,7 +51,9 @@ public partial class FotosViewModel : BaseFotosViewModel
         get =>
             PickFolderVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         // ReSharper disable once ValueParameterNotUsed
-        set { }
+        set
+        {
+        }
     }
 
     protected override async void OnNavigatedToChild(object parameter)
@@ -59,7 +63,9 @@ public partial class FotosViewModel : BaseFotosViewModel
         if (!NeedToPickFolder || _folderAlreadyPicked) await OpenLastOpenedFolder();
     }
 
-    protected override void OnNavigatedFromChild() { }
+    protected override void OnNavigatedFromChild()
+    {
+    }
 
     [RelayCommand]
     private async Task SelectDirectory()
@@ -84,7 +90,10 @@ public partial class FotosViewModel : BaseFotosViewModel
         _currentFolder = folder?.Path;
     }
 
-    protected override async Task LoadPhotos() { await ReadPhotosFromFolder(_currentFolder); }
+    protected override async Task LoadPhotos()
+    {
+        await ReadPhotosFromFolder(_currentFolder);
+    }
 
     private async Task OpenLastOpenedFolder()
     {
@@ -92,7 +101,9 @@ public partial class FotosViewModel : BaseFotosViewModel
         var folderToReadPhotos =
             await settings.ReadSettingAsync<string?>(LocalSettingsService.LastFolderKey);
         _currentFolder = folderToReadPhotos;
-        await ReadPhotosFromFolder(folderToReadPhotos);
+
+        if (folderToReadPhotos?.Length > 0)
+            await ReadPhotosFromFolder(folderToReadPhotos);
     }
 
     private async Task ReadPhotosFromFolder(string? path)
